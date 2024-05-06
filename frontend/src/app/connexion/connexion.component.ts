@@ -25,7 +25,7 @@ export class ConnexionComponent {
           // Pour les autres rôles, vous pouvez afficher un message de connexion réussie ou rediriger vers une autre page si nécessaire
           console.log('Connexion réussie pour un utilisateur non-administrateur');
           // Exemple de redirection vers une page différente
-          this.router.navigate(['/home']);
+          this.router.navigate(['/profile']);
         }
         // Réinitialiser le formulaire
         this.formData = {};

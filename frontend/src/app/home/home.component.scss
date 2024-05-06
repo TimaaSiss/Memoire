@@ -91,6 +91,7 @@
     text-align: center;
     flex: 1;
     padding: 20px;
+    position: relative; /* Assurez-vous que chaque élément parent est positionné */
     margin: 10px;
     background-color: #fff;
     border-radius: 5px;
@@ -103,9 +104,12 @@
   }
   
   .feature i {
-    font-size: 3em;
-    margin-bottom: 20px;
+    position: absolute;
+    bottom: 10px; /* Ajustez cette valeur pour définir la distance entre l'icône et le bas de l'élément */
+    left: 50%; /* Centrez l'icône horizontalement */
+    transform: translateX(-50%); /* Centrez l'icône horizontalement */
   }
+  
   
   .feature h2 {
     font-size: 1.5em;

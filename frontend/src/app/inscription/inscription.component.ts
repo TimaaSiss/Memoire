@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router'; // Importez le service Router
 import { UserService } from '@app/service/user-service.service';
 import { User } from '../model/user';
 
@@ -11,13 +12,21 @@ export class InscriptionComponent {
 
   formData: User = new User(); // Créer un nouvel objet User pour stocker les données du formulaire
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   submitForm() {
     this.userService.save(this.formData)
       .subscribe(
         response => {
           console.log('Utilisateur ajouté avec succès :', response);
+          // Vérifier le rôle de l'utilisateur après l'inscription réussie
+          if (response.role === 'ADMIN') {
+            // Rediriger vers la page d'administration si le rôle est ADMIN
+            this.router.navigate(['/admin']);
+          } else {
+            // Rediriger vers la page de profil pour les autres rôles
+            this.router.navigate(['/profile']);
+          }
           // Réinitialiser le formulaire après l'ajout réussi
           this.formData = new User();
         },

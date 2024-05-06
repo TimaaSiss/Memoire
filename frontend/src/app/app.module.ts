@@ -12,6 +12,7 @@ import { ConnexionComponent } from './connexion/connexion.component';
 import { AdminComponent } from './admin/admin.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserFormComponent } from './user-form/user-form.component';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { UserFormComponent } from './user-form/user-form.component';
          AdminComponent,
          UserListComponent,
          UserFormComponent,
+         ProfileComponent,
 
   ],
   imports: [

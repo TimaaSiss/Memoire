@@ -6,13 +6,16 @@ import { ConnexionComponent } from './connexion/connexion.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { AdminComponent } from './admin/admin.component';
+import { ProfileComponent } from './profile/profile.component';
 const routes: Routes = [
   { path: '', component: HomeComponent }, // Route par défaut pour HomeComponent
   { path: 'register', component: InscriptionComponent }, // Route vers InscriptionComponent
   { path: 'connexion', component: ConnexionComponent },
   { path: 'admin', component: AdminComponent }, 
   { path: 'users', component: UserListComponent },
-  { path: 'adduser', component: UserFormComponent }
+  { path: 'adduser', component: UserFormComponent },
+  { path: 'profile', component: ProfileComponent }
+
 ];
 
 @NgModule({
