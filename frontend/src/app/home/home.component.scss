@@ -1,0 +1,119 @@
+/* Style pour le logo */
+.logo {
+    display: block;
+    margin: 0 auto 20px;
+    width: 150px; /* Ajuste la taille selon tes besoins */
+  }
+  
+  /* Alignement à droite pour les boutons de connexion et d'inscription */
+  .cta-buttons {
+    text-align: center;
+  }
+  
+  .cta-buttons a {
+    margin-right: 10px;
+  }/* Alignement à gauche pour les boutons de connexion et d'inscription */
+
+  .hero {
+    background-size: cover;
+    color: white;
+    padding-top: 100px; /* Ajustez l'espacement au besoin */
+    padding-bottom: 200px; /* Ajustez l'espacement au besoin */
+    position: relative;
+  }
+  
+  .hero-content {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+  .cta-buttons {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+  }
+  
+  .cta-buttons a {
+    margin-right: 10px;
+  }
+  
+  /* Style pour les blocs de fonctionnalités */
+  .features {
+   
+    padding: 50px 0;
+  }
+  
+  .features .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .feature {
+    text-align: center;
+    flex: 1;
+    padding: 20px;
+    margin: 20px;
+    background-image: url(/assets/carreer.webp);
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    background-size: cover;
+  }
+  
+  .feature i {
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+  
+  .feature h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .feature p {
+    font-size: 1.1em;
+  }
+  
+  
+  /* Style pour les blocs de fonctionnalités */
+  .features {
+    background-color: #f9f9f9;
+    padding: 50px 0;
+  }
+  
+  .features .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+  
+  .feature {
+    text-align: center;
+    flex: 1;
+    padding: 20px;
+    margin: 10px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease; /* Ajout de l'effet de transition */
+
+  }
+  .feature:hover {
+    opacity: 0.9; /* Réduire légèrement l'opacité au survol */
+  }
+  
+  .feature i {
+    font-size: 3em;
+    margin-bottom: 20px;
+  }
+  
+  .feature h2 {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+  }
+  
+  .feature p {
+    font-size: 1.1em;
+  }
+
+  

@@ -1,0 +1,44 @@
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nom</th>
+      <th scope="col">Prenom</th>
+      <th scope="col">Username</th>
+      <th scope="col">Email</th>
+      <th scope="col">Roles</th>
+      <th scope="col">Actions</th> <!-- Nouvelle colonne pour les actions -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let user of users">
+      <td>{{ user.id }}</td>
+      <td>{{ user.nom }}</td>
+      <td>{{ user.prenom }}</td>
+      <td>{{ user.username }}</td>
+      <td>{{ user.mail }}</td>
+      <td>{{ user.role }}</td>
+      <td>
+        <!-- Boutons Modifier et Supprimer pour chaque utilisateur -->
+        <button class="btn btn-primary" (click)="editUser(user)">Modifier</button>
+        <button class="btn btn-danger" (click)="confirmDeleteUser(user)">Supprimer</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Formulaire de modification (masqué par défaut) -->
+<div *ngIf="selectedUser">
+  <h4>Modifier l'utilisateur</h4>
+  <form (submit)="updateUser()">
+    <label>Nom:</label>
+    <input type="text" [(ngModel)]="selectedUser.nom" name="nom">
+    <label>Prénom:</label>
+    <input type="text" [(ngModel)]="selectedUser.prenom" name="prenom">
+    <label>Username:</label>
+    <input type="text" [(ngModel)]="selectedUser.username" name="username">
+    <label>Email:</label>
+    <input type="text" [(ngModel)]="selectedUser.mail" name="mail">
+    <button type="submit" class="btn btn-success">Enregistrer</button>
+  </form>
+</div>

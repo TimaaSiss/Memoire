@@ -3,11 +3,11 @@ package com.itma.speciassist.model;
 import java.util.List;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import lombok.Data;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 
 @Entity
 @Data
@@ -19,7 +19,9 @@ public class User {
     private String prenom;
     private String username;
     private String mail;
+    private String token;
     private String password;
+    
     
     private Role role; // Modification de l'attribut de rôle pour utiliser l'énumération
     
@@ -35,4 +37,6 @@ public class User {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	
 }

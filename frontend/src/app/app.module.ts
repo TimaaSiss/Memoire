@@ -1,25 +1,38 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
+import { FormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
-import { LogInComponent } from './log-in/log-in.component';
-import { RegisterComponent } from './register/register.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AngularMaterialModule } from './angular-material.module';
-import { FlexLayoutModule } from '@angular/flex-layout';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
+import { UserService } from './service/user-service.service';
+import { HomeComponent } from './home/home.component';
+import { InscriptionComponent } from './inscription/inscription.component';
+import { ConnexionComponent } from './connexion/connexion.component';
+import { AdminComponent } from './admin/admin.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { UserFormComponent } from './user-form/user-form.component';
+
+
 @NgModule({
-  declarations: [AppComponent, LogInComponent, RegisterComponent],
+  declarations: [
+    AppComponent,
+    
+    HomeComponent,
+         InscriptionComponent,
+         ConnexionComponent,
+         AdminComponent,
+         UserListComponent,
+         UserFormComponent,
+
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
-    AngularMaterialModule,
-    FlexLayoutModule,
-    FormsModule,
-    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule
   ],
-  providers: [],
-  bootstrap: [AppComponent],
+  providers: [UserService],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

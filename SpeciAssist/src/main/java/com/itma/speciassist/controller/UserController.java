@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itma.speciassist.model.User;
@@ -22,40 +21,34 @@ import com.itma.speciassist.service.UserService;
 public class UserController {
 
     @Autowired
-    private UserService userservice;
-    
+    private UserService userService;
+
     @PostMapping("/addUser")
     public User addUser(@RequestBody User user) {
-        return userservice.addUser(user);
-    } 
-    
+        return userService.addUser(user);
+    }
+
+   
 
     @GetMapping("/allUsers")
     public List<User> getAllUsers() {
-        return userservice.allUsers();
-   }
+        return userService.allUsers();
+    }
 
-   @GetMapping("/get/{id}")
-      public User getUserById(@RequestParam Integer id) {
-        return userservice.getUserById(id);
-        }
+    @GetMapping("/get/{id}")
+    public User getUserById(@PathVariable Integer id) {
+        return userService.getUserById(id);
+    }
 
-    
-
-   @PutMapping("/update/{id}")
+    @PutMapping("/update/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable Integer id, @RequestBody User user) {
-       userservice.updateUser(id, user);
-   
-      return ResponseEntity.noContent().build();
-      }
-   
-   @DeleteMapping("/delete/{id}")
-   public ResponseEntity<Void>deleteUser(@PathVariable Integer id){
-	   userservice.deleteUser(id);
-	   
-	   return ResponseEntity.noContent().build();
-   }
-   
-   
+        userService.updateUser(id, user);
+        return ResponseEntity.noContent().build();
+    }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
+        userService.deleteUser(id);
+        return ResponseEntity.noContent().build();
+    }
 }
