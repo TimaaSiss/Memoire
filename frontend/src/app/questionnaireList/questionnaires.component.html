@@ -1,0 +1,32 @@
+<!-- questionnaire-list.component.html -->
+
+<div class="container">
+    <h1>Liste des questionnaires</h1>
+    <button class="btn btn-success mb-3" (click)="openAddQuestionnaireDialog()">
+        <i class="bi bi-plus"></i> Ajouter un questionnaire
+      </button>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Titre</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let questionnaire of questionnaires">
+          <td>{{ questionnaire.id }}</td>
+          <td>{{ questionnaire.titre }}</td>
+          <td>
+            <button class="btn btn-primary" (click)="editQuestionnaire(questionnaire)">
+              <i class="bi bi-pencil"></i>
+            </button>
+            <button class="btn btn-danger" (click)="confirmDeleteQuestionnaire(questionnaire)">
+              <i class="bi bi-trash"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

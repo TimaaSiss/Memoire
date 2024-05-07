@@ -1,20 +1,25 @@
-<div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card bg-dark my-5">
-          <div class="card-body">
-            <h2 class="card-title text-center text-white py-3">ESPACE ADMINISTRATEUR</h2>
-            <ul class="text-center list-inline py-3">
-              <li class="list-inline-item">
-                <a routerLink="/users" class="btn btn-info">List Users</a>
-                  </li>
-              <li class="list-inline-item">
-                <a routerLink="/adduser" class="btn btn-info">Add User</a>
-                  </li>
-            </ul>
-          </div>
-        </div>
-      
-      </div>
-    </div>
+<div class="admin-container">
+  <div class="menu-trigger" (click)="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
   </div>
+
+  <div class="sidebar" [class.active]="menuOpen">
+    <ul>
+      <li><a routerLink="/users">List Users</a></li>
+      <li><a routerLink="/adduser">Add User</a></li>
+      <li><a routerLink="/questions">Liste des questions</a></li>
+      <li><a routerLink="/formations">Liste des formations</a></li>
+      <li><a routerLink="/careers">L'ensemble des carrières</a></li>
+      <li><a routerLink="/mentors">Les mentors</a></li>
+      <li><a routerLink="/questionnaire">Liste des questionnaires</a></li>
+      <!-- Ajoutez d'autres liens ici -->
+    </ul>
+  </div>
+  
+  <div class="admin-content">
+    <h1>ESPACE ADMINISTRATEUR</h1>
+    <!-- Ajoutez d'autres éléments de contenu ici -->
+  </div>
+</div>

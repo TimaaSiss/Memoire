@@ -1,0 +1,93 @@
+import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Questionnaire } from '../model/questionnaire'; 
+import { QuestionnaireService } from '@app/service/questionnaire-service.service';
+import { AddQuestionnaireDialogComponent } from '../add-questionnaire-dialog/add-questionnaire-dialog.component';
+import { EventEmitter } from '@angular/core';
+@Component({
+  selector: 'app-questionnaires',
+  templateUrl: './questionnaires.component.html',
+  styleUrls: ['./questionnaires.component.scss']
+})
+export class QuestionnairesComponent implements OnInit {
+  
+
+  questionnaireAdded: EventEmitter<Questionnaire> = new EventEmitter<Questionnaire>();
+
+
+  questionnaires: Questionnaire[] = [];
+  newQuestionnaire: Questionnaire = { id: 0, titre: '', questions: [] }; // Déclaration de la propriété newQuestionnaire
+  selectedQuestionnaire: Questionnaire | null = null;
+
+  constructor(private questionnaireService: QuestionnaireService, private dialog: MatDialog) { }
+
+  ngOnInit() {
+    this.loadQuestionnaires();
+  }
+
+  loadQuestionnaires() {
+    this.questionnaireService.getAllQuestionnaires().subscribe(data => {
+      this.questionnaires = data;
+    });
+  }
+  addQuestionnaire() {
+    // Vérifiez si le titre du questionnaire est valide
+    if (this.newQuestionnaire.titre.trim()) {
+      // Envoyez la demande d'ajout du questionnaire
+      this.questionnaireService.addQuestionnaire(this.newQuestionnaire).subscribe(() => {
+        // Réinitialisez le nouveau questionnaire après l'ajout réussi
+        this.newQuestionnaire = { id: 0, titre: '', questions: [] };
+        // Rechargez la liste des questionnaires pour refléter les modifications
+        this.loadQuestionnaires();
+      });
+    }
+  }
+
+
+  openAddQuestionnaireDialog(): void {
+    const dialogRef = this.dialog.open(AddQuestionnaireDialogComponent, {
+      width: '400px',
+      disableClose: true,
+      data: this.addQuestionnaire // Passer newQuestionnaire à la boîte de dialogue
+    });
+  
+    dialogRef.afterClosed().subscribe((result: Questionnaire) => {
+      if (result) {
+        this.questionnaires.push(result); // Ajouter le nouveau questionnaire à la liste
+      }
+    });
+  }
+
+
+  editQuestionnaire(questionnaire: Questionnaire) {
+    // Sélectionnez le questionnaire pour la modification
+    this.selectedQuestionnaire = questionnaire;
+  }
+
+  updateQuestionnaire() {
+    if (this.selectedQuestionnaire) {
+      // Envoyez la demande de mise à jour du questionnaire
+      this.questionnaireService.updateQuestionnaire(this.selectedQuestionnaire.id, this.selectedQuestionnaire).subscribe(() => {
+        // Réinitialisez la sélection après la mise à jour réussie
+        this.selectedQuestionnaire = null;
+        // Rechargez la liste des questionnaires pour refléter les modifications
+        this.loadQuestionnaires();
+      });
+    }
+  }
+
+  confirmDeleteQuestionnaire(questionnaire: Questionnaire) {
+    // Demander confirmation avant la suppression du questionnaire
+    if (confirm("Êtes-vous sûr de vouloir supprimer ce questionnaire?")) {
+      this.deleteQuestionnaire(questionnaire);
+    }
+  }
+
+  deleteQuestionnaire(questionnaire: Questionnaire) {
+    // Envoyez la demande de suppression du questionnaire
+    this.questionnaireService.deleteQuestionnaire(questionnaire.id).subscribe(() => {
+      // Rechargez la liste des questionnaires après la suppression réussie
+      this.loadQuestionnaires();
+    });
+  }
+}

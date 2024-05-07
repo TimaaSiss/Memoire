@@ -7,6 +7,7 @@ import { UserListComponent } from './user-list/user-list.component';
 import { UserFormComponent } from './user-form/user-form.component';
 import { AdminComponent } from './admin/admin.component';
 import { ProfileComponent } from './profile/profile.component';
+import { QuestionnairesComponent } from './questionnaireList/questionnaires.component';
 const routes: Routes = [
   { path: '', component: HomeComponent }, // Route par défaut pour HomeComponent
   { path: 'register', component: InscriptionComponent }, // Route vers InscriptionComponent
@@ -14,7 +15,9 @@ const routes: Routes = [
   { path: 'admin', component: AdminComponent }, 
   { path: 'users', component: UserListComponent },
   { path: 'adduser', component: UserFormComponent },
-  { path: 'profile', component: ProfileComponent }
+  { path: 'profile', component: ProfileComponent },
+  { path: 'questionnaire', component: QuestionnairesComponent },
+
 
 ];
 

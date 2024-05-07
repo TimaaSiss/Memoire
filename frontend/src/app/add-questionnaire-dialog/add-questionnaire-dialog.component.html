@@ -1,0 +1,14 @@
+<h2 mat-dialog-title>Ajouter un questionnaire</h2>
+<div mat-dialog-content>
+  <form #questionnaireForm="ngForm">
+    <mat-form-field>
+      <mat-label>Titre du questionnaire</mat-label>
+      <input matInput placeholder="Titre du questionnaire" name="titre" [(ngModel)]="newQuestionnaire.titre" required>
+</mat-form-field>
+    <!-- Ajoutez ici d'autres champs pour les questions du questionnaire si nécessaire -->
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">Annuler</button>
+  <button mat-button (click)="onSaveClick()" [disabled]="questionnaireForm.invalid">Enregistrer</button>
+</div>

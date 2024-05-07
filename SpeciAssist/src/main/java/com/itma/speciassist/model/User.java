@@ -21,22 +21,19 @@ public class User {
     private String mail;
     private String token;
     private String password;
-    
-    
+
     private Role role; // Modification de l'attribut de rôle pour utiliser l'énumération
-    
+
     @ManyToMany(mappedBy = "users")
     List<Mentor> mentors;
-    
+
     @ManyToMany(mappedBy = "users")
     List<Commentaire> commentaires;
-    
 
-   
 	public void setQuestions(Object object) {
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
+    
+  
 }
