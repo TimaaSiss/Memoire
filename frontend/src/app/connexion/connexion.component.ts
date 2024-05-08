@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router'; // Importez le service Router
-import { UserService } from '@app/service/user-service.service';
+import { UserService } from '@app/services/user-service.service';
 
 @Component({
   selector: 'app-connexion',

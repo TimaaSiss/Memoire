@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Questionnaire } from '../model/questionnaire'; 
-import { QuestionnaireService } from '@app/service/questionnaire-service.service';
+import { QuestionnaireService } from '@app/services/questionnaire-service.service';
 import { AddQuestionnaireDialogComponent } from '../add-questionnaire-dialog/add-questionnaire-dialog.component';
 import { EventEmitter } from '@angular/core';
+import { Question } from '../model/questionnaire';
+import { map } from 'rxjs';
 @Component({
   selector: 'app-questionnaires',
   templateUrl: './questionnaires.component.html',
@@ -19,6 +21,9 @@ export class QuestionnairesComponent implements OnInit {
   newQuestionnaire: Questionnaire = { id: 0, titre: '', questions: [] }; // Déclaration de la propriété newQuestionnaire
   selectedQuestionnaire: Questionnaire | null = null;
 
+  selectedQuestionnaireId: number | null = null;
+  questionsMap: Map<number, Question[]> = new Map<number, Question[]>();
+
   constructor(private questionnaireService: QuestionnaireService, private dialog: MatDialog) { }
 
   ngOnInit() {
@@ -29,6 +34,24 @@ export class QuestionnairesComponent implements OnInit {
     this.questionnaireService.getAllQuestionnaires().subscribe(data => {
       this.questionnaires = data;
     });
+  }
+
+  loadQuestions(questionnaireId: number): void {
+    this.questionnaireService.getQuestionsByQuestionnaireId(questionnaireId)
+      .pipe(
+        map(data => data ? Object.values(data.questions) : []) // Filtrer les éléments null
+      )
+      .subscribe(questions => {
+        console.log("Questions loaded:", questions);
+        this.questionsMap.set(questionnaireId, questions);
+      });
+  }
+  
+  // Méthode pour afficher les questions associées à un questionnaire spécifique
+  showQuestions(questionnaireId: number): void {
+    this.selectedQuestionnaireId = questionnaireId;
+    console.log("Selected questionnaire ID:", this.selectedQuestionnaireId); // Ajouter ce log
+      this.loadQuestions(this.selectedQuestionnaireId);
   }
   addQuestionnaire() {
     // Vérifiez si le titre du questionnaire est valide
@@ -58,11 +81,28 @@ export class QuestionnairesComponent implements OnInit {
     });
   }
 
-
   editQuestionnaire(questionnaire: Questionnaire) {
-    // Sélectionnez le questionnaire pour la modification
-    this.selectedQuestionnaire = questionnaire;
+    this.selectedQuestionnaire = { ...questionnaire }; // Cloner le questionnaire sélectionné pour éviter les modifications directes
+    const dialogRef = this.dialog.open(AddQuestionnaireDialogComponent, {
+      width: '400px',
+      disableClose: true,
+      data: this.selectedQuestionnaire // Passer le questionnaire sélectionné à la boîte de dialogue
+    });
+
+    dialogRef.afterClosed().subscribe((result: Questionnaire) => {
+      if (result) {
+        // Mettre à jour le questionnaire dans la liste
+        const index = this.questionnaires.findIndex(q => q.id === result.id);
+        if (index !== -1) {
+          this.questionnaires[index] = result;
+        }
+      }
+      this.selectedQuestionnaire = null; // Réinitialiser le questionnaire sélectionné
+    });
   }
+
+
+  
 
   updateQuestionnaire() {
     if (this.selectedQuestionnaire) {

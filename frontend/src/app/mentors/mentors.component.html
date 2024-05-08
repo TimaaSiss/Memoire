@@ -1,0 +1,53 @@
+<p>LISTE DES MENTORS</p>
+<table class="table table-bordered table-striped">
+
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Nom</th>
+        <th scope="col">Prénom</th>
+        <th scope="col">Username</th>
+        <th scope="col">Email</th>
+        <th scope="col">Spécialité</th>
+        <th scope="col">Actions</th> <!-- Nouvelle colonne pour les actions -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let mentor of mentors">
+        <td>{{ mentor.id }}</td>
+        <td>{{ mentor.nom }}</td>
+        <td>{{ mentor.prenom }}</td>
+        <td>{{ mentor.username }}</td>
+        <td>{{ mentor.mail }}</td>
+        <td>{{ mentor.specialite }}</td>
+        <td>
+          <!-- Boutons Modifier, Supprimer et Activer/Désactiver pour chaque mentor -->
+          <button class="btn btn-primary" (click)="editMentor(mentor)">
+            <i class="bi bi-pencil"></i> 
+          </button>
+          <button class="btn btn-danger" (click)="confirmDeleteMentor(mentor)">
+            <i class="bi bi-trash"></i> 
+          </button>
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  
+  <!-- Formulaire de modification (masqué par défaut) -->
+  <div *ngIf="selectedMentor">
+    <h4>Modifier le mentor</h4>
+    <form (submit)="updateMentor()">
+      <label>Nom:</label>
+      <input type="text" [(ngModel)]="selectedMentor.nom" name="nom">
+      <label>Prénom:</label>
+      <input type="text" [(ngModel)]="selectedMentor.prenom" name="prenom">
+      <label>Username:</label>
+      <input type="text" [(ngModel)]="selectedMentor.username" name="username">
+      <label>Email:</label>
+      <input type="text" [(ngModel)]="selectedMentor.mail" name="mail">
+      <label>Spécialité:</label>
+      <input type="text" [(ngModel)]="selectedMentor.specialite" name="specialite">
+      <button type="submit" class="btn btn-success">Enregistrer</button>
+    </form>
+  </div>

@@ -1,6 +1,6 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
-import { QuestionnaireService } from '../service/questionnaire-service.service';
+import { Component, OnInit, EventEmitter, Output, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { QuestionnaireService } from '../services/questionnaire-service.service';
 import { Questionnaire } from '../model/questionnaire';
 
 @Component({
@@ -15,8 +15,11 @@ export class AddQuestionnaireDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddQuestionnaireDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Questionnaire, // Injecter les données du questionnaire
+  
     private questionnaireService: QuestionnaireService
-  ) { }
+  ) {   this.newQuestionnaire = { ...data };
+}
 
   ngOnInit(): void {
   }

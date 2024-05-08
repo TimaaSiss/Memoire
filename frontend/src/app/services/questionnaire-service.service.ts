@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Questionnaire } from '../model/questionnaire'; // Assurez-vous d'importer le modèle Questionnaire approprié
-
+import { Question } from '../model/questionnaire';
 @Injectable({
   providedIn: 'root'
 })
@@ -12,6 +12,11 @@ export class QuestionnaireService {
 
   constructor(private http: HttpClient) {
     this.questionnairesUrl = 'http://localhost:8080'; // Assurez-vous de remplacer l'URL par celle de votre API
+  }
+
+  // Méthode pour récupérer les questions associées à un questionnaire spécifique
+  public getQuestionsByQuestionnaireId(questionnaireId: number): Observable<Questionnaire> {
+    return this.http.get<Questionnaire>(`${this.questionnairesUrl}/questionnaires/getQuestionnaire/${questionnaireId}`);
   }
 
   public getAllQuestionnaires(): Observable<Questionnaire[]> {
