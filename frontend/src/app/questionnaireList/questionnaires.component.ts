@@ -6,6 +6,7 @@ import { AddQuestionnaireDialogComponent } from '../add-questionnaire-dialog/add
 import { EventEmitter } from '@angular/core';
 import { Question } from '../model/questionnaire';
 import { map } from 'rxjs';
+import { ReponseQuestionService } from '@app/services/reponse-questions.service';
 @Component({
   selector: 'app-questionnaires',
   templateUrl: './questionnaires.component.html',
@@ -20,11 +21,10 @@ export class QuestionnairesComponent implements OnInit {
   questionnaires: Questionnaire[] = [];
   newQuestionnaire: Questionnaire = { id: 0, titre: '', questions: [] }; // Déclaration de la propriété newQuestionnaire
   selectedQuestionnaire: Questionnaire | null = null;
-
   selectedQuestionnaireId: number | null = null;
   questionsMap: Map<number, Question[]> = new Map<number, Question[]>();
 
-  constructor(private questionnaireService: QuestionnaireService, private dialog: MatDialog) { }
+  constructor(private questionnaireService: QuestionnaireService, private dialog: MatDialog, private reponseQuestionService: ReponseQuestionService) { }
 
   ngOnInit() {
     this.loadQuestionnaires();
@@ -52,6 +52,13 @@ export class QuestionnairesComponent implements OnInit {
     this.selectedQuestionnaireId = questionnaireId;
     console.log("Selected questionnaire ID:", this.selectedQuestionnaireId); // Ajouter ce log
       this.loadQuestions(this.selectedQuestionnaireId);
+  }
+  showResponses(questionId: number): void {
+    this.reponseQuestionService.getResponsesByQuestionId(questionId)
+      .subscribe(responses => {
+        console.log("Réponses chargées :", responses);
+        // Gérer les réponses chargées ici (par exemple, les afficher dans une boîte de dialogue)
+      });
   }
   addQuestionnaire() {
     // Vérifiez si le titre du questionnaire est valide

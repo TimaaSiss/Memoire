@@ -24,8 +24,7 @@ public class User {
 
     private Role role; // Modification de l'attribut de rôle pour utiliser l'énumération
 
-    @ManyToMany(mappedBy = "users")
-    List<Mentor> mentors;
+    
 
     @ManyToMany(mappedBy = "users")
     List<Commentaire> commentaires;

@@ -4,10 +4,7 @@
     <thead class="thead-dark">
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Nom</th>
-        <th scope="col">Prénom</th>
-        <th scope="col">Username</th>
-        <th scope="col">Email</th>
+        <th scope="col">User_id</th>
         <th scope="col">Spécialité</th>
         <th scope="col">Actions</th> <!-- Nouvelle colonne pour les actions -->
       </tr>
@@ -15,10 +12,7 @@
     <tbody>
       <tr *ngFor="let mentor of mentors">
         <td>{{ mentor.id }}</td>
-        <td>{{ mentor.nom }}</td>
-        <td>{{ mentor.prenom }}</td>
-        <td>{{ mentor.username }}</td>
-        <td>{{ mentor.mail }}</td>
+        <td>{{ mentor.user.id }}</td>
         <td>{{ mentor.specialite }}</td>
         <td>
           <!-- Boutons Modifier, Supprimer et Activer/Désactiver pour chaque mentor -->
@@ -38,14 +32,9 @@
   <div *ngIf="selectedMentor">
     <h4>Modifier le mentor</h4>
     <form (submit)="updateMentor()">
-      <label>Nom:</label>
-      <input type="text" [(ngModel)]="selectedMentor.nom" name="nom">
-      <label>Prénom:</label>
-      <input type="text" [(ngModel)]="selectedMentor.prenom" name="prenom">
-      <label>Username:</label>
-      <input type="text" [(ngModel)]="selectedMentor.username" name="username">
-      <label>Email:</label>
-      <input type="text" [(ngModel)]="selectedMentor.mail" name="mail">
+      <label>User_id:</label>
+      <input type="text" [(ngModel)]="selectedMentor.user.id" name="user.id">
+      
       <label>Spécialité:</label>
       <input type="text" [(ngModel)]="selectedMentor.specialite" name="specialite">
       <button type="submit" class="btn btn-success">Enregistrer</button>

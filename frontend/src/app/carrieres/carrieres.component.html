@@ -1,0 +1,42 @@
+<!-- carriere.component.html -->
+
+<div class="container mt-4">
+    <h1>Liste des carrières</h1>
+  
+    <!-- Bouton pour ajouter une carrière -->
+    <button class="btn btn-primary mb-3" (click)="openAddDialog()">Ajouter une carrière</button>
+
+    <!-- Tableau des carrières -->
+    <table class="table table-bordered table-striped">
+      <!-- Entêtes de tableau -->
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Nom</th>
+          <th scope="col">Description</th>
+          <th scope="col">Secteur</th>
+          <th scope="col">Compétences Requises</th>
+          <th scope="col">Salaire</th>
+          <th scope="col">Actions</th>
+        </tr>
+      </thead>
+      <!-- Corps du tableau -->
+      <tbody>
+        <!-- Boucle sur la liste des carrières -->
+        <tr *ngFor="let carriere of carrieres">
+          <td>{{ carriere.id }}</td>
+          <td>{{ carriere.nom }}</td>
+          <td>{{ carriere.description }}</td>
+          <td>{{ carriere.secteur }}</td>
+          <td>{{ carriere.competences_requises }}</td>
+          <td>{{ carriere.salaire }}</td>
+          <td>
+            <!-- Boutons Modifier et Supprimer pour chaque carrière -->
+            <button class="btn btn-primary btn-sm mr-2" (click)="openEditDialog(carriere)"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-danger btn-sm" (click)="confirmDeleteCarriere(carriere)"><i class="bi bi-trash"></i></button>
+</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

@@ -1,3 +1,4 @@
+import { CarriereComponent } from './carrieres/carrieres.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
@@ -21,6 +22,13 @@ import { MatInputModule } from '@angular/material/input';
 import { QuestionsComponent } from './questions/questions.component';
 import { MentorComponent } from './mentors/mentors.component';
 import { CoursComponent } from './cours/cours.component';
+import { FormationComponent } from './formations/formations.component';
+import { EditCarriereDialogComponent } from './edit-dialog-career/edit-dialog-career.component';
+import { AddCareerDialogComponent } from './add-career-dialog/add-career-dialog.component';
+import { AddCourseDialogComponent } from './add-cours-dialog/add-cours-dialog.component';
+import { EditCourseDialogComponent } from './edit-cours-dialog/edit-cours-dialog.component';
+import { AddFormationDialogComponent } from './add-formation-dialog/add-formation-dialog.component';
+
 
 
 @NgModule({
@@ -38,7 +46,14 @@ import { CoursComponent } from './cours/cours.component';
          AddQuestionnaireDialogComponent,
          QuestionsComponent,
          MentorComponent,
-         CoursComponent
+         CoursComponent,
+         FormationComponent,
+         CarriereComponent,
+         EditCarriereDialogComponent,
+         AddCareerDialogComponent,
+         AddCourseDialogComponent,
+         EditCourseDialogComponent,
+         AddFormationDialogComponent
 
   ],
   imports: [

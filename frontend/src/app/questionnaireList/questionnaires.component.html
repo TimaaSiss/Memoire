@@ -11,6 +11,8 @@
       <ul>
         <li *ngFor="let question of questionsMap.get(selectedQuestionnaireId)">
           {{ question.libelle }}
+          <button class="btn btn-secondary" (click)="showResponses(question.id)">Voir les réponses</button>
+  
         </li>
       </ul>
     </div>

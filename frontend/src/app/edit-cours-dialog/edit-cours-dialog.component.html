@@ -1,0 +1,27 @@
+<!-- edit-course-dialog.component.html -->
+
+<h2 class="text-center mb-4">Modifier le cours</h2>
+<form (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="titre">Titre :</label>
+    <input type="text" class="form-control" id="titre" [(ngModel)]="editedCourse.titre" name="titre" required>
+  </div>
+  <div class="form-group">
+    <label for="description">Description :</label>
+    <input type="text" class="form-control" id="description" [(ngModel)]="editedCourse.description" name="description" required>
+  </div>
+  <div class="form-group">
+    <label for="duree">Durée :</label>
+    <input type="text" class="form-control" id="duree" [(ngModel)]="editedCourse.duree" name="duree" required>
+  </div>
+  <div class="form-group">
+    <label for="urlCours">URL du cours :</label>
+    <input type="text" class="form-control" id="urlCours" [(ngModel)]="editedCourse.urlCours" name="urlCours" required>
+  </div>
+  <div class="form-group">
+    <label for="niveau">Niveau :</label>
+    <input type="text" class="form-control" id="niveau" [(ngModel)]="editedCourse.niveau" name="niveau" required>
+  </div>
+  <button type="submit" class="btn btn-primary">Enregistrer</button>
+  <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Annuler</button>
+</form>

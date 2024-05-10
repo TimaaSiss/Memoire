@@ -10,6 +10,8 @@ import { ProfileComponent } from './profile/profile.component';
 import { QuestionnairesComponent } from './questionnaireList/questionnaires.component';
 import { MentorComponent } from './mentors/mentors.component';
 import { CoursComponent } from './cours/cours.component';
+import { FormationComponent } from './formations/formations.component';
+import { CarriereComponent } from './carrieres/carrieres.component';
 const routes: Routes = [
   { path: '', component: HomeComponent }, // Route par défaut pour HomeComponent
   { path: 'register', component: InscriptionComponent }, // Route vers InscriptionComponent
@@ -20,7 +22,9 @@ const routes: Routes = [
   { path: 'profile', component: ProfileComponent },
   { path: 'questionnaire', component: QuestionnairesComponent },
   { path: 'mentors', component: MentorComponent },
-  { path: 'cours', component: CoursComponent }
+  { path: 'cours', component: CoursComponent },
+  { path: 'formation', component: FormationComponent },
+  { path: 'careers', component: CarriereComponent }
 
 
 

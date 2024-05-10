@@ -1,0 +1,58 @@
+<p>LISTE DES FORMATIONS</p>
+<br/>
+<button class="btn btn-success" (click)="openAddFormationDialog()">Ajouter une formation</button>
+
+<br/>
+<br/>
+
+
+<table class="table table-bordered table-striped">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Titre</th>
+      <th scope="col">Description</th>
+      <th scope="col">Durée</th>
+      <th scope="col">Prix</th>
+      <th scope="col">Contenu</th>
+      <th scope="col">Actions</th> <!-- Nouvelle colonne pour les actions -->
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let formation of formations">
+        <td>{{ formation.id }}</td>
+        <td *ngIf="selectedFormation !== formation">{{ formation.titre }}</td>
+        <td *ngIf="selectedFormation !== formation">{{ formation.description }}</td>
+        <td *ngIf="selectedFormation !== formation">{{ formation.duree }}</td>
+        <td *ngIf="selectedFormation !== formation">{{ formation.prix }}</td>
+        <td *ngIf="selectedFormation !== formation">{{ formation.contenu }}</td>
+        <td *ngIf="selectedFormation === formation">
+          <input type="text" [(ngModel)]="formation.titre">
+        </td>
+        <td *ngIf="selectedFormation === formation">
+          <input type="text" [(ngModel)]="formation.description">
+        </td>
+        <td *ngIf="selectedFormation === formation">
+          <input type="text" [(ngModel)]="formation.duree">
+        </td>
+        <td *ngIf="selectedFormation === formation">
+          <input type="text" [(ngModel)]="formation.prix">
+        </td>
+        <td *ngIf="selectedFormation === formation">
+          <input type="text" [(ngModel)]="formation.contenu">
+        </td>
+        <td>
+          <button class="btn btn-primary" (click)="editFormation(formation)">
+            <i class="bi bi-pencil"></i> 
+          </button>
+           <button type="button" class="btn btn-success" (click)="updateFormation()">
+            <i class="bi bi-check"></i>
+        </button>
+          <button class="btn btn-danger" (click)="confirmDeleteFormation(formation)">
+            <i class="bi bi-trash"></i> 
+          </button>
+         
+        </td>
+      </tr>
+  </tbody>
+</table>

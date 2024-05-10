@@ -1,1 +1,43 @@
-<p>cours works!</p>
+<h1>Liste des cours</h1>
+
+<!-- Bouton pour ajouter un nouveau cours -->
+<button class="btn btn-primary" (click)="openAddCourseDialog()">Ajouter un cours</button>
+<br /><br />
+
+<!-- Tableau des cours -->
+<table class="table table-bordered table-striped">
+  <!-- Entêtes de tableau -->
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Titre</th>
+      <th scope="col">Description</th>
+      <th scope="col">Durée</th>
+      <th scope="col">URL du cours</th>
+      <th scope="col">Niveau</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <!-- Corps du tableau -->
+  <tbody>
+    <!-- Boucle sur la liste des cours -->
+    <tr *ngFor="let course of courses">
+      <td>{{ course.id }}</td>
+      <td>{{ course.titre }}</td>
+      <td>{{ course.description }}</td>
+      <td>{{ course.duree }}</td>
+      <td><a [href]="course.urlCours" target="_blank">{{ course.urlCours }}</a></td>
+      <td>{{ course.niveau }}</td>
+      <td>
+        <!-- Boutons Modifier et Supprimer pour chaque cours -->
+        <button class="btn btn-primary" (click)="openEditDialog(course)">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button class="btn btn-danger" (click)="confirmDeleteCourse(course)">
+          <i class="bi bi-trash"></i>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
