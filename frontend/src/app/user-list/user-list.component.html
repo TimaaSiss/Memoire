@@ -1,7 +1,7 @@
 <h1>Liste des utilisateurs</h1>
 
 <!-- Bouton pour ajouter un nouvel utilisateur -->
-<button class="btn btn-dark"><a  class="btn btn-white" routerLink="/adduser">Ajouter un nouvel utilisateur</a></button>
+<button class="btn btn-dark"><a class="btn btn-white" routerLink="/adduser">Ajouter un nouvel utilisateur</a></button>
 <!-- Tableau des utilisateurs -->
 <br/><br/>
 <table class="table table-bordered table-striped">
@@ -13,7 +13,8 @@
       <th scope="col">Username</th>
       <th scope="col">Email</th>
       <th scope="col">Rôles</th>
-      <th scope="col">Actions</th> <!-- Nouvelle colonne pour les actions -->
+      <th scope="col">Status</th>
+      <th scope="col">Actions</th> 
     </tr>
   </thead>
   <tbody>
@@ -24,10 +25,17 @@
       <td>{{ user.username }}</td>
       <td>{{ user.mail }}</td>
       <td>{{ user.role }}</td>
+      <td>{{ user.status ? 'Actif' : 'Inactif' }}</td>
       <td>
         <!-- Boutons Modifier et Supprimer pour chaque utilisateur -->
         <button class="btn btn-primary" (click)="editUser(user)">Modifier</button>
         <button class="btn btn-danger" (click)="confirmDeleteUser(user)">Supprimer</button>
+        <!-- Bouton d'activation/désactivation -->
+        <button class="btn" (click)="toggleUserStatus(user)"> 
+          <span *ngIf="user.status" class="fa fa-toggle-on text-success">Activer</span>
+         <span *ngIf="!user.status" class="fa fa-toggle-off text-danger">Desactiver</span> 
+        
+        </button>
       </td>
     </tr>
   </tbody>

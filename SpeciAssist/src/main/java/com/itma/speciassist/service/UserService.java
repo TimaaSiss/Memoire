@@ -2,6 +2,7 @@ package com.itma.speciassist.service;
 
 import java.util.List;
 
+
 import com.itma.speciassist.model.User;
 
 public interface UserService {
@@ -17,6 +18,11 @@ public interface UserService {
 
 	User getUserById(Long id);
 
+	void activateUser(Long userId);
+
+	void deactivateUser(Long userId);
+
+	
 
 
     }

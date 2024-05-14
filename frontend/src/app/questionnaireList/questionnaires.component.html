@@ -1,9 +1,7 @@
-<!-- questionnaire-list.component.html -->
-
 <div class="container">
   <h1>Liste des questionnaires</h1>
   <button class="btn btn-success mb-3" (click)="openAddQuestionnaireDialog()">
-      <i class="bi bi-plus"></i> Ajouter un questionnaire
+    <i class="bi bi-plus"></i> Ajouter un questionnaire
   </button>
   <div *ngFor="let questionnaire of questionnaires">
     <h2>{{ questionnaire.titre }}</h2>
@@ -11,8 +9,13 @@
       <ul>
         <li *ngFor="let question of questionsMap.get(selectedQuestionnaireId)">
           {{ question.libelle }}
-          <button class="btn btn-secondary" (click)="showResponses(question.id)">Voir les réponses</button>
-  
+          <button class="btn btn-success btn-sm" (click)="addResponse(question, question.id)">Ajouter une réponse</button>
+          <ul>
+            <li *ngFor="let reponse of question.reponseQuestions">
+              {{ reponse.contenu }}
+            </li>
+          </ul>
+          <br/><br/>
         </li>
       </ul>
     </div>
@@ -22,7 +25,6 @@
     <button class="btn btn-danger" (click)="confirmDeleteQuestionnaire(questionnaire)">
       <i class="bi bi-trash"></i>
     </button>
-    <!-- Nouveau bouton pour afficher les questions -->
     <button class="btn btn-info" (click)="showQuestions(questionnaire.id)">
       <i class="bi bi-eye"></i> 
     </button>

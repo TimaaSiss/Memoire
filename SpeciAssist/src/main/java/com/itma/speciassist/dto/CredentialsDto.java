@@ -7,5 +7,15 @@ public record CredentialsDto(String username, char[] password, Role role) {
         return role;
     }
 
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public char[] getPassword() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

@@ -3,7 +3,11 @@ package com.itma.speciassist.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -18,6 +22,8 @@ import lombok.Data;
 
 @Entity
 @Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+
 public class Question {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,15 +31,18 @@ public class Question {
     private Long id;
 
     private String libelle;
-
+    @JsonIgnore
     @ManyToOne
     @JsonIgnoreProperties("questions")
     @JoinColumn(name = "questionnaire_id")
+    @JsonBackReference
     private Questionnaire questionnaire;
 
    
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<ReponseQuestion> reponseQuestions = new ArrayList<>();
+    
+    
 
    
 

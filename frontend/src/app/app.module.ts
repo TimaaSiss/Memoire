@@ -28,6 +28,7 @@ import { AddCareerDialogComponent } from './add-career-dialog/add-career-dialog.
 import { AddCourseDialogComponent } from './add-cours-dialog/add-cours-dialog.component';
 import { EditCourseDialogComponent } from './edit-cours-dialog/edit-cours-dialog.component';
 import { AddFormationDialogComponent } from './add-formation-dialog/add-formation-dialog.component';
+import { AddResponseDialogComponent } from './add-response-dialog/add-response-dialog.component';
 
 
 
@@ -53,7 +54,8 @@ import { AddFormationDialogComponent } from './add-formation-dialog/add-formatio
          AddCareerDialogComponent,
          AddCourseDialogComponent,
          EditCourseDialogComponent,
-         AddFormationDialogComponent
+         AddFormationDialogComponent,
+         AddResponseDialogComponent
 
   ],
   imports: [

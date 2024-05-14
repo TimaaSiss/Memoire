@@ -1,0 +1,13 @@
+<h2 mat-dialog-title>Ajouter une réponse</h2>
+<div mat-dialog-content>
+  <form #responseForm="ngForm">
+    <mat-form-field>
+      <mat-label>Nouvelle réponse</mat-label>
+      <input matInput placeholder="Entrez la nouvelle réponse" name="response" [(ngModel)]="newResponse" required>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancelClick()">Annuler</button>
+  <button mat-button (click)="onSaveClick()" [disabled]="responseForm.invalid">Enregistrer</button>
+</div>

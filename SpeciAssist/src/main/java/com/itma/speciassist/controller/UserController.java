@@ -2,6 +2,7 @@ package com.itma.speciassist.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +30,17 @@ public class UserController {
     }
 
    
+    @PutMapping("/{userId}/activate")
+    public ResponseEntity<?> activateUser(@PathVariable Long userId) {
+        userService.activateUser(userId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/{userId}/deactivate")
+    public ResponseEntity<?> deactivateUser(@PathVariable Long userId) {
+        userService.deactivateUser(userId);
+        return ResponseEntity.ok().build();
+    }
 
     @GetMapping("/allUsers")
     public List<User> getAllUsers() {
@@ -45,6 +57,7 @@ public class UserController {
         userService.updateUser(id, user);
         return ResponseEntity.noContent().build();
     }
+   
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {

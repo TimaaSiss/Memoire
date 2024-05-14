@@ -7,4 +7,6 @@ export class User {
     password!: string;
     role!: string;
     editMode: boolean= false;
+    status!: boolean;
 }
+

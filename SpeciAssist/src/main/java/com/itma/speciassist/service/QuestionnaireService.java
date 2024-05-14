@@ -2,6 +2,7 @@ package com.itma.speciassist.service;
 
 import java.util.List;
 
+import com.itma.speciassist.model.Question;
 import com.itma.speciassist.model.Questionnaire;
 
 public interface QuestionnaireService {
@@ -17,5 +18,7 @@ public interface QuestionnaireService {
 	void deleteQuestionnaire(Long id);
 
 	Questionnaire saveQuestionnaire(Questionnaire questionnaire);
+
+	List<Question> getQuestionsByQuestionnaire(Long id);
 
 }

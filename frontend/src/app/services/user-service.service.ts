@@ -31,4 +31,12 @@ export class UserService {
   public update(userId: number, user: User): Observable<User> {
     return this.http.put<User>(`${this.usersUrl}/users/update/${userId}`, user);
   }
+
+  activateUser(userId: number): Observable<void> {
+    return this.http.put<void>(`${this.usersUrl}/users/${userId}/activate`, null);
+  }
+
+  deactivateUser(userId: number): Observable<void> {
+    return this.http.put<void>(`${this.usersUrl}/users/${userId}/deactivate`, null);
+  }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itma.speciassist.model.Question;
 import com.itma.speciassist.model.Questionnaire;
 import com.itma.speciassist.repository.QuestionnaireRepository;
 import com.itma.speciassist.service.QuestionnaireService;
@@ -49,4 +50,12 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
     public Questionnaire saveQuestionnaire(Questionnaire questionnaire) {
         return questionnaireRepository.save(questionnaire);
     }
+
+	@Override
+	public List<Question> getQuestionsByQuestionnaire(Long id) {
+		Questionnaire questionnaire = questionnaireRepository.findById(id).orElseThrow();
+		
+		// TODO Auto-generated method stub
+		return questionnaire.getQuestions();
+	}
 }

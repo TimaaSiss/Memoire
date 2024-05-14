@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itma.speciassist.model.Question;
 import com.itma.speciassist.model.Questionnaire;
 import com.itma.speciassist.service.QuestionnaireService;
 
@@ -41,6 +42,11 @@ public class QuestionnaireController {
     @GetMapping("/getQuestionnaire/{id}")
     public Questionnaire getQuestionnaireById(@PathVariable Long id) {
         return questionnaireService.getQuestionnaireById(id);
+    }
+
+    @GetMapping("/{id}/questions")
+    public List<Question> getQuestionsByQuestionnaire(@PathVariable Long id) {
+        return questionnaireService.getQuestionsByQuestionnaire(id);
     }
 
     @PutMapping("/update/{id}")

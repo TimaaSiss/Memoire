@@ -25,9 +25,12 @@ export class Question {
 export class ReponseQuestion {
   id: number;
   contenu: string;
+  question: { id: number }; // Assurez-vous que la propriété question est correctement typée
 
-  constructor(id: number, contenu: string) {
+  constructor(id: number, contenu: string, question: { id: number }) {
     this.id = id;
     this.contenu = contenu;
+    this.question = question;
   }
 }
+

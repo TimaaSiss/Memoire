@@ -21,6 +21,7 @@ public class User {
     private String mail;
     private String token;
     private String password;
+    private boolean status;
 
     private Role role; // Modification de l'attribut de rôle pour utiliser l'énumération
 
@@ -33,6 +34,8 @@ public class User {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
     
   
 }
