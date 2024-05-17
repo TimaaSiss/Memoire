@@ -1,8 +1,10 @@
 import { User } from './../model/user';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserService } from '@app/services/user-service.service';
-
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -12,19 +14,52 @@ export class UserListComponent implements OnInit {
 
   users: User[] = [];
   selectedUser: User | null = null;
+  menuOpen= true;
+  dataSource = new MatTableDataSource<User>(); // Source de données pour la table
+  displayedColumns: string[] = ['id', 'nom', 'prenom', 'username', 'mail', 'role', 'status', 'actions'];
+
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
+  pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
 
   constructor(private userService: UserService) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadUsers();
+    // Vérifier si la valeur de menuOpen est stockée localement
+    const storedMenuOpen = localStorage.getItem('menuOpen');
+    if (storedMenuOpen !== null) {
+      // Si une valeur est trouvée dans le stockage local, la mettre à jour
+      this.menuOpen = JSON.parse(storedMenuOpen);
+    }
+  }
+
+  toggleMenu(): void {
+    // Basculer l'état menuOpen
+    this.menuOpen = !this.menuOpen;
+    // Enregistrer l'état menuOpen dans le stockage du navigateur
+    localStorage.setItem('menuOpen', JSON.stringify(this.menuOpen));
   }
 
   loadUsers() {
     this.userService.findAll().subscribe(data => {
       this.users = data;
+      this.dataSource = new MatTableDataSource<User>(this.users.slice(0, 10)); // Charger les 10 premiers utilisateurs
+      this.dataSource.paginator = this.paginator; // Configurer la pagination
     });
   }
-
+  
+  loadMoreUsers(event: PageEvent) {
+    const pageIndex = event.pageIndex;
+    const pageSize = event.pageSize;
+    const startIndex = pageIndex * pageSize;
+    const endIndex = startIndex + pageSize;
+  
+    // Charger les utilisateurs suivants selon l'index de page
+    this.dataSource = new MatTableDataSource<User>(this.users.slice(startIndex, endIndex));
+  }
+  
+  
   activateUser(userId: number): void {
     this.userService.activateUser(userId).subscribe(() => {
       // Mettre à jour la liste des utilisateurs après activation réussie

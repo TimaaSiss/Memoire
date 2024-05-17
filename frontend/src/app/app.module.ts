@@ -29,7 +29,13 @@ import { AddCourseDialogComponent } from './add-cours-dialog/add-cours-dialog.co
 import { EditCourseDialogComponent } from './edit-cours-dialog/edit-cours-dialog.component';
 import { AddFormationDialogComponent } from './add-formation-dialog/add-formation-dialog.component';
 import { AddResponseDialogComponent } from './add-response-dialog/add-response-dialog.component';
-
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { NavbarComponent } from './navbar/navbar.component';
+import { CareerCardComponent } from './career-card/career-card.component';
+import { FormationCardComponent } from './formation-card/formation-card.component';
+import { QuestionnaireDetailsComponent } from './questionnaire-details/questionnaire-details.component';
 
 
 @NgModule({
@@ -55,7 +61,11 @@ import { AddResponseDialogComponent } from './add-response-dialog/add-response-d
          AddCourseDialogComponent,
          EditCourseDialogComponent,
          AddFormationDialogComponent,
-         AddResponseDialogComponent
+         AddResponseDialogComponent,
+         NavbarComponent,
+         CareerCardComponent,
+         FormationCardComponent,
+         QuestionnaireDetailsComponent
 
   ],
   imports: [
@@ -66,7 +76,10 @@ import { AddResponseDialogComponent } from './add-response-dialog/add-response-d
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatDialogModule, 
-    MatInputModule
+    MatInputModule,
+    MatTableModule,
+    MatSortModule,
+    MatPaginatorModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

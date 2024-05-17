@@ -13,11 +13,24 @@ export class CoursComponent implements OnInit {
 
   courses: Course[] = [];
   selectedCourse: Course | null = null;
-
+  menuOpen= true;
   constructor(private courseService: CourseService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadCourses();
+    // Vérifier si la valeur de menuOpen est stockée localement
+    const storedMenuOpen = localStorage.getItem('menuOpen');
+    if (storedMenuOpen !== null) {
+      // Si une valeur est trouvée dans le stockage local, la mettre à jour
+      this.menuOpen = JSON.parse(storedMenuOpen);
+    }
+  }
+
+  toggleMenu(): void {
+    // Basculer l'état menuOpen
+    this.menuOpen = !this.menuOpen;
+    // Enregistrer l'état menuOpen dans le stockage du navigateur
+    localStorage.setItem('menuOpen', JSON.stringify(this.menuOpen));
   }
 
   loadCourses(): void {

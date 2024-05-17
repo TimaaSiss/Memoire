@@ -1,0 +1,30 @@
+<!-- questionnaire-details.component.html -->
+<div *ngIf="currentQuestionnaire; else loading">
+    <h2>{{ currentQuestionnaire.titre }}</h2>
+    <div *ngFor="let question of currentQuestionnaire.questions">
+      <h3>{{ question.libelle }}</h3>
+      <ul>
+        <li *ngFor="let reponse of question.reponseQuestions">
+          <label>
+            <input type="radio" name="question{{ question.id }}" [value]="reponse.contenu" (change)="onAnswerSelect(question.id, reponse.contenu)" />
+            {{ reponse.contenu }}
+          </label>
+        </li>
+        <li >
+          <label>
+            <input type="radio" name="question{{ question.id }}" value="Autre" (change)="onAnswerSelect(question.id, 'Autre')" />
+            Autre
+          </label>
+          <input *ngIf="selectedOther[question.id]" type="text" placeholder="Veuillez préciser" [(ngModel)]="otherAnswers[question.id]" />
+        </li>
+      </ul>
+    </div>
+    <button (click)="completeCurrentQuestionnaire()">Valider le Questionnaire</button>
+  </div>
+  <ng-template #loading>
+    <p>Loading...</p>
+  </ng-template>
+  <div *ngIf="errorMessage">
+    <p>{{ errorMessage }}</p>
+  </div>
+  

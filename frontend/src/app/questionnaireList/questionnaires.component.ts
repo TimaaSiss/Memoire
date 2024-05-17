@@ -20,7 +20,7 @@ export class QuestionnairesComponent implements OnInit {
   selectedQuestionnaireId: number = 0;
   questionsMap: Map<number, Question[]> = new Map<number, Question[]>();
   selectedQuestionnaire: Questionnaire | null = null; // Ajout de la variable selectedQuestionnaire
-  
+  menuOpen= true;
 
   constructor(
     private questionnaireService: QuestionnaireService,
@@ -28,8 +28,21 @@ export class QuestionnairesComponent implements OnInit {
     private reponseQuestionService: ReponseQuestionService // Injection du service ReponseQuestionService
   ) { }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.loadQuestionnaires();
+    // Vérifier si la valeur de menuOpen est stockée localement
+    const storedMenuOpen = localStorage.getItem('menuOpen');
+    if (storedMenuOpen !== null) {
+      // Si une valeur est trouvée dans le stockage local, la mettre à jour
+      this.menuOpen = JSON.parse(storedMenuOpen);
+    }
+  }
+
+  toggleMenu(): void {
+    // Basculer l'état menuOpen
+    this.menuOpen = !this.menuOpen;
+    // Enregistrer l'état menuOpen dans le stockage du navigateur
+    localStorage.setItem('menuOpen', JSON.stringify(this.menuOpen));
   }
 
   loadQuestionnaires() {

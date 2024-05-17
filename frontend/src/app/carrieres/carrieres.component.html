@@ -1,6 +1,24 @@
-<!-- carriere.component.html -->
-
-<div class="container mt-4">
+<div class="carriere-container">
+  <div class="menu-trigger" (click)="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <div class="sidebar" [class.active]="menuOpen">
+    <ul>
+      <button><a routerLink="/admin"><i class="bi bi-arrow-left-circle"></i></a></button>
+      <li><a routerLink="/users">Liste des Utilisateurs</a></li>
+      <li><a routerLink="/adduser">Ajouter un Utilisateur</a></li>
+      <li><a routerLink="/cours">Liste des cours</a></li>
+      <li><a routerLink="/formation">Liste des formations</a></li>
+      <li><a routerLink="/careers">Liste des carrières</a></li>
+      <li><a routerLink="/mentors">Les mentors</a></li>
+      <li><a routerLink="/questionnaire">Liste des questionnaires</a></li>
+      <!-- Ajoutez d'autres liens ici -->
+    </ul>
+  </div>
+  
+  <div class="admin-content">
     <h1>Liste des carrières</h1>
   
     <!-- Bouton pour ajouter une carrière -->
@@ -13,7 +31,6 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Nom</th>
-          <th scope="col">Description</th>
           <th scope="col">Secteur</th>
           <th scope="col">Compétences Requises</th>
           <th scope="col">Salaire</th>
@@ -25,8 +42,7 @@
         <!-- Boucle sur la liste des carrières -->
         <tr *ngFor="let carriere of carrieres">
           <td>{{ carriere.id }}</td>
-          <td>{{ carriere.nom }}</td>
-          <td>{{ carriere.description }}</td>
+          <td>{{ carriere.nom }}</td> 
           <td>{{ carriere.secteur }}</td>
           <td>{{ carriere.competences_requises }}</td>
           <td>{{ carriere.salaire }}</td>
@@ -34,9 +50,9 @@
             <!-- Boutons Modifier et Supprimer pour chaque carrière -->
             <button class="btn btn-primary btn-sm mr-2" (click)="openEditDialog(carriere)"><i class="bi bi-pencil"></i></button>
             <button class="btn btn-danger btn-sm" (click)="confirmDeleteCarriere(carriere)"><i class="bi bi-trash"></i></button>
-</td>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
-  
+</div>

@@ -13,7 +13,7 @@ import { AddCareerDialogComponent } from '@app/add-career-dialog/add-career-dial
 export class CarriereComponent implements OnInit {
 
   carrieres: Carriere[] = [];
-
+  menuOpen= true;
   constructor(
     private carriereService: CarriereService,
     public dialog: MatDialog
@@ -21,8 +21,21 @@ export class CarriereComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCarrieres();
+    // Vérifier si la valeur de menuOpen est stockée localement
+    const storedMenuOpen = localStorage.getItem('menuOpen');
+    if (storedMenuOpen !== null) {
+      // Si une valeur est trouvée dans le stockage local, la mettre à jour
+      this.menuOpen = JSON.parse(storedMenuOpen);
+    }
   }
 
+  toggleMenu(): void {
+    // Basculer l'état menuOpen
+    this.menuOpen = !this.menuOpen;
+    // Enregistrer l'état menuOpen dans le stockage du navigateur
+    localStorage.setItem('menuOpen', JSON.stringify(this.menuOpen));
+  }
+  
   loadCarrieres(): void {
     this.carriereService.getAllCarrieres().subscribe(carrieres => {
       this.carrieres = carrieres;

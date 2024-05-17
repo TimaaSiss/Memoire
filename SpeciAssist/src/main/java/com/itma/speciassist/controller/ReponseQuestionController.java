@@ -21,7 +21,7 @@ public class ReponseQuestionController {
     private ReponseQuestionService reponseQuestionService;
 
     @GetMapping("/getReponse/{id}")
-    public ReponseQuestion getReponseById(@PathVariable Integer id) {
+    public ReponseQuestion getReponseById(@PathVariable String id) {
         return reponseQuestionService.getReponseById(id);
     }
 
@@ -31,12 +31,12 @@ public class ReponseQuestionController {
     }
 
     @PutMapping("/update/{id}")
-    public ReponseQuestion updateReponse(@PathVariable Integer id, @RequestBody ReponseQuestion reponse) {
+    public ReponseQuestion updateReponse(@PathVariable String id, @RequestBody ReponseQuestion reponse) {
         return reponseQuestionService.updateReponse(id, reponse);
     }
 
     @DeleteMapping("/delete/{id}")
-    public void deleteReponse(@PathVariable Integer id) {
+    public void deleteReponse(@PathVariable String id) {
         reponseQuestionService.deleteReponse(id);
     }
 }

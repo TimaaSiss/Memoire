@@ -1,0 +1,122 @@
+/* styles.css ou app.component.css */
+.search-bar {
+    background-color: #eeede6;
+    padding: 10px;
+    text-align: center;
+}
+
+.search-bar input[type="text"] {
+    width: 70%;
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-bar button {
+    padding: 8px 15px;
+    background-color: #020202;
+    border: none;
+    border-radius: 4px;
+    color: rgb(248, 243, 243);
+    cursor: pointer;
+}
+
+.scrollable-container {
+    overflow-x: auto; /* Activer le défilement horizontal */
+    white-space: wrap; /* Empêcher le saut de ligne */
+    width: auto;
+}
+
+.column {
+    display: inline-block; /* Afficher les colonnes en ligne */
+    vertical-align: top; /* Alignement vertical en haut */
+    width: 400px; /* Largeur de chaque colonne */
+    margin-right: 10px; /* Marge entre les colonnes */
+    border: 5px solid #686861; /* Bordure pour chaque colonne (facultatif) */
+    padding: 15px; /* Espacement interne pour chaque colonne */
+    border-radius: 10px;
+    cursor: pointer; /* Ajouter un curseur indiquant que la colonne est cliquable */
+
+}
+
+
+.progress {
+    height: 15px; /* Hauteur de la barre de progression */
+    margin-top: 20px; /* Marge supérieure pour l'espace */
+}
+
+.progress-bar {
+    background-color: #494943; /* Couleur de la barre de progression */
+    color: #fff; /* Couleur du texte à l'intérieur de la barre de progression */
+}
+
+
+
+.career-section {
+    margin-top: 50px; /* Marge supérieure pour séparer de la section précédente */
+}
+
+.scrollable-container {
+    overflow-x: auto; /* Activer le défilement horizontal */
+    white-space: nowrap; /* Empêcher le saut de ligne */
+}
+
+.career-row {
+    display: flex; /* Afficher les cartes de carrière sur la même ligne */
+}
+
+.career-card {
+    display: flex; /* Utiliser flexbox pour le positionnement */
+    flex-direction: column; /* Aligner le contenu en colonne */
+    justify-content: space-between; /* Aligner les éléments sur l'axe principal (verticalement) */
+    align-items: flex-end; /* Aligner les éléments sur l'axe transversal (horizontalement) vers le bas */
+    max-width: 300px; /* Largeur maximale de la carte */
+    width: auto; /* Permet à la largeur de s'adapter au contenu */
+    height: 250px; /* Hauteur de la carte */
+    border: 1px solid #ccc; /* Bordure pour chaque carte de carrière */
+    margin-right: 10px; /* Marge à droite */
+    margin-bottom: 20px; /* Marge en bas */
+    border-radius: 10px; /* Bord arrondi */
+    overflow: hidden; /* Empêche le contenu de déborder */
+   // background-image: url('/assets/compta.jpg'); /* Image de fond */
+    background-size: cover; /* Ajuster la taille de l'image pour couvrir la carte */
+
+}
+
+.career-card h2 {
+    margin: 0; /* Réinitialiser les marges par défaut */
+    padding: 10px; /* Espacement interne */
+    background-color: rgba(248, 248, 248, 0.925); /* Fond semi-transparent pour le texte */
+}
+
+
+.career-image {
+    max-width: 100%; /* Empêche l'image de déborder du div */
+    height: auto; /* Garantit que l'image conserve ses proportions */
+}
+
+
+/* Ajoutez ces styles après les styles existants */
+
+.formation-card {
+    display: flex; /* Utiliser flexbox pour le positionnement */
+    flex-direction: column; /* Aligner le contenu en colonne */
+    justify-content: space-between; /* Aligner les éléments sur l'axe principal (verticalement) */
+    align-items: flex-end; /* Aligner les éléments sur l'axe transversal (horizontalement) vers le bas */
+    max-width: 300px; /* Largeur maximale de la carte */
+    width: auto; /* Permet à la largeur de s'adapter au contenu */
+    height: 250px; /* Hauteur de la carte */
+    border: 1px solid #ccc; /* Bordure pour chaque carte de formation */
+    margin-right: 10px; /* Marge à droite */
+    margin-bottom: 20px; /* Marge en bas */
+    border-radius: 10px; /* Bord arrondi */
+    overflow: hidden; /* Empêche le contenu de déborder */
+    background-size: cover; /* Ajuster la taille de l'image pour couvrir la carte */
+}
+
+.formation-card h2 {
+    margin: 0; /* Réinitialiser les marges par défaut */
+    padding: 10px; /* Espacement interne */
+    background-color: rgba(248, 252, 251, 0.925); /* Fond semi-transparent pour le texte */
+}

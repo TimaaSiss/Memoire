@@ -14,14 +14,8 @@ export class ReponseQuestionService {
  
 
   // Méthode pour ajouter une réponse
-  addReponse(reponseQuestion: ReponseQuestion): Observable<ReponseQuestion> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
-    };
-    
-    return this.http.post<ReponseQuestion>(`${this.apiUrl}/reponsesQ/add`, reponseQuestion, httpOptions);
+  public addReponse(reponseQuestion: ReponseQuestion): Observable<ReponseQuestion> {
+    return this.http.post<ReponseQuestion>(`${this.apiUrl}/reponsesQ/add`, reponseQuestion);
   }
   
 

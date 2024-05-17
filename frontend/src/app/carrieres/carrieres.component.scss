@@ -1,0 +1,37 @@
+/* Dans votre fichier CSS */
+.carriere-container {
+    display: flex;
+  }
+  
+  .sidebar {
+    width: 250px; /* ou la largeur souhaitée */
+    height: 100vh;
+    background-color: #333; /* Couleur de fond */
+    color: #fff; /* Couleur du texte */
+    transition: all 0.3s ease;
+    overflow-y: auto; /* Activation du défilement vertical si nécessaire */
+  }
+  
+  .sidebar ul {
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .sidebar ul li {
+    padding: 10px;
+  }
+  
+  .sidebar ul li a {
+    color: #fff;
+    text-decoration: none;
+  }
+  
+  .sidebar ul li a:hover {
+    text-decoration: underline;
+  }
+  
+  .admin-content {
+    flex-grow: 1; /* Utilisation de tout l'espace disponible */
+    padding: 20px;
+  }
+  

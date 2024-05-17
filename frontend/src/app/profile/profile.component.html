@@ -1,1 +1,64 @@
-<p>profile works!</p>
+<div class="search-bar">
+    <input type="text" placeholder="Rechercher..." [(ngModel)]="searchTerm" (input)="filterCareers(); filterFormations()">
+    <button>Rechercher</button>
+</div>
+
+<div class="container" >
+    <br><br>
+    <div class="row justify-content-center">
+        <div class="col-6">
+            <div class="welcome-box text-center" >
+                <h1 class="font-weight-bold">Bienvenue, {{ username }} <br> es-tu pret a découvrir le métier 
+                qui te correspond le mieux ?</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="welcome-box text-center">
+                <div class="scrollable-container">
+                    <div class="column" (click)="navigateToQuestionPage()">
+                        <h2>Vois un peu plus claire dans tes choix<br> en repondant a ses questions!</h2>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" [style.width]="progress + '%'">
+                                {{ progress }}%
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Ajoutez d'autres colonnes au besoin -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<br>
+    <h1 class="font-weight-bold">Carrières disponibles</h1>
+    <div class="scrollable-container">
+        <div class="row">
+            <!-- Répétez cette colonne pour chaque carrière -->
+            <div class="col career-card" style="background-image: url('/assets/{{career.img}}');" *ngFor="let career of filteredCareers; let i = index">
+                <h2>{{ career.nom }}</h2>
+
+                <!-- Autres détails de la carrière -->
+            </div>
+             </div>
+            <!-- Fin de la colonne de carrière -->
+        </div>
+        <br>
+        <h1 class="font-weight-bold">Formations disponibles</h1>
+        <div class="scrollable-container">
+            <div class="row">
+                <!-- Répétez cette colonne pour chaque formation -->
+                <div class="col formation-card" *ngFor="let formation of filteredFormations; let i = index" [ngClass]="'formation-card-' + (i + 1)">
+                    <h2>{{ formation }}</h2>
+            
+            <!-- Autres détails de la formation -->
+        </div>
+    </div>
+</div>
+

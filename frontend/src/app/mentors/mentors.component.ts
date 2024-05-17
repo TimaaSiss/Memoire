@@ -11,11 +11,24 @@ export class MentorComponent implements OnInit {
   mentors: Mentor[] = [];
   newMentor: Mentor = new Mentor();
   selectedMentor: Mentor | null = null;
-
+  menuOpen= true;
   constructor(private mentorService: MentorService) { }
 
   ngOnInit(): void {
     this.loadMentors();
+    // Vérifier si la valeur de menuOpen est stockée localement
+    const storedMenuOpen = localStorage.getItem('menuOpen');
+    if (storedMenuOpen !== null) {
+      // Si une valeur est trouvée dans le stockage local, la mettre à jour
+      this.menuOpen = JSON.parse(storedMenuOpen);
+    }
+  }
+
+  toggleMenu(): void {
+    // Basculer l'état menuOpen
+    this.menuOpen = !this.menuOpen;
+    // Enregistrer l'état menuOpen dans le stockage du navigateur
+    localStorage.setItem('menuOpen', JSON.stringify(this.menuOpen));
   }
 
   loadMentors(): void {

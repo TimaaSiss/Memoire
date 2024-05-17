@@ -15,6 +15,12 @@ export class InscriptionComponent {
   constructor(private userService: UserService, private router: Router) { }
 
   submitForm() {
+    if (this.formData.password !== this.formData.confirmPassword) {
+      console.error('Les mots de passe ne correspondent pas');
+      // Gérer l'erreur ici (peut-être afficher un message à l'utilisateur)
+      return; // Arrêtez le traitement si les mots de passe ne correspondent pas
+    }
+  
     this.userService.save(this.formData)
       .subscribe(
         response => {
@@ -36,4 +42,5 @@ export class InscriptionComponent {
         }
       );
   }
+  
 }

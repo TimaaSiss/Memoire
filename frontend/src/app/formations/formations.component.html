@@ -1,58 +1,60 @@
-<p>LISTE DES FORMATIONS</p>
-<br/>
-<button class="btn btn-success" (click)="openAddFormationDialog()">Ajouter une formation</button>
-
-<br/>
-<br/>
-
-
-<table class="table table-bordered table-striped">
-  <thead class="thead-dark">
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Titre</th>
-      <th scope="col">Description</th>
-      <th scope="col">Durée</th>
-      <th scope="col">Prix</th>
-      <th scope="col">Contenu</th>
-      <th scope="col">Actions</th> <!-- Nouvelle colonne pour les actions -->
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let formation of formations">
-        <td>{{ formation.id }}</td>
-        <td *ngIf="selectedFormation !== formation">{{ formation.titre }}</td>
-        <td *ngIf="selectedFormation !== formation">{{ formation.description }}</td>
-        <td *ngIf="selectedFormation !== formation">{{ formation.duree }}</td>
-        <td *ngIf="selectedFormation !== formation">{{ formation.prix }}</td>
-        <td *ngIf="selectedFormation !== formation">{{ formation.contenu }}</td>
-        <td *ngIf="selectedFormation === formation">
-          <input type="text" [(ngModel)]="formation.titre">
-        </td>
-        <td *ngIf="selectedFormation === formation">
-          <input type="text" [(ngModel)]="formation.description">
-        </td>
-        <td *ngIf="selectedFormation === formation">
-          <input type="text" [(ngModel)]="formation.duree">
-        </td>
-        <td *ngIf="selectedFormation === formation">
-          <input type="text" [(ngModel)]="formation.prix">
-        </td>
-        <td *ngIf="selectedFormation === formation">
-          <input type="text" [(ngModel)]="formation.contenu">
-        </td>
-        <td>
-          <button class="btn btn-primary" (click)="editFormation(formation)">
-            <i class="bi bi-pencil"></i> 
-          </button>
-           <button type="button" class="btn btn-success" (click)="updateFormation()">
-            <i class="bi bi-check"></i>
-        </button>
-          <button class="btn btn-danger" (click)="confirmDeleteFormation(formation)">
-            <i class="bi bi-trash"></i> 
-          </button>
-         
-        </td>
-      </tr>
-  </tbody>
-</table>
+<div class="formation-container">
+  <div class="sidebar" [class.active]="menuOpen">
+    <ul>
+      <button><a routerLink="/admin"><i class="bi bi-arrow-left-circle"></i></a></button>
+      <li><a routerLink="/users">Liste des Utilisateurs</a></li>
+      <li><a routerLink="/adduser">Ajouter un Utilisateur</a></li>
+      <li><a routerLink="/cours">Liste des cours</a></li>
+      <li><a routerLink="/formation">Liste des formations</a></li>
+      <li><a routerLink="/careers">Liste des carrières</a></li>
+      <li><a routerLink="/mentors">Les mentors</a></li>
+      <li><a routerLink="/questionnaire">Liste des questionnaires</a></li>
+      <!-- Ajoutez d'autres liens ici -->
+    </ul>
+  </div>
+  
+  <div class="admin-content">
+    <h1>LISTE DES FORMATIONS</h1>
+    <!-- Le reste de votre contenu de la page "Liste des formations" -->
+    <p>LISTE DES FORMATIONS</p>
+    <br/>
+    <button class="btn btn-success" (click)="openAddFormationDialog()">Ajouter une formation</button>
+    <br/>
+    <br/>
+    <table class="table table-bordered table-striped">
+      <!-- Entêtes de tableau -->
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Titre</th>
+          <th scope="col">Durée</th>
+          <th scope="col">Prix</th>
+          <th scope="col">Actions</th> <!-- Nouvelle colonne pour les actions -->
+        </tr>
+      </thead>
+      <!-- Corps du tableau -->
+      <tbody>
+        <!-- Boucle sur la liste des formations -->
+        <tr *ngFor="let formation of formations">
+          <!-- Affichage des données de la formation -->
+          <td>{{ formation.id }}</td>
+          <td>{{ formation.titre }}</td>
+          <td>{{ formation.duree }}</td>
+          <td>{{ formation.prix }}</td>
+          <!-- Actions pour chaque formation -->
+          <td>
+            <button class="btn btn-primary" (click)="editFormation(formation)">
+              <i class="bi bi-pencil"></i> 
+            </button>
+            <button type="button" class="btn btn-success" (click)="updateFormation()">
+              <i class="bi bi-check"></i>
+            </button>
+            <button class="btn btn-danger" (click)="confirmDeleteFormation(formation)">
+              <i class="bi bi-trash"></i> 
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

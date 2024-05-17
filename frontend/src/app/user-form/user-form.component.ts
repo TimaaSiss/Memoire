@@ -11,6 +11,7 @@ import { User } from '../model/user';
 export class UserFormComponent {
 
   user: User;
+  formData: User = new User();
 
   constructor(
     private route: ActivatedRoute, 
@@ -21,6 +22,11 @@ export class UserFormComponent {
 
   onSubmit() {
     this.userService.save(this.user).subscribe(result => this.gotoUserList());
+    if (this.formData.password !== this.formData.confirmPassword) {
+      console.error('Les mots de passe ne correspondent pas');
+      // Gérer l'erreur ici (peut-être afficher un message à l'utilisateur)
+      return; // Arrêtez le traitement si les mots de passe ne correspondent pas
+    }
   }
 
   gotoUserList() {

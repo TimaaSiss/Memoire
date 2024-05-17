@@ -11,11 +11,12 @@ import lombok.Data;
 
 @Entity
 @Data
+
 public class ReponseQuestion {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
     
     private String contenu;
     

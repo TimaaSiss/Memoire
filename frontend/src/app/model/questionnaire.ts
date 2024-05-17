@@ -14,11 +14,12 @@ export class Question {
   id: number;
   libelle: string;
   reponseQuestions: ReponseQuestion[];
-
-  constructor(id: number, libelle: string, reponseQuestions: ReponseQuestion[]) {
+  hasOtherOption: boolean;
+  constructor(id: number, libelle: string, reponseQuestions: ReponseQuestion[], hasOtherOption: boolean) {
     this.id = id;
     this.libelle = libelle;
     this.reponseQuestions = reponseQuestions;
+    this.hasOtherOption= hasOtherOption
   }
 }
 

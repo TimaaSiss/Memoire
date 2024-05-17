@@ -23,6 +23,7 @@ export class UserService {
   public login(credentials: CredentialsDto): Observable<User> {
     return this.http.post<User>(`${this.usersUrl}/username`, credentials);
   }
+  
  
   public delete(userId: number) {
     return this.http.delete<void>(`${this.usersUrl}/users/delete/${userId}`);

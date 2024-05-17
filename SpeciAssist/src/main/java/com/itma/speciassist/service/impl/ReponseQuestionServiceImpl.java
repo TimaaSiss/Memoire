@@ -21,7 +21,7 @@ public class ReponseQuestionServiceImpl implements ReponseQuestionService {
     private QuestionRepository questionRepository;
 
     @Override
-    public ReponseQuestion getReponseById(Integer id) {
+    public ReponseQuestion getReponseById(String id) {
         return reponseQuestionRepository.findById(id).orElse(null);
     }
 
@@ -40,7 +40,7 @@ public class ReponseQuestionServiceImpl implements ReponseQuestionService {
 
 
     @Override
-    public ReponseQuestion updateReponse(Integer id, ReponseQuestion reponse) {
+    public ReponseQuestion updateReponse(String id, ReponseQuestion reponse) {
         if (reponseQuestionRepository.existsById(id)) {
             // Assurez-vous que la question est sauvegardée en premier
             Question question = reponse.getQuestion();
@@ -54,7 +54,11 @@ public class ReponseQuestionServiceImpl implements ReponseQuestionService {
     }
 
     @Override
-    public void deleteReponse(Integer id) {
+    public void deleteReponse(String id) {
         reponseQuestionRepository.deleteById(id);
     }
+
+	
+
+	
 }
