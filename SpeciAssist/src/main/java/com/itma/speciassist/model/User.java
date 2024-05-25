@@ -9,9 +9,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@NoArgsConstructor 
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +44,10 @@ public class User {
 	public Object getConfirmPassword() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public User(Integer id2, String username2, Object name) {
+		// TODO Auto-generated constructor stub
 	}
 
 	

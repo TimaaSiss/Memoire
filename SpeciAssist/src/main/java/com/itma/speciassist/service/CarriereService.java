@@ -16,4 +16,6 @@ public interface CarriereService {
 
 	void deleteCarriere(Integer id);
 
+	Carriere getCarriereByNom(String nom);
+
 }

@@ -1,0 +1,65 @@
+<div class="formation-container">
+    <div class="sidebar" [class.active]="menuOpen">
+      <ul>
+        <button><a routerLink="/admin"><i class="bi bi-arrow-left-circle"></i></a></button>
+        <li><a routerLink="/users">Liste des Utilisateurs</a></li>
+        <li><a routerLink="/adduser">Ajouter un Utilisateur</a></li>
+        <li><a routerLink="/cours">Liste des cours</a></li>
+        <li><a routerLink="/formation">Liste des formations</a></li>
+        <li><a routerLink="/etablissements">Liste des Établissements</a></li>
+        <li><a routerLink="/careers">Liste des carrières</a></li>
+        <li><a routerLink="/mentors">Les mentors</a></li>
+        <li><a routerLink="/questionnaire">Liste des questionnaires</a></li>
+        
+        <!-- Ajoutez d'autres liens ici -->
+      </ul>
+    </div>
+    
+    <div class="admin-content">
+      <h1>LISTE DES ÉTABLISSEMENTS</h1>
+      <!-- Le reste de votre contenu de la page "Liste des formations" -->
+     <!-- <p>LISTE DES FORMATIONS</p> -->
+      <br/>
+      <button class="btn btn-success" (click)="openAddEtablissementDialog()">Ajouter une formation</button>
+      <br/>
+      <br/>
+      <table class="table table-bordered table-striped">
+        <!-- Entêtes de tableau -->
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Lieu</th>
+            <th scope="col">Téléphone</th>
+            <th scope="col">Email</th>
+            <th scope="col">Actions</th> <!-- Nouvelle colonne pour les actions -->
+          </tr>
+        </thead>
+        <!-- Corps du tableau -->
+        <tbody>
+          <!-- Boucle sur la liste des formations -->
+          <tr *ngFor="let formation of etablissements">
+            <!-- Affichage des données de la formation -->
+            <td>{{ formation.id }}</td>
+            <td>{{ formation.nom }}</td>
+            <td>{{ formation.lieu }}</td>
+            <td>{{ formation.telephone }}</td>
+            <td>{{ formation.email }}</td>
+            <!-- Actions pour chaque formation -->
+            <td>
+              <button class="btn btn-primary" (click)="editEtablissement(formation)">
+                <i class="bi bi-pencil"></i> 
+              </button>
+              <button type="button" class="btn btn-success" (click)="updateEtablissement()">
+                <i class="bi bi-check"></i>
+              </button>
+              <button class="btn btn-danger" (click)="confirmDeleteEtablissement(formation)">
+                <i class="bi bi-trash"></i> 
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

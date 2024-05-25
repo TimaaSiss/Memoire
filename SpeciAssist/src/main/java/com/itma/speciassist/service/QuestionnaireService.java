@@ -21,4 +21,6 @@ public interface QuestionnaireService {
 
 	List<Question> getQuestionsByQuestionnaire(Long id);
 
+	List<Questionnaire> getQuestionnairesWithUnansweredQuestions(Long userId);
+
 }

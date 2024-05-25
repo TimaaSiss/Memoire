@@ -13,7 +13,8 @@ export class AddFormationDialogComponent {
     description: '',
     duree: '',
     prix: 0,
-    contenu: ''
+    contenu: '',
+    etablissements:[]
   };
 
   constructor(public dialogRef: MatDialogRef<AddFormationDialogComponent>) {}

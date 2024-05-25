@@ -6,6 +6,7 @@
       <li><a routerLink="/adduser">Ajouter un Utilisateur</a></li>
       <li><a routerLink="/cours">Liste des cours</a></li>
       <li><a routerLink="/formation">Liste des formations</a></li>
+      <li><a routerLink="/etablissements">Liste des Établissements</a></li>
       <li><a routerLink="/careers">Liste des carrières</a></li>
       <li><a routerLink="/mentors">Les mentors</a></li>
       <li><a routerLink="/questionnaire">Liste des questionnaires</a></li>
@@ -16,7 +17,7 @@
   <div class="admin-content">
     <h1>LISTE DES FORMATIONS</h1>
     <!-- Le reste de votre contenu de la page "Liste des formations" -->
-    <p>LISTE DES FORMATIONS</p>
+    
     <br/>
     <button class="btn btn-success" (click)="openAddFormationDialog()">Ajouter une formation</button>
     <br/>
@@ -43,12 +44,12 @@
           <td>{{ formation.prix }}</td>
           <!-- Actions pour chaque formation -->
           <td>
-            <button class="btn btn-primary" (click)="editFormation(formation)">
+            <button class="btn btn-primary" (click)="openEditDialog(formation)">
               <i class="bi bi-pencil"></i> 
             </button>
-            <button type="button" class="btn btn-success" (click)="updateFormation()">
+           <!-- <button type="button" class="btn btn-success" (click)="updateFormation()">
               <i class="bi bi-check"></i>
-            </button>
+            </button> -->
             <button class="btn btn-danger" (click)="confirmDeleteFormation(formation)">
               <i class="bi bi-trash"></i> 
             </button>

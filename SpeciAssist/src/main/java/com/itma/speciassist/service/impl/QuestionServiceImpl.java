@@ -61,4 +61,8 @@ public class QuestionServiceImpl implements QuestionService {
     public Question saveQuestion(Question question) {
         return questionRepository.save(question);
     }
+    
+    public List<Question> getUnansweredQuestions(Long userId) {
+        return questionRepository.findUnansweredQuestionsByUserId(userId);
+    }
 }

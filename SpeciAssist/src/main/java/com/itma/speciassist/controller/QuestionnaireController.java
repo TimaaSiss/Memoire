@@ -59,4 +59,10 @@ public class QuestionnaireController {
     public void deleteQuestionnaire(@PathVariable Long id) {
         questionnaireService.deleteQuestionnaire(id);
     }
+    
+    @GetMapping("/unanswered/{userId}")
+    public ResponseEntity<List<Questionnaire>> getQuestionnairesWithUnansweredQuestions(@PathVariable Long userId) {
+        List<Questionnaire> questionnaires = questionnaireService.getQuestionnairesWithUnansweredQuestions(userId);
+        return new ResponseEntity<>(questionnaires, HttpStatus.OK);
+    }
 }

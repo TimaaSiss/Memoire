@@ -24,5 +24,10 @@ public class ReponseQuestion {
     @JoinColumn(name = "question_id")
     private Question question;
 
+	public void setId(String id2) {
+		// TODO Auto-generated method stub
+		
+	}
+
     // Constructeur, getters et setters
 }

@@ -36,6 +36,14 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { CareerCardComponent } from './career-card/career-card.component';
 import { FormationCardComponent } from './formation-card/formation-card.component';
 import { QuestionnaireDetailsComponent } from './questionnaire-details/questionnaire-details.component';
+import { CareerDetailsComponent } from './career-details/career-details.component';
+import { FormationDetailsComponent } from './formation-details/formation-details.component';
+import { EtablissementComponent } from './etablissements/etablissements.component';
+import { AddEtablissementDialogComponent } from './add-etablissement-dialog/add-etablissement-dialog.component';
+import { EditEtablissementDialogComponent } from './edit-etablissement-dialog/edit-etablissement-dialog.component';
+import { EditFormationDialogComponent } from './edit-formation-dialog/edit-formation-dialog.component';
+import { EditMentorDialogComponent } from './edit-mentor-dialog/edit-mentor-dialog.component';
+import { AddMentorDialogComponent } from './add-mentor-dialog/add-mentor-dialog.component';
 
 
 @NgModule({
@@ -65,7 +73,15 @@ import { QuestionnaireDetailsComponent } from './questionnaire-details/questionn
          NavbarComponent,
          CareerCardComponent,
          FormationCardComponent,
-         QuestionnaireDetailsComponent
+         QuestionnaireDetailsComponent,
+         CareerDetailsComponent,
+         FormationDetailsComponent,
+         EtablissementComponent,
+         AddEtablissementDialogComponent,
+         EditEtablissementDialogComponent,
+         EditFormationDialogComponent,
+         EditMentorDialogComponent,
+         AddMentorDialogComponent
 
   ],
   imports: [

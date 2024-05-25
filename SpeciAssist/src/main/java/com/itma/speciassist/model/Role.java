@@ -3,6 +3,11 @@ package com.itma.speciassist.model;
 public enum Role {
     USER,
     ADMIN,
-    MENTOR, 
+    MENTOR,;
+
+	public Object getName() {
+		// TODO Auto-generated method stub
+		return null;
+	} 
 }
 

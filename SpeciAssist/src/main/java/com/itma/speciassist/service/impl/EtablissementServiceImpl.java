@@ -49,4 +49,10 @@ public class EtablissementServiceImpl implements EtablissementService {
         }
         etablissementRepository.deleteById(id);
     }
+
+	@Override
+	public Etablissement getEtablissementById(Integer etablissementId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

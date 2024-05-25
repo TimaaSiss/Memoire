@@ -10,5 +10,9 @@ import com.itma.speciassist.model.Carriere;
 public interface CarriereRepository extends JpaRepository<Carriere, Integer> {
 	
 	Optional<Carriere> findById(Integer id);
+	
+
+
+	Optional<Carriere> findByNom(String nom);
 
 }

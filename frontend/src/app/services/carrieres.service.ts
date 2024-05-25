@@ -20,6 +20,10 @@ export class CarriereService {
     return this.http.get<Carriere>(`${this.baseUrl}/getCarriere/${id}`);
   }
 
+ getCarriereByNom(nom: string): Observable<Carriere> {
+    return this.http.get<Carriere>(`${this.baseUrl}/getCarriereByName/${nom}`);
+  }
+
   addCarriere(carriere: Carriere): Observable<Carriere> {
     return this.http.post<Carriere>(`${this.baseUrl}/addCarriere`, carriere);
   }

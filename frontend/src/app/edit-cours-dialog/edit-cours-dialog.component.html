@@ -7,8 +7,8 @@
     <input type="text" class="form-control" id="titre" [(ngModel)]="editedCourse.titre" name="titre" required>
   </div>
   <div class="form-group">
-    <label for="description">Description :</label>
-    <input type="text" class="form-control" id="description" [(ngModel)]="editedCourse.description" name="description" required>
+    <label for="description"><strong>Description:</strong></label>
+    <textarea class="form-control" id="description" [(ngModel)]="editedCourse.description" name="description" rows="4" required></textarea>
   </div>
   <div class="form-group">
     <label for="duree">Durée :</label>

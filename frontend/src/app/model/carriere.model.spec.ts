@@ -1,7 +1,8 @@
-import { CarriereModel } from './carriere.model';
+import { Carriere } from './carriere.model';
+
 
 describe('CarriereModel', () => {
   it('should create an instance', () => {
-    expect(new CarriereModel()).toBeTruthy();
+    expect(new Carriere()).toBeTruthy();
   });
 });

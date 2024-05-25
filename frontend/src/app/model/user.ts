@@ -9,5 +9,6 @@ export class User {
     role!: string;
     editMode: boolean= false;
     status!: boolean;
+    answeredQuestionnaires?: number;
 }
 

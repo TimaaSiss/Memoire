@@ -1,5 +1,4 @@
 package com.itma.speciassist.service.impl;
-
 import java.nio.CharBuffer;
 import java.util.List;
 import java.util.Optional;
@@ -14,7 +13,6 @@ import com.itma.speciassist.dto.CredentialsDto;
 import com.itma.speciassist.dto.SignUpDto;
 import com.itma.speciassist.exception.AppException;
 import com.itma.speciassist.mappers.UserMapper;
-import com.itma.speciassist.model.Role;
 import com.itma.speciassist.model.User;
 import com.itma.speciassist.model.UserNotFoundException;
 import com.itma.speciassist.repository.UserRepository;
@@ -31,26 +29,18 @@ public class UserServiceImpl implements UserService {
     public User username(CredentialsDto credentialsDto) {
         User user = userRepository.findByUsername(credentialsDto.username())
             .orElseThrow(() -> new AppException("Unknown user", HttpStatus.NOT_FOUND));
+        
         if (!user.isStatus()) {
             throw new AppException("User is deactivated", HttpStatus.FORBIDDEN);
         }
 
-
         if (passwordEncoder.matches(CharBuffer.wrap(credentialsDto.password()), user.getPassword())) {
-            // Récupérer le rôle de l'utilisateur depuis la base de données
-        	Role userRole = userRepository.findRoleByUsername(credentialsDto.username());
-        	
- // Vérifier si le rôle dans la demande correspond au rôle de l'utilisateur
-            if (userRole != null && userRole.equals(credentialsDto.getRole())) {
-                user.setRole(userRole);
-                return user;
-            } else {
-                throw new AppException("Invalid role", HttpStatus.BAD_REQUEST);
-            }
+            return user;
         }
-    	throw new AppException("Invalid passwword", HttpStatus.BAD_REQUEST);
-    				
+
+        throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
     }
+
     public User register(SignUpDto signUpDto) {
         Optional<User> oUser= userRepository.findByUsername(signUpDto.getUsername());
 

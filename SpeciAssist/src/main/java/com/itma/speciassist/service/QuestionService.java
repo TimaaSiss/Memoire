@@ -18,4 +18,6 @@ public interface QuestionService {
 
 	Question saveQuestion(Question question);
 
+	List<Question> getUnansweredQuestions(Long userId);
+
 }

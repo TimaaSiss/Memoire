@@ -14,4 +14,6 @@ public interface EtablissementService {
     Etablissement updateEtablissement(Integer id, Etablissement etablissement);
 
     void deleteEtablissement(Integer id);
+
+	Etablissement getEtablissementById(Integer etablissementId);
 }

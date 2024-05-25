@@ -1,30 +1,40 @@
-<!-- questionnaire-details.component.html -->
 <div *ngIf="currentQuestionnaire; else loading">
-    <h2>{{ currentQuestionnaire.titre }}</h2>
-    <div *ngFor="let question of currentQuestionnaire.questions">
-      <h3>{{ question.libelle }}</h3>
-      <ul>
-        <li *ngFor="let reponse of question.reponseQuestions">
-          <label>
-            <input type="radio" name="question{{ question.id }}" [value]="reponse.contenu" (change)="onAnswerSelect(question.id, reponse.contenu)" />
-            {{ reponse.contenu }}
-          </label>
-        </li>
-        <li >
-          <label>
-            <input type="radio" name="question{{ question.id }}" value="Autre" (change)="onAnswerSelect(question.id, 'Autre')" />
-            Autre
-          </label>
-          <input *ngIf="selectedOther[question.id]" type="text" placeholder="Veuillez préciser" [(ngModel)]="otherAnswers[question.id]" />
-        </li>
-      </ul>
-    </div>
-    <button (click)="completeCurrentQuestionnaire()">Valider le Questionnaire</button>
+  <h2>{{ currentQuestionnaire.titre }}</h2>
+ <li> <a routerLink="/profile">profile</a></li>
+  <div *ngFor="let question of currentQuestionnaire.questions">
+    <h3 id="question-{{ question.id }}">{{ question.libelle }}</h3>
+    <ul>
+      <li *ngFor="let reponse of question.reponseQuestions">
+        <label>
+          <input 
+            type="radio" 
+            name="question{{ question.id }}" 
+            [value]="reponse.contenu" 
+            (change)="onAnswerSelect(question.id, reponse.contenu)" 
+            [checked]="selectedAnswers[question.id] === reponse.contenu"
+          />
+          {{ reponse.contenu }}
+          <!-- Show input field next to "Autre (spécifiez) ______________" -->
+          <span *ngIf="reponse.contenu === 'Autre (spécifiez) ______________' && selectedAnswers[question.id] === 'Autre (spécifiez) ______________'">
+            <input 
+              type="text" 
+              [(ngModel)]="otherAnswers[question.id]" 
+              name="question{{ question.id }}_other" 
+            />
+            <button (click)="validateOtherAnswer(question.id)">Valider</button>
+          </span>
+        </label>
+      </li>
+    </ul>
   </div>
-  <ng-template #loading>
-    <p>Loading...</p>
-  </ng-template>
-  <div *ngIf="errorMessage">
-    <p>{{ errorMessage }}</p>
-  </div>
-  
+  <button (click)="completeCurrentQuestionnaire()">Valider le Questionnaire</button>
+</div>
+<ng-template #loading>
+  <p>Loading...</p>
+</ng-template>
+<div *ngIf="errorMessage">
+  <p>{{ errorMessage }}</p>
+</div>
+<div *ngIf="warningMessage" style="color: red;">
+  <p>{{ warningMessage }}</p>
+</div>

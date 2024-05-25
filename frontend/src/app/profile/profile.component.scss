@@ -41,15 +41,20 @@
 }
 
 
-.progress {
-    height: 15px; /* Hauteur de la barre de progression */
-    margin-top: 20px; /* Marge supérieure pour l'espace */
-}
-
 .progress-bar {
-    background-color: #494943; /* Couleur de la barre de progression */
-    color: #fff; /* Couleur du texte à l'intérieur de la barre de progression */
-}
+    width: 100%;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+  }
+  
+  .progress {
+    height: 20px;
+    background-color: #3b5998;
+    width: 0;
+    transition: width 0.5s;
+  }
+  
 
 
 

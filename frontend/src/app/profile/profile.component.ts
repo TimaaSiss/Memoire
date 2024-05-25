@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { UserService } from '@app/services/user-service.service';
 import { Router } from '@angular/router';
+import { UserService } from '@app/services/user-service.service';
+import { QuestionnaireService } from '@app/services/questionnaire-service.service';
+import { ReponseUserService } from '@app/services/reponse-user.service';
+import { CarriereService } from '@app/services/carrieres.service';
+import { FormationService } from '@app/services/formations.service'; // Importer le service Formation
+import { Carriere } from '@app/model/carriere.model';
+import { Formation } from '@app/model/formation.model'; // Importer Formation
 
 @Component({
   selector: 'app-profile',
@@ -8,61 +14,171 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.component.scss']
 })
 export class ProfileComponent implements OnInit {
-  username: string = ""; // Variable pour stocker le nom de l'utilisateur
-  progress: number = 5;
-  careers: {nom:string; img:string}[] = [{nom:'Comptabilité',img:'compta.jpg'}, {nom:'Développement Web',img:'dev.jpg'}, {nom:'Juriste', img:'juge.jpg'}, {nom:'Dentiste',img:'dentiste.jpg'}, {nom:'Hotellerie',img:'hote.jpg'}, {nom:'Police',img:'police.jpg'}]; // Ajoutez les noms des carrières et leurs images
-  formations: string[] = ['Finance', 'Informatique', 'Mecanique', 'Electronique', 'Adressage IP', 'Agriculture', 'Journalisme']; // Ajoutez les noms des formations
+  username: string = "";
+  progress: number = 0;
+  totalQuestions: number = 0;
 
-  filteredCareers: {nom:string; img:string}[] = []; // Tableau pour stocker les carrières filtrées
-  searchTerm: string = ''; // Variable pour stocker le terme de recherche
-  filteredFormations: string[] = [];
+  careers: { nom: string; img: string }[] = [
+    { nom: 'Comptabilité', img: 'compta.jpg' },
+    { nom: 'Développement Web', img: 'dev.jpg' },
+    { nom: 'Juriste', img: 'juge.jpg' },
+    { nom: 'Docteur', img: 'dentiste.jpg' }
+  ];
 
-  constructor(private userService: UserService, private router: Router) { }
+  formations: {titre: string; img: string}[] = [
+    {titre:'Développement Web Full Stack', img:'dev.jpg'},
+    {titre:'Maintenance Industrielle Avancée', img:'compta.jpg'},
+    {titre:'aaaa', img:'compta.jpg'}
+  ];
+
+  filteredCareers: { nom: string; img: string }[] = [];
+  searchTerm: string = '';
+  filteredFormations: { titre: string; img: string }[] = [];
+
+  currentUser!: any;
+  selectedCarriere: Carriere | null = null;
+  formationDetails: Formation | null = null; 
+
+  constructor(
+    private userService: UserService,
+    private router: Router,
+    private questionnaireService: QuestionnaireService,
+    private reponseUserService: ReponseUserService,
+    private carriereService: CarriereService,
+    private formationService: FormationService // Inject formation Service
+  ) { }
 
   ngOnInit(): void {
-    // Obtenir les informations de l'utilisateur connecté lors de l'initialisation du composant
     const currentUserString = localStorage.getItem('currentUser');
     if (currentUserString) {
-      const currentUser = JSON.parse(currentUserString); // Supposons que vous stockez les informations de l'utilisateur dans le local storage après la connexion
-      this.username = currentUser.username; // Récupérez le nom de l'utilisateur connecté et stockez-le dans la variable
+      this.currentUser = JSON.parse(currentUserString);
+      this.username = this.currentUser.username;
+  
+      // Ensure totalQuestions is calculated before calculating progress
+      this.calculateTotalQuestions(() => {
+        this.calculateProgress(this.currentUser.id);
+      });
     } else {
-      this.username = ''; // Si aucune donnée utilisateur n'est présente dans le localStorage, initialisez la variable à une chaîne vide
+      this.username = '';
     }
-
-    // Initialisez le tableau des carrières filtrées avec toutes les carrières au début
+  
     this.filteredCareers = this.careers;
-
-    // Initialisez le tableau des formations filtrées avec toutes les formations au début
     this.filteredFormations = this.formations;
   }
+  
+  calculateTotalQuestions(callback?: () => void): void {
+    this.questionnaireService.getAllQuestionnaires().subscribe(
+      (questionnaires) => {
+        let totalQuestions = 0;
+        for (const questionnaire of questionnaires) {
+          totalQuestions += questionnaire.questions.length;
+        }
+        this.totalQuestions = totalQuestions;
+        console.log('Total Questions:', this.totalQuestions);
+  
+        // Call the callback if provided
+        if (callback) {
+          callback();
+        }
+      },
+      (error) => {
+        console.error('Error fetching questionnaires:', error);
+      }
+    );
+  }
+  
 
-  // Méthode pour filtrer les carrières en fonction du terme de recherche
+  calculateProgress(userId: string): void {
+    let answeredQuestions = 0;
+  
+    // Fetch user responses
+    this.reponseUserService.getUserResponses(userId).subscribe(
+      (responses) => {
+        answeredQuestions = responses.length;
+        console.log('Answered Questions:', answeredQuestions);
+  
+        // Ensure totalQuestions is greater than 0 to avoid division by zero
+        if (this.totalQuestions > 0) {
+          // Log the values before calculation
+          console.log('Total Questions:', this.totalQuestions);
+          console.log('Answered Questions:', answeredQuestions);
+  
+          // Calculate progress
+          this.progress = (answeredQuestions / this.totalQuestions) * 100;
+          console.log('Calculated Progress:', this.progress);
+        } else {
+          this.progress = 0;
+          console.warn('Total Questions is 0, setting progress to 0');
+        }
+      },
+      (error) => {
+        console.error('Error fetching user responses:', error);
+      }
+    );
+  }
+  
+  
+
   filterCareers(): void {
     if (this.searchTerm.trim() === '') {
-      // Si la barre de recherche est vide, affichez toutes les carrières
       this.filteredCareers = this.careers;
     } else {
-      // Sinon, filtrez les carrières en fonction du terme de recherche
       this.filteredCareers = this.careers.filter(career => career.nom.toLowerCase().includes(this.searchTerm.toLowerCase()));
     }
   }
-  
-  // Méthode pour filtrer les formations en fonction du terme de recherche
+
   filterFormations(): void {
     if (this.searchTerm.trim() === '') {
-      // Si la barre de recherche est vide, affichez toutes les formations
       this.filteredFormations = this.formations;
     } else {
-      // Sinon, filtrez les formations en fonction du terme de recherche
-      this.filteredFormations = this.formations.filter(formation => formation.toLowerCase().includes(this.searchTerm.toLowerCase()));
+      this.filteredFormations = this.formations.filter(formation => formation.titre.toLowerCase().includes(this.searchTerm.toLowerCase()));
     }
   }
 
-  startQuestionnaire() {
-    // Ajoutez votre logique pour commencer le questionnaire ici
+  navigateToQuestionPage(): void {
+    this.router.navigate(['/questionnaires/:id']);
   }
 
-  navigateToQuestionPage(): void {
-    this.router.navigate(['/questionnaires/:id']); // Spécifiez le chemin de la nouvelle page ('/questions' est un exemple, remplacez-le par le chemin réel de votre page)
+  logout(): void {
+    if (this.currentUser && this.currentUser.id) {
+      localStorage.removeItem('currentUser');
+      localStorage.setItem('userProgress', JSON.stringify({
+        userId: this.currentUser.id,
+        progress: this.progress
+      }));
+      this.router.navigate(['/home']);
+    }
+  }
+
+  getCarriereDetails(nom: string): void {
+    this.carriereService.getCarriereByNom(nom).subscribe(
+      (carriere) => {
+        this.selectedCarriere = carriere;
+      },
+      (error) => {
+        console.error('Error fetching carriere details:', error);
+      }
+    );
+  }
+
+  viewCareerDetails(careerName: string): void {
+    this.router.navigate(['/career-details', careerName]);
+  }
+
+  viewFormationDetails(formationName: string): void {
+    this.router.navigate(['/formation-details', formationName]);
+  }
+
+  // Add this method to obtain details of the formation
+  getFormationDetails(titre: string): void {
+    this.formationService.getFormationWithEtablissementsByTitre(titre).subscribe(
+      (details) => {
+        this.formationDetails = details;
+        console.log(this.formationDetails); // add this line to debbug
+      },
+      (error) => {
+        console.error('Error fetching formation details:', error);
+      }
+    );
   }
 }

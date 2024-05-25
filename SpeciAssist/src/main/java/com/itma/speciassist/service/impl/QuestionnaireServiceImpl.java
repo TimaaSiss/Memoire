@@ -58,4 +58,8 @@ public class QuestionnaireServiceImpl implements QuestionnaireService {
 		// TODO Auto-generated method stub
 		return questionnaire.getQuestions();
 	}
+	
+	 public List<Questionnaire> getQuestionnairesWithUnansweredQuestions(Long userId) {
+	        return questionnaireRepository.findQuestionnairesWithUnansweredQuestionsByUserId(userId);
+	    }
 }

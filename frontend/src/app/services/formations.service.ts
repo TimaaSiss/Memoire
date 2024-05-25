@@ -20,6 +20,12 @@ export class FormationService {
     return this.http.get<Formation>(`${this.apiUrl}/getFormation/${id}`);
   }
 
+  
+ 
+  getFormationWithEtablissementsByTitre(titre: string): Observable<Formation> {
+    return this.http.get<Formation>(`${this.apiUrl}/getFormationByTitre/${titre}`);
+  }
+
   addFormation(formation: Formation): Observable<Formation> {
     return this.http.post<Formation>(`${this.apiUrl}/addFormation`, formation);
   }

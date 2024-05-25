@@ -31,6 +31,11 @@ public class CarriereController {
     public Carriere getCarriereById(@PathVariable Integer id) {
         return carriereService.getCarriere(id);
     }
+    
+    @GetMapping("/getCarriereByName/{nom}")
+    public Carriere getCarriereByNom(@PathVariable String nom) {
+        return carriereService.getCarriereByNom(nom);
+    }
 
     @PostMapping("/addCarriere")
     public Carriere addCarriere(@RequestBody Carriere carriere) {

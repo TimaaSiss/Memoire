@@ -39,4 +39,13 @@ export class QuestionnaireService {
   public deleteQuestionnaire(questionnaireId: number): Observable<void> {
     return this.http.delete<void>(`${this.questionnairesUrl}/questionnaires/delete/${questionnaireId}`);
   }
+
+ // getUnansweredQuestions(userId: number): Observable<Question[]> {
+   // return this.http.get<Question[]>(`${this.questionnairesUrl}/questions/unanswered/${userId}`);
+ // }
+
+  getUnansweredQuestionnaires(userId: number): Observable<Questionnaire[]> {
+    return this.http.get<Questionnaire[]>(`${this.questionnairesUrl}/questionnaires/unanswered/${userId}`);
+  }
+
 }

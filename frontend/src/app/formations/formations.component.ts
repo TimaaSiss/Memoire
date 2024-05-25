@@ -3,6 +3,7 @@ import { FormationService } from '@app/services/formations.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Formation } from '@app/model/formation.model';
 import { AddFormationDialogComponent } from '@app/add-formation-dialog/add-formation-dialog.component';
+import { EditFormationDialogComponent } from '@app/edit-formation-dialog/edit-formation-dialog.component';
 
 @Component({
   selector: 'app-formation',
@@ -12,7 +13,7 @@ import { AddFormationDialogComponent } from '@app/add-formation-dialog/add-forma
 export class FormationComponent implements OnInit {
   formations: Formation[] = [];
   selectedFormation: Formation | null = null;
-   newFormation: Formation = { titre: '', description: '', duree: '', prix: 0, contenu: '' }; // Ajoutez cette propriété pour représenter la nouvelle formation à ajouter
+   newFormation: Formation = { titre: '', description: '', duree: '', prix: 0, contenu: '', etablissements:[] }; // Ajoutez cette propriété pour représenter la nouvelle formation à ajouter
    menuOpen=true;
   constructor(private formationService: FormationService, public dialog: MatDialog) {}
 
@@ -55,6 +56,19 @@ export class FormationComponent implements OnInit {
   //return 'titre' in object && 'description' in object && 'duree' in object && 'prix' in object && 'contenu' in object;
 //}
 
+openEditDialog(formation: Formation): void {
+  const dialogRef = this.dialog.open(EditFormationDialogComponent, {
+    width: '500px',
+    data: formation
+  });
+
+  dialogRef.afterClosed().subscribe(editedFormation => {
+    if (editedFormation) {
+      this.updateFormation(editedFormation); // Call updateFormation here
+    }
+  });
+}
+
 
     addFormation(newFormation: Formation): void {
     this.formationService.addFormation(newFormation).subscribe(() => {
@@ -62,27 +76,17 @@ export class FormationComponent implements OnInit {
   });
 }
   
- 
 
-  editFormation(formation: Formation): void {
-    console.log("Formation à éditer :", formation);
-    this.selectedFormation = formation;
+updateFormation(updatedFormation: Formation): void {
+  if (updatedFormation.id !== undefined) {
+    this.formationService.updateFormation(updatedFormation.id, updatedFormation)
+      .subscribe(() => {
+        // Refresh the formation list after successful update
+        this.loadFormations();
+      });
   }
+}
 
-  updateFormation(): void {
-    if (this.selectedFormation && this.selectedFormation.id !== undefined) {
-      this.formationService.updateFormation(this.selectedFormation.id, this.selectedFormation)
-        .subscribe(updatedFormation => {
-          // Mettre à jour la formation dans la liste des formations
-          const index = this.formations.findIndex(f => f.id === updatedFormation.id);
-          if (index !== -1) {
-            this.formations[index] = updatedFormation;
-          }
-          // Réinitialiser la formation sélectionnée
-          this.selectedFormation = null;
-        });
-    }
-  }
   confirmDeleteFormation(formation: Formation): void {
     const confirmDelete = confirm(`Êtes-vous sûr de vouloir supprimer la formation "${formation.titre}" ?`);
     if (confirmDelete) {

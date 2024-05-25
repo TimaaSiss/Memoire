@@ -1,6 +1,7 @@
 package com.itma.speciassist.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,5 +49,10 @@ public class CarriereServiceImpl implements CarriereService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Carriere not found with ID: " + id);
         }
         carriereRepository.deleteById(id);
+    }
+    
+    public Carriere getCarriereByNom(String nom) {
+        Optional<Carriere> carriere = carriereRepository.findByNom(nom);
+        return carriere.orElse(null);
     }
 }

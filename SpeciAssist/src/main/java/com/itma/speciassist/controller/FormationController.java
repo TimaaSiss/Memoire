@@ -1,5 +1,4 @@
 package com.itma.speciassist.controller;
-
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -13,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itma.speciassist.model.Etablissement;
 import com.itma.speciassist.model.Formation;
+import com.itma.speciassist.service.EtablissementService;
 import com.itma.speciassist.service.FormationService;
 
 @RestController
@@ -21,6 +22,7 @@ import com.itma.speciassist.service.FormationService;
 public class FormationController {
 
     private final FormationService formationService;
+    private EtablissementService etablissementService;
 
     public FormationController(FormationService formationService) {
         this.formationService = formationService;
@@ -40,12 +42,50 @@ public class FormationController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<Formation> getFormation(@PathVariable Integer id) {
+        return formationService.getFormationWithEtablissements(id)
+            .map(ResponseEntity::ok)
+            .orElse(ResponseEntity.notFound().build());
+    }
+    
+    @GetMapping("/getFormationByTitre/{titre}")
+    public ResponseEntity<Formation> getFormationBytitre(@PathVariable String titre) {
+        Formation formation = formationService.getFormationByTitre(titre);
+        if (formation != null) {
+            return new ResponseEntity<>(formation, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    
+    
+    @PostMapping("/formations/{formationId}/etablissements/{etablissementId}")
+    public ResponseEntity<Formation> addEtablissementToFormation(
+        @PathVariable Integer formationId,
+        @PathVariable Integer etablissementId
+        
+    ) {
+        Formation formation = formationService.getFormationById(formationId);
+        Etablissement etablissement = etablissementService.getEtablissementById(etablissementId);
+
+        if (formation != null && etablissement != null) {
+            formation.getEtablissements().add(etablissement);
+            formationService.updateFormation(formationId, formation);
+            return ResponseEntity.ok(formation);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+
 
     @PostMapping("/addFormation")
     public ResponseEntity<Formation> createFormation(@RequestBody Formation formation) {
         Formation createdFormation = formationService.createFormation(formation);
         return new ResponseEntity<>(createdFormation, HttpStatus.CREATED);
     }
+    
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Formation> updateFormation(@PathVariable Integer id, @RequestBody Formation formation) {
@@ -55,6 +95,7 @@ public class FormationController {
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteFormation(@PathVariable Integer id) {

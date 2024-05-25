@@ -1,6 +1,9 @@
+// src/app/connexion/connexion.component.ts
+
 import { Component } from '@angular/core';
-import { Router } from '@angular/router'; // Importez le service Router
+import { Router } from '@angular/router';
 import { UserService } from '@app/services/user-service.service';
+import { CredentialsDto } from '@app/model/credentials-dto';
 
 @Component({
   selector: 'app-connexion',
@@ -9,30 +12,24 @@ import { UserService } from '@app/services/user-service.service';
 })
 export class ConnexionComponent {
 
-  formData: any = {}; // Modèle pour stocker les données du formulaire
+  formData: CredentialsDto = new CredentialsDto();
 
-  constructor(private userService: UserService, private router: Router) { } // Injectez le service Router
+  constructor(private userService: UserService, private router: Router) { }
 
   submitForm() {
     this.userService.login(this.formData).subscribe(
-      (user) => {
+      user => {
         console.log('Connexion réussie : ', user);
-        // Vérifier le rôle de l'utilisateur après la connexion réussie
         if (user.role === 'ADMIN') {
-          // Rediriger vers la page d'administration si le rôle est ADMIN
           this.router.navigate(['/admin']);
         } else {
-          // Pour les autres rôles, vous pouvez afficher un message de connexion réussie ou rediriger vers une autre page si nécessaire
-          console.log('Connexion réussie pour un utilisateur non-administrateur');
-          // Exemple de redirection vers une page différente
           this.router.navigate(['/profile']);
         }
-        // Réinitialiser le formulaire
-        this.formData = {};
+        this.formData = new CredentialsDto();
       },
-      (error) => {
+      error => {
         console.error('Erreur de connexion : ', error);
-       }
+      }
     );
   }
 }
