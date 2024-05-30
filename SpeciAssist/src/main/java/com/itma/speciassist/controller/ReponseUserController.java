@@ -24,31 +24,61 @@ public class ReponseUserController {
 
     @PostMapping("/add")
     public ReponseUser addReponse(@RequestBody ReponseUser reponse) {
+        // Prétraiter la réponse textuelle et choisie
+        if (reponse.getReponseTextuelle() != null) {
+            String preprocessedText = reponseService.preprocessText(reponse.getReponseTextuelle());
+            reponse.setReponseTextuelle(preprocessedText);
+        }
+        if (reponse.getReponseChoisie() != null) {
+            String preprocessedChoice = reponseService.preprocessText(reponse.getReponseChoisie());
+            reponse.setReponseChoisie(preprocessedChoice);
+        }
+
         return reponseService.addReponse(reponse);
     }
 
     @GetMapping("/all")
     public List<ReponseUser> getAllReponses() {
-        return reponseService.getAllReponses();
+        List<ReponseUser> reponses = reponseService.getAllReponses();
+        return reponseService.preprocessReponses(reponses);
     }
 
     @GetMapping("/{id}")
     public ReponseUser getReponseById(@PathVariable Integer id) {
-        return reponseService.getReponseById(id);
+        ReponseUser reponse = reponseService.getReponseById(id);
+        if (reponse != null && reponse.getReponseTextuelle() != null) {
+            reponse.setReponseTextuelle(reponseService.preprocessText(reponse.getReponseTextuelle()));
+        }
+        if (reponse != null && reponse.getReponseChoisie() != null) {
+            reponse.setReponseChoisie(reponseService.preprocessText(reponse.getReponseChoisie()));
+        }
+        return reponse;
     }
 
     @GetMapping("/user/{userId}")
     public List<ReponseUser> getReponsesByUserId(@PathVariable Integer userId) {
-        return reponseService.getReponsesByUserId(userId);
+        List<ReponseUser> reponses = reponseService.getReponsesByUserId(userId);
+        return reponseService.preprocessReponses(reponses);
     }
 
     @GetMapping("/question/{questionId}")
     public List<ReponseUser> getReponsesByQuestionId(@PathVariable Integer questionId) {
-        return reponseService.getReponsesByQuestionId(questionId);
+        List<ReponseUser> reponses = reponseService.getReponsesByQuestionId(questionId);
+        return reponseService.preprocessReponses(reponses);
     }
 
     @PutMapping("/{id}")
     public ReponseUser updateReponse(@PathVariable Integer id, @RequestBody ReponseUser reponse) {
+        // Prétraiter la réponse textuelle et choisie
+        if (reponse.getReponseTextuelle() != null) {
+            String preprocessedText = reponseService.preprocessText(reponse.getReponseTextuelle());
+            reponse.setReponseTextuelle(preprocessedText);
+        }
+        if (reponse.getReponseChoisie() != null) {
+            String preprocessedChoice = reponseService.preprocessText(reponse.getReponseChoisie());
+            reponse.setReponseChoisie(preprocessedChoice);
+        }
+
         return reponseService.updateReponse(id, reponse);
     }
 

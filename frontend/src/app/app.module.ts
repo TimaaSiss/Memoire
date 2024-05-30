@@ -44,6 +44,8 @@ import { EditEtablissementDialogComponent } from './edit-etablissement-dialog/ed
 import { EditFormationDialogComponent } from './edit-formation-dialog/edit-formation-dialog.component';
 import { EditMentorDialogComponent } from './edit-mentor-dialog/edit-mentor-dialog.component';
 import { AddMentorDialogComponent } from './add-mentor-dialog/add-mentor-dialog.component';
+import { EditEtabDialogComponent } from './edit-etab-dialog/edit-etab-dialog.component';
+import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
 
 
 @NgModule({
@@ -81,7 +83,9 @@ import { AddMentorDialogComponent } from './add-mentor-dialog/add-mentor-dialog.
          EditEtablissementDialogComponent,
          EditFormationDialogComponent,
          EditMentorDialogComponent,
-         AddMentorDialogComponent
+         AddMentorDialogComponent,
+         EditEtabDialogComponent,
+         EditUserDialogComponent
 
   ],
   imports: [

@@ -2,6 +2,8 @@ package com.itma.speciassist.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import com.itma.speciassist.model.User;
 
@@ -23,6 +25,7 @@ public interface UserService {
 	void deactivateUser(Long userId);
 
 	
+	 Page<User> allUsers(Pageable pageable);
 
 
     }

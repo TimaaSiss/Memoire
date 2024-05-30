@@ -22,16 +22,18 @@ export class FormationDetailsComponent {
     const formationName = this.route.snapshot.paramMap.get('formationName');
     console.log('Formation name:', formationName);
     if (formationName) {
-      this.formationService.getFormationWithEtablissementsByTitre(formationName).subscribe(
-        (data: Formation) => {
-          this.formationDetails = data;
-          console.log('Formation details:', this.formationDetails);
-        },
-        (error: any) => {
-          console.error('Error fetching formation details:', error);
-        }
-      );
+        const encodedFormationName = encodeURIComponent(formationName);
+        this.formationService.getFormationWithEtablissementsByTitre(encodedFormationName).subscribe(
+            (data: Formation) => {
+                this.formationDetails = data;
+                console.log('Formation details:', this.formationDetails);
+            },
+            (error: any) => {
+                console.error('Error fetching formation details:', error);
+            }
+        );
     }
-  }
+}
+
   }
   

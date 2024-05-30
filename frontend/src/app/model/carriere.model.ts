@@ -5,5 +5,6 @@ export class Carriere {
     secteur!: string;
     competences_requises!: string;
     salaire!: string;
+    image!:string
   }
   

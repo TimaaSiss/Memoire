@@ -12,4 +12,6 @@ public interface ReponseUserService {
     List<ReponseUser> getReponsesByQuestionId(Integer questionId);
     ReponseUser updateReponse(Integer id, ReponseUser reponse);
     void deleteReponse(Integer id);
+	String preprocessText(String reponseTextuelle);
+	List<ReponseUser> preprocessReponses(List<ReponseUser> reponses);
 }

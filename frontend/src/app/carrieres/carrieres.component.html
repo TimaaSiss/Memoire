@@ -11,6 +11,7 @@
       <li><a routerLink="/adduser">Ajouter un Utilisateur</a></li>
       <li><a routerLink="/cours">Liste des cours</a></li>
       <li><a routerLink="/formation">Liste des formations</a></li>
+      <li><a routerLink="/etablissements">Liste des Établissements</a></li>
       <li><a routerLink="/careers">Liste des carrières</a></li>
       <li><a routerLink="/mentors">Les mentors</a></li>
       <li><a routerLink="/questionnaire">Liste des questionnaires</a></li>
@@ -54,5 +55,12 @@
         </tr>
       </tbody>
     </table>
+
+    <!--Pagination-->
+    <mat-paginator [length]="carrieres.length"
+                     [pageSize]="10"
+                     (page)="loadMoreCarrieres($event)"
+                     [pageSizeOptions]="[10, 20, 50]">
+      </mat-paginator>
   </div>
 </div>

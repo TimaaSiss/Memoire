@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 import { Mentor } from '@app/model/mentor.model';
 import { MentorService } from '@app/services/mentors.service';
 
@@ -12,6 +14,14 @@ export class MentorComponent implements OnInit {
   newMentor: Mentor = new Mentor();
   selectedMentor: Mentor | null = null;
   menuOpen= true;
+
+  dataSource = new MatTableDataSource<Mentor>(); // Source de données pour la table
+  displayedColumns: string[] = ['id', 'specialite'];
+
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
+  pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
+
   constructor(private mentorService: MentorService) { }
 
   ngOnInit(): void {
@@ -31,11 +41,25 @@ export class MentorComponent implements OnInit {
     localStorage.setItem('menuOpen', JSON.stringify(this.menuOpen));
   }
 
-  loadMentors(): void {
-    this.mentorService.getAllMentors().subscribe(mentors => {
-      this.mentors = mentors;
+  loadMentors() {
+    this.mentorService.getAllMentors().subscribe(data => {
+      this.mentors = data;
+      this.dataSource = new MatTableDataSource<Mentor>(this.mentors.slice(0, 10)); // Charger les 10 premiers utilisateurs
+      this.dataSource.paginator = this.paginator; // Configurer la pagination
     });
   }
+  
+  loadMoreMentors(event: PageEvent) {
+    const pageIndex = event.pageIndex;
+    const pageSize = event.pageSize;
+    const startIndex = pageIndex * pageSize;
+    const endIndex = startIndex + pageSize;
+  
+    // Charger les utilisateurs suivants selon l'index de page
+    this.dataSource = new MatTableDataSource<Mentor>(this.mentors.slice(startIndex, endIndex));
+  }
+
+
 
   addMentor(): void {
     this.mentorService.addMentor(this.newMentor).subscribe(() => {

@@ -22,6 +22,10 @@
     <label for="salaire"><strong>Salaire:</strong></label>
     <input type="text" class="form-control" id="salaire" [(ngModel)]="editedCarriere.salaire" name="salaire" required>
   </div>
+  <div class="form-group">
+    <label for="image"><strong>Image:</strong></label>
+    <input type="text" class="form-control" id="image" [(ngModel)]="editedCarriere.image" name="image" required>
+  </div>
   <button type="submit" class="btn btn-primary">Enregistrer</button>
   <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Annuler</button>
 </form>

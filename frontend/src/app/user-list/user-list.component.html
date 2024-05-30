@@ -6,6 +6,7 @@
         <li><a routerLink="/adduser">Ajouter un Utilisateur</a></li>
         <li><a routerLink="/cours">Liste des cours</a></li>
         <li><a routerLink="/formation">Liste des formations</a></li>
+        <li><a routerLink="/etablissements">Liste des Établissements</a></li>
         <li><a routerLink="/careers">Liste des carrières</a></li>
         <li><a routerLink="/mentors">Les mentors</a></li>
         <li><a routerLink="/questionnaire">Liste des questionnaires</a></li>
@@ -45,8 +46,9 @@
             <td>{{ user.role }}</td>
             <td>{{ user.status ? 'Actif' : 'Inactif' }}</td>
             <td>
+              <div class="action-buttons">
               <!-- Boutons Modifier et Supprimer pour chaque utilisateur -->
-              <button class="btn btn-primary" (click)="editUser(user)"><i class="bi bi-pencil"></i></button>
+              <button class="btn btn-primary" (click)="updateUser()"><i class="bi bi-pencil"></i></button>
               <button class="btn btn-danger" (click)="confirmDeleteUser(user)"><i class="bi bi-trash"></i></button>
               <!-- Bouton d'activation/désactivation -->
               
@@ -54,6 +56,7 @@
                 <span *ngIf="user.status" class="fa fa-toggle-on text-success"><i class="bi bi-toggle-on"></i></span>
                 <span *ngIf="!user.status" class="fa fa-toggle-off text-danger"><i class="bi bi-toggle-off"></i></span> 
               </button>
+              </div>
             </td>
           </tr>
         </tbody>
@@ -63,7 +66,7 @@
       <mat-paginator [length]="users.length"
                      [pageSize]="10"
                      (page)="loadMoreUsers($event)"
-                     [pageSizeOptions]="[10, 20, 50]">
+                     [pageSizeOptions]="[10, 20, 50, 100]">
       </mat-paginator>
     </div>
   </div>

@@ -18,22 +18,14 @@ export class ProfileComponent implements OnInit {
   progress: number = 0;
   totalQuestions: number = 0;
 
-  careers: { nom: string; img: string }[] = [
-    { nom: 'Comptabilité', img: 'compta.jpg' },
-    { nom: 'Développement Web', img: 'dev.jpg' },
-    { nom: 'Juriste', img: 'juge.jpg' },
-    { nom: 'Docteur', img: 'dentiste.jpg' }
-  ];
+  careers: Carriere[] = [];
 
-  formations: {titre: string; img: string}[] = [
-    {titre:'Développement Web Full Stack', img:'dev.jpg'},
-    {titre:'Maintenance Industrielle Avancée', img:'compta.jpg'},
-    {titre:'aaaa', img:'compta.jpg'}
-  ];
+  formations: Formation[] = [];
 
-  filteredCareers: { nom: string; img: string }[] = [];
+  filteredCareers: Carriere[] = [];
+ 
   searchTerm: string = '';
-  filteredFormations: { titre: string; img: string }[] = [];
+  filteredFormations: Formation[] = [];
 
   currentUser!: any;
   selectedCarriere: Carriere | null = null;
@@ -61,6 +53,9 @@ export class ProfileComponent implements OnInit {
     } else {
       this.username = '';
     }
+
+    this.getCarrieres();
+    this.getFormations();
   
     this.filteredCareers = this.careers;
     this.filteredFormations = this.formations;
@@ -150,6 +145,14 @@ export class ProfileComponent implements OnInit {
     }
   }
 
+  getCarrieres(): void {
+    this.carriereService.getAllCarrieres()
+      .subscribe(carrieres => {
+        this.careers = carrieres;
+        this.filteredCareers = carrieres;
+      });
+  }
+
   getCarriereDetails(nom: string): void {
     this.carriereService.getCarriereByNom(nom).subscribe(
       (carriere) => {
@@ -167,6 +170,14 @@ export class ProfileComponent implements OnInit {
 
   viewFormationDetails(formationName: string): void {
     this.router.navigate(['/formation-details', formationName]);
+  }
+
+  getFormations(): void {
+    this.formationService.getAllFormations()
+      .subscribe(formations => {
+        this.formations = formations;
+        this.filteredFormations = this.formations;
+      });
   }
 
   // Add this method to obtain details of the formation

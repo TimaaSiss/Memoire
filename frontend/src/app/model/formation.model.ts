@@ -7,6 +7,7 @@ export class Formation {
     duree: string;
     prix: number;
     contenu: string;
+    image:string;
     etablissements!: Etablissement[];
   
     constructor() {
@@ -16,6 +17,7 @@ export class Formation {
       this.duree = '';
       this.prix = 0;
       this.contenu = '';
+      this.image='';
       this.etablissements=[]
     }
   }

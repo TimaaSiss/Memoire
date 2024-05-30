@@ -36,24 +36,22 @@
 
 
 <br>
+    
     <h1 class="font-weight-bold">Carrières disponibles</h1>
-    <div class="scrollable-container">
-        <div class="row">
-            <!-- Répétez cette colonne pour chaque carrière -->
-            <div class="col career-card" style="background-image: url('/assets/{{career.img}}');" *ngFor="let career of filteredCareers; let i = index" (click)="viewCareerDetails(career.nom)">
-                <h2>{{ career.nom }}</h2>
-
-                <!-- Autres détails de la carrière -->
-            </div>
-             </div>
-            <!-- Fin de la colonne de carrière -->
+<div class="scrollable-careers">
+    <div class="career-row">
+        <div class="career-card" *ngFor="let career of filteredCareers; let i = index" (click)="viewCareerDetails(career.nom)" [style.backgroundImage]="'url(' + career.image + ')'">
+            <h2>{{ career.nom }}</h2>
         </div>
+    </div>
+</div>
+
         <br>
         <h1 class="font-weight-bold">Formations disponibles</h1>
-        <div class="scrollable-container">
-            <div class="row">
+        <div class="scrollable-formations">
+            <div class="formtion-row">
                 <!-- Répétez cette colonne pour chaque formation -->
-                <div class="col formation-card" style="background-image: url('/assets/{{formation.img}}')" *ngFor="let formation of filteredFormations; let i = index" [ngClass]="'formation-card-' + (i + 1)" (click)="viewFormationDetails(formation.titre)">
+                <div class="formation-card"  [style.backgroundImage]="'url(' + formation.image + ')'" *ngFor="let formation of filteredFormations; let i = index" [ngClass]="'formation-card-' + (i + 1)" (click)="viewFormationDetails(formation.titre)">
                     <h2>{{ formation.titre}}</h2>
             
             <!-- Autres détails de la formation -->

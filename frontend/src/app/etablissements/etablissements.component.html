@@ -38,28 +38,37 @@
         <!-- Corps du tableau -->
         <tbody>
           <!-- Boucle sur la liste des formations -->
-          <tr *ngFor="let formation of etablissements">
+          <tr *ngFor="let etablissement of etablissements">
             <!-- Affichage des données de la formation -->
-            <td>{{ formation.id }}</td>
-            <td>{{ formation.nom }}</td>
-            <td>{{ formation.lieu }}</td>
-            <td>{{ formation.telephone }}</td>
-            <td>{{ formation.email }}</td>
+            <td>{{ etablissement.id }}</td>
+            <td>{{ etablissement.nom }}</td>
+            <td>{{ etablissement.lieu }}</td>
+            <td>{{ etablissement.telephone }}</td>
+            <td>{{ etablissement.email }}</td>
             <!-- Actions pour chaque formation -->
             <td>
-              <button class="btn btn-primary" (click)="editEtablissement(formation)">
+              <div class="action-buttons">
+              <button class="btn btn-primary" (click)="openEditDialog(etablissement)">
                 <i class="bi bi-pencil"></i> 
               </button>
-              <button type="button" class="btn btn-success" (click)="updateEtablissement()">
+              <!--<button type="button" class="btn btn-success" (click)="updateEtablissement()">
                 <i class="bi bi-check"></i>
-              </button>
-              <button class="btn btn-danger" (click)="confirmDeleteEtablissement(formation)">
+              </button> -->
+              <button class="btn btn-danger" (click)="confirmDeleteEtablissement(etablissement)">
                 <i class="bi bi-trash"></i> 
               </button>
+              </div>
             </td>
           </tr>
         </tbody>
       </table>
+
+        <!--Pagination-->
+    <mat-paginator [length]="etablissements.length"
+    [pageSize]="10"
+    (page)="loadMoreEtablissements($event)"
+    [pageSizeOptions]="[10, 20, 50]">
+</mat-paginator>
     </div>
   </div>
   

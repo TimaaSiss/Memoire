@@ -43,21 +43,34 @@ public class FormationController {
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
     
-    @GetMapping("/{id}")
-    public ResponseEntity<Formation> getFormation(@PathVariable Integer id) {
-        return formationService.getFormationWithEtablissements(id)
-            .map(ResponseEntity::ok)
-            .orElse(ResponseEntity.notFound().build());
-    }
+	/*
+	 * @GetMapping("/{id}") public ResponseEntity<Formation>
+	 * getFormation(@PathVariable Integer id) { return
+	 * formationService.getFormationWithEtablissements(id) .map(ResponseEntity::ok)
+	 * .orElse(ResponseEntity.notFound().build()); }
+	 */
     
     @GetMapping("/getFormationByTitre/{titre}")
     public ResponseEntity<Formation> getFormationBytitre(@PathVariable String titre) {
+        System.out.println("Received titre: " + titre);  // Log received title
         Formation formation = formationService.getFormationByTitre(titre);
+        if (formation != null) {
+            System.out.println("Formation found: " + formation.getTitre());  // Log found formation
+            return new ResponseEntity<>(formation, HttpStatus.OK);
+        }
+        System.out.println("Formation not found for titre: " + titre);  // Log not found
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    
+    @GetMapping("/{titre}/etablissements")
+    public ResponseEntity<List<Etablissement>> getEtablissementsWithFormation(@PathVariable String titre) {
+        List<Etablissement> formation = formationService.getEtablissementsWithFormation(titre);
         if (formation != null) {
             return new ResponseEntity<>(formation, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+    
     
     
     @PostMapping("/formations/{formationId}/etablissements/{etablissementId}")

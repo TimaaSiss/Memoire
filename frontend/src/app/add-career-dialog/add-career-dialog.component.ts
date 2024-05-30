@@ -10,7 +10,7 @@ import { Carriere } from '../model/carriere.model';
   styleUrls: ['./add-career-dialog.component.scss']
 })
 export class AddCareerDialogComponent implements OnInit {
-  newCarriere: Carriere = { id: 0, nom: '', description: '', secteur: '', competences_requises: '', salaire: '' };
+  newCarriere: Carriere = { id: 0, nom: '', description: '', secteur: '', competences_requises: '', salaire: '', image:''};
 
   constructor(
     public dialogRef: MatDialogRef<AddCareerDialogComponent>

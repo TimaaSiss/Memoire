@@ -5,6 +5,8 @@ import { Course } from '@app/model/cours.model';
 @Component({
   selector: 'app-add-course-dialog',
   templateUrl: './add-cours-dialog.component.html',
+  styleUrls: ['./add-cours-dialog.component.scss']
+
 })
 export class AddCourseDialogComponent {
   newCourse: Course = {

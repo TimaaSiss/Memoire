@@ -8,7 +8,7 @@ import { Carriere } from '../model/carriere.model';
   styleUrls: ['./edit-dialog-career.component.scss']
 })
 export class EditCarriereDialogComponent implements OnInit {
-  editedCarriere: Carriere = { id: 0, nom: '', description: '', secteur: '', competences_requises: '', salaire: '' };
+  editedCarriere: Carriere = { id: 0, nom: '', description: '', secteur: '', competences_requises: '', salaire: '', image:'' };
 
 
   constructor(

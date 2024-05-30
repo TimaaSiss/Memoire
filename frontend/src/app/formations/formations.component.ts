@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormationService } from '@app/services/formations.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Formation } from '@app/model/formation.model';
 import { AddFormationDialogComponent } from '@app/add-formation-dialog/add-formation-dialog.component';
 import { EditFormationDialogComponent } from '@app/edit-formation-dialog/edit-formation-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-formation',
@@ -13,8 +15,16 @@ import { EditFormationDialogComponent } from '@app/edit-formation-dialog/edit-fo
 export class FormationComponent implements OnInit {
   formations: Formation[] = [];
   selectedFormation: Formation | null = null;
-   newFormation: Formation = { titre: '', description: '', duree: '', prix: 0, contenu: '', etablissements:[] }; // Ajoutez cette propriété pour représenter la nouvelle formation à ajouter
+   newFormation: Formation = { titre: '', description: '', duree: '', prix: 0, contenu: '',image:'', etablissements:[] }; // Ajoutez cette propriété pour représenter la nouvelle formation à ajouter
    menuOpen=true;
+
+   dataSource = new MatTableDataSource<Formation>(); // Source de données pour la table
+   displayedColumns: string[] = ['id', 'titre', 'contenu', 'duree', 'description', 'prix'];
+ 
+   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+ 
+   pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
+ 
   constructor(private formationService: FormationService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
@@ -34,10 +44,22 @@ export class FormationComponent implements OnInit {
     localStorage.setItem('menuOpen', JSON.stringify(this.menuOpen));
   }
 
-  loadFormations(): void {
-    this.formationService.getAllFormations().subscribe(formations => {
-      this.formations = formations;
+  loadFormations() {
+    this.formationService.getAllFormations().subscribe(data => {
+      this.formations = data;
+      this.dataSource = new MatTableDataSource<Formation>(this.formations.slice(0, 10)); // Charger les 10 premiers utilisateurs
+      this.dataSource.paginator = this.paginator; // Configurer la pagination
     });
+  }
+  
+  loadMoreFormations(event: PageEvent) {
+    const pageIndex = event.pageIndex;
+    const pageSize = event.pageSize;
+    const startIndex = pageIndex * pageSize;
+    const endIndex = startIndex + pageSize;
+  
+    // Charger les utiliformations suivants selon l'index de page
+    this.dataSource = new MatTableDataSource<Formation>(this.formations.slice(startIndex, endIndex));
   }
 
   openAddFormationDialog(): void {

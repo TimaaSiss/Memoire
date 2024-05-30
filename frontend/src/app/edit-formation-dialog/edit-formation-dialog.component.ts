@@ -1,39 +1,54 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Etablissement } from '@app/model/etablissement.model';
 import { Formation } from '@app/model/formation.model';
+import { EtablissementService } from '@app/services/etablissement.service';
 
 @Component({
   selector: 'app-edit-formation-dialog',
   templateUrl: './edit-formation-dialog.component.html',
   styleUrls: ['./edit-formation-dialog.component.scss']
 })
-export class EditFormationDialogComponent {
-  editedFormation: Formation = { id: 0, titre: '', description: '', contenu: '', duree: '', prix: 0, etablissements:[]};
-
+export class EditFormationDialogComponent implements OnInit {
+  editedFormation: Formation;
+  etablissements: Etablissement[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<EditFormationDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Formation
-    
-  ) {  this.editedFormation = { ...data };
-}
+    @Inject(MAT_DIALOG_DATA) public data: Formation,
+    private etablissementService: EtablissementService
+  ) {
+    this.editedFormation = { ...data };
+  }
 
   ngOnInit(): void {
-    // Copiez les données reçues pour les éditer
-    this.editedFormation.id = this.data.id;
-    this.editedFormation.titre = this.data.titre;
-    this.editedFormation.description = this.data.description;
-    this.editedFormation.contenu = this.data.contenu;
-    this.editedFormation.duree = this.data.duree;
-    this.editedFormation.prix = this.data.prix;
+    // Charger les établissements depuis le service
+    this.etablissementService.getAllEtablissements().subscribe(data => {
+      this.etablissements = data;
+    });
+
+    // Copier les données reçues pour les éditer
+    this.editedFormation = { ...this.data };
   }
 
   onSubmit(): void {
-    // Emit the edited data to the parent component
+    // Emettre les données éditées vers le composant parent
     this.dialogRef.close(this.editedFormation);
   }
 
   onCancelClick(): void {
     this.dialogRef.close();
+  }
+
+  onEtablissementSelectionChange(etablissement: Etablissement, event: any): void {
+    if (event.target.checked) {
+      this.editedFormation.etablissements.push(etablissement);
+    } else {
+      this.editedFormation.etablissements = this.editedFormation.etablissements.filter(e => e.id !== etablissement.id);
+    }
+  }
+
+  isEtablissementSelected(etablissement: Etablissement): boolean {
+    return this.editedFormation.etablissements.some(e => e.id === etablissement.id);
   }
 }

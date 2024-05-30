@@ -6,6 +6,7 @@
       <li><a routerLink="/adduser">Ajouter un Utilisateur</a></li>
       <li><a routerLink="/cours">Liste des cours</a></li>
       <li><a routerLink="/formation">Liste des formations</a></li>
+      <li><a routerLink="/etablissements">Liste des Établissements</a></li>
       <li><a routerLink="/careers">Liste des carrières</a></li>
       <li><a routerLink="/mentors">Les mentors</a></li>
       <li><a routerLink="/questionnaire">Liste des questionnaires</a></li>
@@ -31,6 +32,7 @@
         <td>{{ mentor.user.id }}</td>
         <td>{{ mentor.specialite }}</td>
         <td>
+          <div class="action-buttons">
           <!-- Boutons Modifier, Supprimer et Activer/Désactiver pour chaque mentor -->
           <button class="btn btn-primary" (click)="editMentor(mentor)">
             <i class="bi bi-pencil"></i> 
@@ -38,12 +40,18 @@
           <button class="btn btn-danger" (click)="confirmDeleteMentor(mentor)">
             <i class="bi bi-trash"></i> 
           </button>
-          
+          </div>
         </td>
       </tr>
     </tbody>
   </table>
-  
+     <!--Pagination-->
+     <mat-paginator [length]="mentors.length"
+     [pageSize]="10"
+     (page)="loadMoreMentors($event)"
+     [pageSizeOptions]="[10, 20, 50]">
+</mat-paginator>
+
   <!-- Formulaire de modification (masqué par défaut) -->
   <div *ngIf="selectedMentor">
     <h4>Modifier le mentor</h4>

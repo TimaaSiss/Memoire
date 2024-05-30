@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Course } from '../model/cours.model';
 import { CourseService } from '../services/cours.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddCourseDialogComponent } from '@app/add-cours-dialog/add-cours-dialog.component';// votre boîte de dialogue d'ajout de cours ici
 import { EditCourseDialogComponent } from '@app/edit-cours-dialog/edit-cours-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 @Component({
   selector: 'app-cours',
   templateUrl: './cours.component.html',
@@ -14,6 +16,13 @@ export class CoursComponent implements OnInit {
   courses: Course[] = [];
   selectedCourse: Course | null = null;
   menuOpen= true;
+
+  dataSource = new MatTableDataSource<Course>(); // Source de données pour la table
+  displayedColumns: string[] = ['id', 'titre', 'duree', 'salaire', 'description', 'url_cours', 'niveau'];
+
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
+  pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
   constructor(private courseService: CourseService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
@@ -33,12 +42,23 @@ export class CoursComponent implements OnInit {
     localStorage.setItem('menuOpen', JSON.stringify(this.menuOpen));
   }
 
-  loadCourses(): void {
-    this.courseService.getAllCourses().subscribe(courses => {
-      this.courses = courses;
+  loadCourses() {
+    this.courseService.getAllCourses().subscribe(data => {
+      this.courses = data;
+      this.dataSource = new MatTableDataSource<Course>(this.courses.slice(0, 10)); // Charger les 10 premiers utilisateurs
+      this.dataSource.paginator = this.paginator; // Configurer la pagination
     });
   }
-
+  
+  loadMoreCourses(event: PageEvent) {
+    const pageIndex = event.pageIndex;
+    const pageSize = event.pageSize;
+    const startIndex = pageIndex * pageSize;
+    const endIndex = startIndex + pageSize;
+  
+    // Charger les utilisateurs suivants selon l'index de page
+    this.dataSource = new MatTableDataSource<Course>(this.courses.slice(startIndex, endIndex));
+  }
   openAddCourseDialog(): void {
     const dialogRef = this.dialog.open(AddCourseDialogComponent, {
       width: '500px'

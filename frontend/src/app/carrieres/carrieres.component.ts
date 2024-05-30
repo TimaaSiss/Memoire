@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Carriere } from '../model/carriere.model';
 import { CarriereService } from '../services/carrieres.service';
 import { MatDialog } from '@angular/material/dialog';
 import { EditCarriereDialogComponent } from '@app/edit-dialog-career/edit-dialog-career.component';
 import { AddCareerDialogComponent } from '@app/add-career-dialog/add-career-dialog.component';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-carriere',
@@ -14,6 +16,13 @@ export class CarriereComponent implements OnInit {
 
   carrieres: Carriere[] = [];
   menuOpen= true;
+  dataSource = new MatTableDataSource<Carriere>(); // Source de données pour la table
+  displayedColumns: string[] = ['id', 'nom', 'secteur', 'competences_requises', 'description', 'salaire', 'image'];
+
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
+  pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
+
   constructor(
     private carriereService: CarriereService,
     public dialog: MatDialog
@@ -36,12 +45,23 @@ export class CarriereComponent implements OnInit {
     localStorage.setItem('menuOpen', JSON.stringify(this.menuOpen));
   }
   
-  loadCarrieres(): void {
-    this.carriereService.getAllCarrieres().subscribe(carrieres => {
-      this.carrieres = carrieres;
+  loadCarrieres() {
+    this.carriereService.getAllCarrieres().subscribe(data => {
+      this.carrieres = data;
+      this.dataSource = new MatTableDataSource<Carriere>(this.carrieres.slice(0, 10)); // Charger les 10 premiers utilisateurs
+      this.dataSource.paginator = this.paginator; // Configurer la pagination
     });
   }
-
+  
+  loadMoreCarrieres(event: PageEvent) {
+    const pageIndex = event.pageIndex;
+    const pageSize = event.pageSize;
+    const startIndex = pageIndex * pageSize;
+    const endIndex = startIndex + pageSize;
+  
+    // Charger les utilisateurs suivants selon l'index de page
+    this.dataSource = new MatTableDataSource<Carriere>(this.carrieres.slice(startIndex, endIndex));
+  }
   confirmDeleteCarriere(carriere: Carriere): void {
     if (confirm("Êtes-vous sûr de vouloir supprimer cette carrière ?")) {
       this.deleteCarriere(carriere.id);

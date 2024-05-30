@@ -19,5 +19,7 @@ public class Carriere {
     private String secteur;
     private String competences_requises;
     private String salaire;
+    private String image;
+    
     
 }

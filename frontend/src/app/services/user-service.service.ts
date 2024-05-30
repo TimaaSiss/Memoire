@@ -1,12 +1,14 @@
 // src/app/services/user-service.service.ts
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { User } from '../model/user';
 import { CredentialsDto } from '@app/model/credentials-dto';
+import { Page } from '@app/model/page.model';
+
 
 @Injectable()
 export class UserService {
@@ -17,8 +19,12 @@ export class UserService {
     this.usersUrl = 'http://localhost:8080';
   }
 
-  public findAll(): Observable<User[]> {
-    return this.http.get<User[]>(`${this.usersUrl}/users/allUsers`);
+  public findAll(page: number, size: number): Observable<Page<User>> {
+    const params = new HttpParams()
+      .set('page', page.toString())
+      .set('size', size.toString());
+
+    return this.http.get<Page<User>>(`${this.usersUrl}/users/paginated`, { params });
   }
 
   public save(user: User): Observable<User> {

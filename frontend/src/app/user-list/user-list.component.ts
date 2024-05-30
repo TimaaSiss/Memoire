@@ -25,7 +25,7 @@ export class UserListComponent implements OnInit {
   constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.loadUsers();
+    this.loadUsers(0,10);
     // Vérifier si la valeur de menuOpen est stockée localement
     const storedMenuOpen = localStorage.getItem('menuOpen');
     if (storedMenuOpen !== null) {
@@ -41,22 +41,15 @@ export class UserListComponent implements OnInit {
     localStorage.setItem('menuOpen', JSON.stringify(this.menuOpen));
   }
 
-  loadUsers() {
-    this.userService.findAll().subscribe(data => {
-      this.users = data;
-      this.dataSource = new MatTableDataSource<User>(this.users.slice(0, 10)); // Charger les 10 premiers utilisateurs
-      this.dataSource.paginator = this.paginator; // Configurer la pagination
+  loadUsers(page: number, size: number) {
+    this.userService.findAll(page, size).subscribe(data => {
+      this.dataSource = new MatTableDataSource<User>(data.content);
+      this.dataSource.paginator = this.paginator;
     });
   }
   
   loadMoreUsers(event: PageEvent) {
-    const pageIndex = event.pageIndex;
-    const pageSize = event.pageSize;
-    const startIndex = pageIndex * pageSize;
-    const endIndex = startIndex + pageSize;
-  
-    // Charger les utilisateurs suivants selon l'index de page
-    this.dataSource = new MatTableDataSource<User>(this.users.slice(startIndex, endIndex));
+    this.loadUsers(event.pageIndex, event.pageSize);
   }
   
   
@@ -92,10 +85,6 @@ export class UserListComponent implements OnInit {
     });
   }
   
-  
-  
-
-  
 
   editUser(user: User) {
     // Sélectionnez l'utilisateur pour la modification
@@ -109,7 +98,7 @@ export class UserListComponent implements OnInit {
         // Réinitialisez la sélection après la mise à jour réussie
         this.selectedUser = null;
         // Rechargez la liste des utilisateurs pour refléter les modifications
-        this.loadUsers();
+        this.loadUsers(0,10);
       });
     }
   }
@@ -126,7 +115,7 @@ export class UserListComponent implements OnInit {
     // Envoyez la demande de suppression de l'utilisateur
     this.userService.delete(user.id).subscribe(() => {
       // Rechargez la liste des utilisateurs après la suppression réussie
-      this.loadUsers();
+      this.loadUsers(0,10);
     });
   }
 

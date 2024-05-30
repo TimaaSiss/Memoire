@@ -22,6 +22,7 @@ public class Formation {
     private String duree;
     private double prix;
     private String contenu;
+    private String image;
     
     @ManyToMany
     @JoinTable(
@@ -30,4 +31,9 @@ public class Formation {
         inverseJoinColumns = @JoinColumn(name = "etablissement_id")
     )
     private List<Etablissement> etablissements;
+
+	public Object getFormationWithEtablissementsByTitre() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

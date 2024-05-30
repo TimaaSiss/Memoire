@@ -1,7 +1,10 @@
 import { AddEtablissementDialogComponent } from './../add-etablissement-dialog/add-etablissement-dialog.component';
 import { EtablissementService } from './../services/etablissement.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { EditEtabDialogComponent } from '@app/edit-etab-dialog/edit-etab-dialog.component';
 
 import { Etablissement } from '@app/model/etablissement.model';
 
@@ -15,6 +18,13 @@ export class EtablissementComponent implements OnInit {
   selectedEtablissement: Etablissement | null = null;
    newEtablissement: Etablissement = {id: 0,nom: '', lieu: '', telephone: '', email: '' }; // Ajoutez cette propriété pour représenter la nouvelle formation à ajouter
    menuOpen=true;
+
+   dataSource = new MatTableDataSource<Etablissement>(); // Source de données pour la table
+  displayedColumns: string[] = ['id', 'nom', 'lieu', 'telephone', 'email'];
+
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+
+  pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
   constructor(private etablissementService: EtablissementService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
@@ -34,10 +44,22 @@ export class EtablissementComponent implements OnInit {
     localStorage.setItem('menuOpen', JSON.stringify(this.menuOpen));
   }
 
-  loadEtablissements(): void {
-    this.etablissementService.getAllEtablissements().subscribe(etablissements => {
-      this.etablissements = etablissements;
+  loadEtablissements() {
+    this.etablissementService.getAllEtablissements().subscribe(data => {
+      this.etablissements = data;
+      this.dataSource = new MatTableDataSource<Etablissement>(this.etablissements.slice(0, 10)); // Charger les 10 premiers utilisateurs
+      this.dataSource.paginator = this.paginator; // Configurer la pagination
     });
+  }
+  
+  loadMoreEtablissements(event: PageEvent) {
+    const pageIndex = event.pageIndex;
+    const pageSize = event.pageSize;
+    const startIndex = pageIndex * pageSize;
+    const endIndex = startIndex + pageSize;
+  
+    // Charger les etablissements suivants selon l'index de page
+    this.dataSource = new MatTableDataSource<Etablissement>(this.etablissements.slice(startIndex, endIndex));
   }
 
   openAddEtablissementDialog(): void {
@@ -63,6 +85,20 @@ export class EtablissementComponent implements OnInit {
   });
 }
   
+
+openEditDialog(etablissement: Etablissement): void {
+  const dialogRef = this.dialog.open(EditEtabDialogComponent, {
+    width: '500px',
+    data: etablissement // Passez le cours à votre composant de boîte de dialogue de modification
+  });
+
+  dialogRef.afterClosed().subscribe(result => {
+    if (result) {
+      // Si des données sont renvoyées depuis la boîte de dialogue, mettez à jour le cours
+      this.updateEtablissement(result);
+    }
+  });
+}
  
 
   editEtablissement(etablissement: Etablissement): void {
@@ -70,7 +106,7 @@ export class EtablissementComponent implements OnInit {
     this.selectedEtablissement = etablissement;
   }
 
-  updateEtablissement(): void {
+  updateEtablissement(etablissement: Etablissement): void {
     if (this.selectedEtablissement && this.selectedEtablissement.id !== undefined) {
       this.etablissementService.updateEtablissement(this.selectedEtablissement.id, this.selectedEtablissement)
         .subscribe(updatedEtablissement => {

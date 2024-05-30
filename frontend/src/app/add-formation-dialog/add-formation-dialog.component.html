@@ -1,25 +1,36 @@
 <h2 class="text-center">Ajouter une Formation</h2>
 <form class="add-course-form" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="titre">Titre :</label>
-    <input type="text" class="form-control" id="titre" [(ngModel)]="newFormation.titre" name="titre" required>
+  <div class="dialog-content scrollable-content">
+    <div class="form-group">
+      <label for="titre">Titre :</label>
+      <input type="text" class="form-control" id="titre" [(ngModel)]="newFormation.titre" name="titre" required>
+    </div>
+    <div class="form-group">
+      <label for="description"><strong>Description:</strong></label>
+      <textarea class="form-control" id="description" [(ngModel)]="newFormation.description" name="description" rows="4" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="duree">Durée :</label>
+      <input type="text" class="form-control" id="duree" [(ngModel)]="newFormation.duree" name="duree" required>
+    </div>
+    <div class="form-group">
+      <label for="prix">Prix :</label>
+      <input type="text" class="form-control" id="prix" [(ngModel)]="newFormation.prix" name="prix" required>
+    </div>
+    <div class="form-group">
+      <label for="contenu">Contenu :</label>
+      <input type="text" class="form-control" id="contenu" [(ngModel)]="newFormation.contenu" name="contenu" required>
+    </div>
+    <div class="form-group">
+      <label>Établissements :</label>
+      <div *ngFor="let etablissement of etablissements">
+        <input type="checkbox" [value]="etablissement.id" (change)="onEtablissementSelectionChange(etablissement.id, $event)" name="etablissement-{{etablissement.id}}">
+        {{etablissement.nom}}
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <label for="description"><strong>Description:</strong></label>
-    <textarea class="form-control" id="description" [(ngModel)]="newFormation.description" name="description" rows="4" required></textarea>
+  <div class="dialog-actions">
+    <button type="submit" class="btn btn-primary">Ajouter</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Annuler</button>
   </div>
-  <div class="form-group">
-    <label for="duree">Durée :</label>
-    <input type="text" class="form-control" id="duree" [(ngModel)]="newFormation.duree" name="duree" required>
-  </div>
-  <div class="form-group">
-    <label for="prix">Prix :</label>
-    <input type="text" class="form-control" id="prix" [(ngModel)]="newFormation.prix" name="prix" required>
-  </div>
-  <div class="form-group">
-    <label for="contenu">Contenu :</label>
-    <input type="text" class="form-control" id="contenu" [(ngModel)]="newFormation.contenu" name="contenu" required>
-  </div>
-  <button type="submit" class="btn btn-primary">Ajouter</button>
-  <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Annuler</button>
 </form>

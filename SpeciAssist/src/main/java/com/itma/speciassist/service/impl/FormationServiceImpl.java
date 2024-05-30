@@ -8,20 +8,25 @@ import org.springframework.stereotype.Service;
 
 import com.itma.speciassist.model.Etablissement;
 import com.itma.speciassist.model.Formation;
+import com.itma.speciassist.repository.EtablissementRepository;
 import com.itma.speciassist.repository.FormationRepository;
 import com.itma.speciassist.service.FormationService;
 
+import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+
 
 @Service
+@Transactional
+@AllArgsConstructor
 public class FormationServiceImpl implements FormationService {
 
     private final FormationRepository formationRepository;
+    private final EtablissementRepository etablissementRepository;
+    
 
     
-    public FormationServiceImpl(FormationRepository formationRepository) {
-        this.formationRepository = formationRepository;
-    }
-
+   
     @Override
     public List<Formation> getAllFormations() {
         return formationRepository.findAll();
@@ -62,19 +67,19 @@ public class FormationServiceImpl implements FormationService {
         return formation.orElse(null);
     }
 
-    
+	/*
+	 * @Override public Optional<Formation> getFormationWithEtablissements(Integer
+	 * id) { return formationRepository.findById(id).map(formation -> {
+	 * Hibernate.initialize(formation.getEtablissements()); // Ensure lazy-loaded
+	 * collections are initialized return formation; }); }
+	 */
     @Override
-    public Optional<Formation> getFormationWithEtablissements(Integer id) {
-        return formationRepository.findById(id).map(formation -> {
-            Hibernate.initialize(formation.getEtablissements()); // Ensure lazy-loaded collections are initialized
-            return formation;
-        });
-    }
-    @Override
-    public Optional<Formation> getFormationWithEtablissementsByTitre(String titre) {
+   public List<Etablissement> getEtablissementsWithFormation(String titre) {
         Optional<Formation> formationOpt = formationRepository.findByTitre(titre);
         if (formationOpt.isPresent()) {
-            Formation formation = formationOpt.get();
+        	
+        	return formationOpt.get().getEtablissements();
+           /* Formation formation = formationOpt.get();
             Hibernate.initialize(formation.getEtablissements()); // Assurez-vous que les collections en lazy loading sont initialisées
             System.out.println("Formation trouvée : " + formation.getTitre());
             System.out.println("Nombre d'établissements : " + formation.getEtablissements().size());
@@ -84,6 +89,18 @@ public class FormationServiceImpl implements FormationService {
         } else {
             System.out.println("Aucune formation trouvée avec le titre : " + titre);
         }
-        return formationOpt;
+        return formationOpt;*/
+        }	
+        return null;
     }
+    
+    public void addEtab(int idFormation, List<Etablissement> etablissements) {
+    	Formation f=getFormationById(idFormation);
+		f.getEtablissements().addAll(etablissements);
+		createFormation(f);
+    }
+
+	
 }
+        
+

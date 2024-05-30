@@ -35,3 +35,20 @@
     padding: 20px;
   }
   
+  .btn{
+    margin-left: 20px;
+  }
+
+  .questionnaire-header {
+    display: flex; /* Utilise une disposition flexbox */
+    align-items: center; /* Aligne les éléments verticalement */
+  }
+  
+  .questionnaire-header h2 {
+    margin-right: auto; /* Pousse le titre à gauche, laissant les boutons à droite */
+  }
+  
+  .questionnaire-header button {
+    margin-left: 10px; /* Ajoute un espace entre les boutons */
+  }
+  

@@ -1,7 +1,5 @@
-<!-- edit-course-dialog.component.html -->
-
 <h2 class="text-center mb-4">Modifier le cours</h2>
-<form (ngSubmit)="onSubmit()">
+<form class="edit-course-form" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="titre">Titre :</label>
     <input type="text" class="form-control" id="titre" [(ngModel)]="editedCourse.titre" name="titre" required>

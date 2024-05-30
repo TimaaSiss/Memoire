@@ -1,0 +1,31 @@
+.add-career-form {
+    max-width: 500px; /* Définit une largeur maximale pour le formulaire */
+    margin: 0 auto; /* Centre le formulaire horizontalement sur la page */
+    padding: 20px; /* Ajoute un peu d'espace intérieur autour du formulaire */
+  }
+  
+  .add-career-form label {
+    font-weight: bold; /* Rend les étiquettes en gras pour les mettre en évidence */
+    margin-bottom: 0.5rem; /* Ajoute un peu d'espace en bas de chaque étiquette */
+  }
+  
+  .add-career-form .form-group {
+    margin-bottom: 1.5rem; /* Ajoute un espace entre chaque groupe de champs */
+  }
+  
+  .add-career-form textarea {
+    resize: vertical; /* Permet le redimensionnement vertical du champ de texte */
+  }
+  
+  .add-career-form button {
+    margin-right: 0.5rem; /* Ajoute un espace à droite des boutons */
+  }
+  
+  .add-career-form .btn-primary {
+    margin-top: 1rem; /* Ajoute un espace au-dessus du bouton Ajouter */
+  }
+  
+  .add-career-form .btn-secondary {
+    margin-top: 1rem; /* Ajoute un espace au-dessus du bouton Annuler */
+  }
+  
