@@ -9,6 +9,6 @@ import java.util.List;
 
 @Repository
 public interface ReponseUserRepository extends JpaRepository<ReponseUser, Integer> {
-    List<ReponseUser> findByUserId(Integer userId);
-    List<ReponseUser> findByQuestionId(Integer questionId);
+    List<ReponseUser> findByUser_Id(Integer userId);
+    List<ReponseUser> findByQuestion_Id(Integer questionId);
 }

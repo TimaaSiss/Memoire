@@ -1,6 +1,7 @@
 package com.itma.speciassist.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.itma.speciassist.model.ReponseUser;
 
@@ -14,4 +15,5 @@ public interface ReponseUserService {
     void deleteReponse(Integer id);
 	String preprocessText(String reponseTextuelle);
 	List<ReponseUser> preprocessReponses(List<ReponseUser> reponses);
+	List<Map<String, Object>> getFormattedResponses();
 }

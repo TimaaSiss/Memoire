@@ -25,5 +25,15 @@ public class ReponseUser {
     @ManyToOne
     private Question question;
 
+	public Object getUserId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Long getQuestionId() {
+	    return question != null ? question.getId() : null;
+	}
+
+
    
 }

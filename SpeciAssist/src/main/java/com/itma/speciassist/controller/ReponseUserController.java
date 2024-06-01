@@ -1,6 +1,7 @@
 package com.itma.speciassist.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -85,5 +86,10 @@ public class ReponseUserController {
     @DeleteMapping("/{id}")
     public void deleteReponse(@PathVariable Integer id) {
         reponseService.deleteReponse(id);
+    }
+    
+    @GetMapping("/formatted-responses")
+    public List<Map<String, Object>> getFormattedResponses() {
+        return reponseService.getFormattedResponses();
     }
 }

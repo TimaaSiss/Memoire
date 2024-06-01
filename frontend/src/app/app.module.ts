@@ -50,9 +50,8 @@ import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.com
 
 @NgModule({
   declarations: [
-    AppComponent,
-    
-    HomeComponent,
+         AppComponent, 
+         HomeComponent,
          InscriptionComponent,
          ConnexionComponent,
          AdminComponent,

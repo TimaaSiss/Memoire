@@ -1,8 +1,13 @@
 package com.itma.speciassist.service.impl;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.itma.speciassist.model.ReponseUser;
 import com.itma.speciassist.repository.ReponseUserRepository;
 import com.itma.speciassist.service.ReponseUserService;
@@ -47,12 +52,12 @@ public class ReponseUserServiceImpl implements ReponseUserService {
 
     @Override
     public List<ReponseUser> getReponsesByUserId(Integer userId) {
-        return reponseRepository.findByUserId(userId);
+        return reponseRepository.findByUser_Id(userId);
     }
 
     @Override
     public List<ReponseUser> getReponsesByQuestionId(Integer questionId) {
-        return reponseRepository.findByQuestionId(questionId);
+        return reponseRepository.findByQuestion_Id(questionId);
     }
 
     @Override
@@ -97,5 +102,23 @@ public class ReponseUserServiceImpl implements ReponseUserService {
             }
         }
         return reponses;
+    }
+    
+    public List<Map<String, Object>> getFormattedResponses() {
+        List<ReponseUser> reponses = reponseRepository.findAll();
+        List<Map<String, Object>> formattedResponses = new ArrayList<>();
+
+        for (ReponseUser reponse : reponses) {
+            Map<String, Object> responseMap = new HashMap<>();
+            responseMap.put("user_id", reponse.getUser());
+            responseMap.put("question_id", reponse.getQuestion());
+            responseMap.put("reponse_textuelle", reponse.getReponseTextuelle());
+            responseMap.put("reponse_choisie", reponse.getReponseChoisie());
+
+            // Ajoutez d'autres champs nécessaires à l'analyse
+            formattedResponses.add(responseMap);
+        }
+
+        return formattedResponses;
     }
 }
