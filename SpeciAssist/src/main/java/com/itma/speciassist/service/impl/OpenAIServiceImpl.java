@@ -39,7 +39,7 @@ public class OpenAIServiceImpl implements OpenAIService {
 
 	    @Override
 	    public String callOpenAI(String userInput) {
-	        String apiUrl = "https://api.openai.com/v1/your-endpoint"; // Remplacez par l'URL correcte de l'API
+	        String apiUrl = "https://api.openai.com/v1/chat/completions"; // Remplacez par l'URL correcte de l'API
 	        HttpHeaders headers = new HttpHeaders();
 	        headers.setContentType(MediaType.APPLICATION_JSON);
 	        headers.setBearerAuth("your_api_key"); // Remplacez par votre clé API

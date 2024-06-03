@@ -59,6 +59,7 @@ export class CoursComponent implements OnInit {
     // Charger les utilisateurs suivants selon l'index de page
     this.dataSource = new MatTableDataSource<Course>(this.courses.slice(startIndex, endIndex));
   }
+  
   openAddCourseDialog(): void {
     const dialogRef = this.dialog.open(AddCourseDialogComponent, {
       width: '500px'

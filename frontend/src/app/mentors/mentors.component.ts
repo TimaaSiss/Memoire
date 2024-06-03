@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
+import { AddMentorComponent } from '@app/add-mentor/add-mentor.component';
+import { EditMentorComponent } from '@app/edit-mentor/edit-mentor.component';
 import { Mentor } from '@app/model/mentor.model';
 import { MentorService } from '@app/services/mentors.service';
 
@@ -22,7 +25,7 @@ export class MentorComponent implements OnInit {
 
   pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
 
-  constructor(private mentorService: MentorService) { }
+  constructor(private mentorService: MentorService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadMentors();
@@ -59,12 +62,37 @@ export class MentorComponent implements OnInit {
     this.dataSource = new MatTableDataSource<Mentor>(this.mentors.slice(startIndex, endIndex));
   }
 
+  openEditMentor(): void {
+    const dialogRef = this.dialog.open(AddMentorComponent, {
+      width: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.addMentor();
+      }
+    });
+  }
 
 
   addMentor(): void {
     this.mentorService.addMentor(this.newMentor).subscribe(() => {
       this.newMentor = new Mentor();
       this.loadMentors();
+    });
+  }
+
+  openEditDialog(mentor: Mentor): void {
+    const dialogRef = this.dialog.open(EditMentorComponent, {
+      width: '500px',
+      data: mentor // Passez le cours à votre composant de boîte de dialogue de modification
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Si des données sont renvoyées depuis la boîte de dialogue, mettez à jour le cours
+        this.updateMentor();
+      }
     });
   }
 
