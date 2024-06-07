@@ -18,10 +18,7 @@ public class ReponseUserServiceImpl implements ReponseUserService {
     @Autowired
     private ReponseUserRepository reponseRepository;
 
-    private static final List<String> STOP_WORDS = Arrays.asList(
-            "le", "la", "les", "de", "du", "des", "et", "ou", "mais"
-            // Ajoutez d'autres mots vides au besoin
-    );
+    
 
     @Override
     public ReponseUser addReponse(ReponseUser reponse) {
@@ -74,21 +71,7 @@ public class ReponseUserServiceImpl implements ReponseUserService {
         reponseRepository.deleteById(id);
     }
 
-    public String preprocessText(String text) {
-        // Nettoyage du texte : suppression de la ponctuation et mise en minuscules
-        text = text.replaceAll("[^a-zA-Z0-9\\s]", "").toLowerCase();
-        // Suppression des mots vides
-        text = removeStopWords(text);
-        return text;
-    }
-
-    private String removeStopWords(String text) {
-        // Suppression des mots vides de la liste
-        for (String stopWord : STOP_WORDS) {
-            text = text.replaceAll("\\b" + stopWord + "\\b", "");
-        }
-        return text.trim(); // Supprimez les espaces supplémentaires avant et après le texte
-    }
+  
 
     public List<ReponseUser> preprocessReponses(List<ReponseUser> reponses) {
         for (ReponseUser reponse : reponses) {
@@ -121,4 +104,10 @@ public class ReponseUserServiceImpl implements ReponseUserService {
 
         return formattedResponses;
     }
+
+	@Override
+	public String preprocessText(String reponseTextuelle) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

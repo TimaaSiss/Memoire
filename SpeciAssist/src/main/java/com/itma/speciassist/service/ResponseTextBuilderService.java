@@ -4,35 +4,49 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itma.speciassist.model.Question;
 import com.itma.speciassist.model.Questionnaire;
+import com.itma.speciassist.model.ReponseOpenAI;
 import com.itma.speciassist.model.ReponseUser;
+import com.itma.speciassist.model.User;
+import com.itma.speciassist.service.OpenAIService;
 
 @Service
 public class ResponseTextBuilderService {
 
-	   public String buildResponseText(List<ReponseUser> reponsesUser) {
-	        StringBuilder textBuilder = new StringBuilder();
+    @Autowired
+    private ReponseUserService reponseService;
 
-	        // Grouper les réponses par questionnaire
-	        Map<Questionnaire, List<ReponseUser>> groupedByQuestionnaire = reponsesUser.stream()
-	            .collect(Collectors.groupingBy(reponseUser -> reponseUser.getQuestion().getQuestionnaire()));
+    @Autowired
+    private OpenAIService openAIService;
 
-	        // Construire le texte
-	        groupedByQuestionnaire.forEach((questionnaire, responses) -> {
-	            textBuilder.append("Questionnaire: ").append(questionnaire.getTitre()).append("\n\n");
+    public String buildResponseText(Integer userId) {
+        StringBuilder textBuilder = new StringBuilder();
 
-	            for (ReponseUser reponseUser : responses) {
-	                Question question = reponseUser.getQuestion();
-	                if (question != null) {
-	                    textBuilder.append("Question: ").append(question.getLibelle()).append("\n");
-	                    textBuilder.append("Réponse: ").append(reponseUser.getReponseChoisie()).append("\n\n");
-	                }
-	            }
-	        });
+        textBuilder.append("Génère-moi une carrière correspondant a ses reponses : ").append("\n\n");
+        // get reponse user
+        List<ReponseUser> reponses = reponseService.getReponsesByUserId(userId);
 
-	        return textBuilder.toString();
-	    }
+        // Grouper les réponses par questionnaire
+        Map<Questionnaire, List<ReponseUser>> groupedByQuestionnaire = reponses.stream()
+                .collect(Collectors.groupingBy(reponseUser -> reponseUser.getQuestion().getQuestionnaire()));
+
+        // Construire le texte
+        groupedByQuestionnaire.forEach((questionnaire, responses) -> {
+            textBuilder.append("Questionnaire: ").append(questionnaire.getTitre()).append("\n\n");
+
+            for (ReponseUser reponseUser : responses) {
+                Question question = reponseUser.getQuestion();
+                if (question != null) {
+                    textBuilder.append("Question: ").append(question.getLibelle()).append("\n");
+                    textBuilder.append("Réponse: ").append(reponseUser.getReponseChoisie()).append("\n\n");
+                }
+            }
+        });
+
+        return textBuilder.toString();
+    }
 }

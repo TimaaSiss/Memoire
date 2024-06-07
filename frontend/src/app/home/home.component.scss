@@ -1,10 +1,10 @@
 .header_section {
   width: 100%;
   float: left;
-  background-color: #0e0d0d;
+  background-color: #000000;
   height: auto;
   padding-bottom: 0;
-  border-top: 25px solid #131212;
+  border-top: 25px solid #000000;
 }
 
 .logo {
@@ -122,7 +122,7 @@
   width: 100%;
   float: left;
   font-size: 46px;
-  color: #c2a20e;
+  color: #9fa4a5;
   font-weight: bold;
 }
 
@@ -146,13 +146,13 @@
  font-size: 20px;
  color: #ffffff;
  text-align: center;
- background-color: #c2a20e;
+ background-color: #9fa4a5;
  padding: 8px;
 }
 
 .read_bt a:hover{
   color: #ffffff;
-  background-color: #dac9c9;
+  background-color: #8b8989;
 }
 
 .image_8{
@@ -335,7 +335,7 @@
    float: left;
    font-size: 46px;
    font-weight: bold;
-   color: #c2a20e;
+   color: #81817e;
 }
 
 .contact_section_2 {
@@ -398,7 +398,7 @@ textarea#comment::placeholder {
 }
 
 .main_bt a {
-  background: #c2a20e;
+  background: #7c7c7a;
   border: none;
   color: #fff;
   height: 50px;
@@ -438,7 +438,7 @@ textarea#comment::placeholder {
   width: 100%;
   float: left;
   font-size: 24px;
-  color: #c2a20e;
+  color: #8b8b87;
   text-align: center;
   margin-left: 0px;
   margin-top: 0px;
@@ -462,7 +462,7 @@ textarea#comment::placeholder {
 .footer_section {
   width: 100%;
   float: left;
-  background-color: #c2a20e;
+  background-color: #949390;
   height: auto;
   padding-bottom: 90px;
 }
@@ -564,7 +564,7 @@ input.email_text::placeholder {
 .copyright_section{
   width: 100%;
   float: left;
-  background-color: #323131;
+  background-color: #000000;
   height: auto;
 }
 
@@ -573,12 +573,12 @@ input.email_text::placeholder {
   float: left;
   font-size: 16px;
   text-align: center;
-  color: #c2a20e;
+  color: #ffffff;
   margin-left: 0px;
 }
 
 .copyright_text a{
-  color: #c2a20e;
+  color: #a09f9a;
 }
 
 .copyright_text a:hover{
@@ -647,7 +647,7 @@ input.email_text::placeholder {
 
 .btn_main .active a {
   color: #ffffff;
-  background-color: #c2a20e;
+  background-color: #adaca7;
 }
 .btn_main li a {
   float: left;
@@ -688,7 +688,7 @@ input.email_text::placeholder {
 
 .way_main_text .active a {
   color: #ffffff;
-  background-color: #c2a20e;
+  background-color: #92918e;
 }
 .way_main_text li a {
   float: left;
@@ -704,7 +704,7 @@ input.email_text::placeholder {
   padding: 0px;
 }
 .way_main_text li a:hover {
-  background-color: #c2a20e;
+  background-color: #a7a5a0;
   color: #ffffff;
 }
 
@@ -726,18 +726,9 @@ input.email_text::placeholder {
 
 .header_section::after {
   display: block;
-  border-bottom: 5px solid #c2a108;
+  border-bottom: 5px solid #000000;
   height: 0px;
   width: 80%;
   content: "";
 }
 
-.carousel-indicators li {
-  position: relative;
-  width: 15px;
-  height: 15px;
-  background-color: #c2a20e;
-  top: -110px;
-  border-radius: 15px;
-  left: -50%;
-}
