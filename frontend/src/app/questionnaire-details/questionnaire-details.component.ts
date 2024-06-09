@@ -37,8 +37,8 @@ export class QuestionnaireDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // this.loadCurrentQuestionnaireIndex();
     this.loadUnansweredQuestionnaires();
+    this.otherAnswers;
   }
 
   loadUnansweredQuestionnaires(): void {
@@ -104,9 +104,9 @@ export class QuestionnaireDetailsComponent implements OnInit {
   validateOtherAnswer(questionId: number): void {
     const otherAnswer = this.otherAnswers[questionId];
     if (otherAnswer) {
-      this.selectedAnswers[questionId] = otherAnswer;
+      this.selectedAnswers[questionId] = '';
+      this.otherAnswers[questionId] = otherAnswer;
       alert('Votre réponse a été enregistrée.');
-      this.storePartialAnswers();
     } else {
       alert('Veuillez entrer une réponse.');
     }
@@ -139,7 +139,7 @@ export class QuestionnaireDetailsComponent implements OnInit {
     if (partialAnswersString) {
       const partialAnswers = JSON.parse(partialAnswersString);
       this.selectedAnswers = partialAnswers.selectedAnswers || {};
-      this.otherAnswers = partialAnswers.otherAnswers || {};
+      this.otherAnswers = partialAnswers.otherAnswers || {}; // Assurez-vous que les réponses textuelles sont correctement récupérées ici
     }
   }
 
@@ -148,10 +148,14 @@ export class QuestionnaireDetailsComponent implements OnInit {
       this.warningMessage = 'Veuillez répondre à toutes les questions avant de valider le questionnaire.';
       return;
     }
-
+  
+    // Enregistrer toutes les réponses dans la base de données
     this.saveUserResponses();
+  
+    // Mettre à jour la progression
     this.updateProgress();
-
+  
+    // Mettre à jour le nombre de questionnaires auxquels l'utilisateur a répondu
     if (this.currentUser) {
       if (this.currentUser.answeredQuestionnaires !== undefined) {
         this.currentUser.answeredQuestionnaires++;
@@ -159,14 +163,15 @@ export class QuestionnaireDetailsComponent implements OnInit {
         this.currentUser.answeredQuestionnaires = 1;
       }
     }
-
+  
+    // Charger le prochain questionnaire ou rediriger vers le profil si aucun questionnaire restant
     this.currentQuestionnaireIndex++;
     this.saveCurrentQuestionnaireIndex();
     this.loadNextQuestionnaire();
-
+  
+    // Mettre à jour les informations de l'utilisateur dans le stockage local
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
   }
-
   loadNextQuestionnaire(): void {
     if (this.currentQuestionnaireIndex < this.questionnaires.length) {
       this.currentQuestionnaire = this.questionnaires[this.currentQuestionnaireIndex];
@@ -199,16 +204,18 @@ export class QuestionnaireDetailsComponent implements OnInit {
     if (this.currentQuestionnaire) {
       for (const question of this.currentQuestionnaire.questions) {
         let reponseUser: ReponseUser;
-
-        if (this.otherAnswers[question.id]) {
+  
+        if (this.selectedAnswers[question.id] === 'Autre (spécifiez) ______________') {
+          // Si l'utilisateur a choisi "Autre (spécifiez) ______________", enregistrer la réponse textuelle
           reponseUser = {
-            reponseTextuelle: this.otherAnswers[question.id],
-            reponseChoisie: '',
+            reponseTextuelle: this.otherAnswers[question.id] || '', // Utiliser la réponse textuelle si elle est définie
+            reponseChoisie: '', // Laisser la réponse choisie vide
             date: new Date(),
             user: this.currentUser,
             question: { id: question.id } as Question
           };
         } else {
+          // Sinon, enregistrer la réponse choisie
           reponseUser = {
             reponseTextuelle: '',
             reponseChoisie: this.selectedAnswers[question.id] || '',
@@ -217,7 +224,11 @@ export class QuestionnaireDetailsComponent implements OnInit {
             question: { id: question.id } as Question
           };
         }
-
+  
+        console.log('Saving response for question:', question.id);
+        console.log('Response textuelle:', reponseUser.reponseTextuelle);
+        console.log('Response choisie:', reponseUser.reponseChoisie);
+  
         this.reponseUserService.save(reponseUser).subscribe(
           response => {
             console.log('Réponse enregistrée avec succès :', response);
@@ -229,13 +240,18 @@ export class QuestionnaireDetailsComponent implements OnInit {
       }
       this.clearPartialAnswers();
     }
-  }
+}
+
+
+  
+ 
+  
+
   clearPartialAnswers(): void {
     if (!this.currentUser || !this.currentQuestionnaire) return;
     const partialAnswersKey = `partialAnswers_${this.currentUser.id}_${this.currentQuestionnaire.id}`;
     localStorage.removeItem(partialAnswersKey);
   }
-  
 
   redirectToProfile(): void {
     this.router.navigate(['/profile']);

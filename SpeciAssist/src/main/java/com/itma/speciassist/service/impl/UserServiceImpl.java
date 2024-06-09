@@ -42,6 +42,22 @@ public class UserServiceImpl implements UserService {
 
         throw new AppException("Invalid password", HttpStatus.BAD_REQUEST);
     }
+    
+    @Override
+    public User addUser(User user) {
+        // Encodez le mot de passe avant de sauvegarder l'utilisateur
+        String encodedPassword = passwordEncoder.encode(CharBuffer.wrap(user.getPassword()));
+        user.setPassword(encodedPassword);
+        
+        // Définir le statut de l'utilisateur comme actif par défaut
+        user.setStatus(true);
+
+        // Enregistrer l'utilisateur dans la base de données
+        User savedUser = userRepository.save(user);
+        
+        // Retourner l'utilisateur enregistré
+        return savedUser;
+    }
 
     public User register(SignUpDto signUpDto) {
         Optional<User> oUser= userRepository.findByUsername(signUpDto.getUsername());
@@ -71,22 +87,7 @@ public class UserServiceImpl implements UserService {
         userRepository.save(user);
     }
 
-    @Override
-    public User addUser(User user) {
-        // Encodez le mot de passe avant de sauvegarder l'utilisateur
-        String encodedPassword = passwordEncoder.encode(CharBuffer.wrap(user.getPassword()));
-        user.setPassword(encodedPassword);
-        
-        // Définir le statut de l'utilisateur comme actif par défaut
-        user.setStatus(true);
-
-        // Enregistrer l'utilisateur dans la base de données
-        User savedUser = userRepository.save(user);
-        
-        // Retourner l'utilisateur enregistré
-        return savedUser;
-    }
-
+   
     @Override
     public List<User> allUsers() {
         return userRepository.findAll();

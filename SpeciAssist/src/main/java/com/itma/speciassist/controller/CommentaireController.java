@@ -27,7 +27,7 @@ public class CommentaireController {
         return commentaireService.getCommentaire(id);
     }
 
-
+    
     @GetMapping("/allComments")
     public List<Commentaire> getAllCommentaires() {
         return commentaireService.getAllCommentaires();
@@ -47,4 +47,5 @@ public class CommentaireController {
     public void deleteCommentaire(@PathVariable Integer id) {
         commentaireService.deleteCommentaire(id);
     }
+   
 }

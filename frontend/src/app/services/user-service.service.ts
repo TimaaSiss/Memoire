@@ -65,4 +65,9 @@ export class UserService {
   deactivateUser(userId: number): Observable<void> {
     return this.http.put<void>(`${this.usersUrl}/users/${userId}/deactivate`, null);
   }
+
+  getCurrentUser(): User | null {
+    const currentUser = localStorage.getItem('currentUser');
+    return currentUser ? JSON.parse(currentUser) : null;
+  }
 }

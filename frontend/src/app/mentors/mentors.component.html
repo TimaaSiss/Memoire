@@ -33,7 +33,7 @@
     <tbody>
       <tr *ngFor="let mentor of mentors">
         <td>{{ mentor.id }}</td>
-        <td>{{ mentor.user.id }}</td>
+
         <td>{{ mentor.specialite }}</td>
         <td>
           <div class="action-buttons">
@@ -60,9 +60,7 @@
   <div *ngIf="selectedMentor">
     <h4>Modifier le mentor</h4>
     <form (submit)="updateMentor()">
-      <label>User_id:</label>
-      <input type="text" [(ngModel)]="selectedMentor.user.id" name="user.id">
-      
+    
       <label>Spécialité:</label>
       <input type="text" [(ngModel)]="selectedMentor.specialite" name="specialite">
       <button type="submit" class="btn btn-success">Enregistrer</button>

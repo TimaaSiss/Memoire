@@ -9,7 +9,7 @@ public interface CommentaireService {
 
     List<Commentaire> getAllCommentaires();
 
-    Commentaire addCommentaire(Integer id);
+    
 
     Commentaire updateCommentaire(Integer id, Commentaire commentaire);
 
@@ -17,6 +17,9 @@ public interface CommentaireService {
 
 	Commentaire addCommentaire(Commentaire commentaire);
 
+	List<Commentaire> getCommentairesByCarriereId(Integer carriereId);
+
+	
 }
 
 

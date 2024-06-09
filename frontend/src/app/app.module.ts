@@ -48,6 +48,10 @@ import { EditEtabDialogComponent } from './edit-etab-dialog/edit-etab-dialog.com
 import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
 import { EditMentorComponent } from './edit-mentor/edit-mentor.component';
 import { AddMentorComponent } from './add-mentor/add-mentor.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MentorProfileComponent } from './profile-mentor/profile-mentor.component';
+
 
 
 @NgModule({
@@ -88,7 +92,8 @@ import { AddMentorComponent } from './add-mentor/add-mentor.component';
          EditEtabDialogComponent,
          EditUserDialogComponent,
          EditMentorComponent,
-         AddMentorComponent
+         AddMentorComponent,
+         MentorProfileComponent
 
   ],
   imports: [
@@ -102,7 +107,9 @@ import { AddMentorComponent } from './add-mentor/add-mentor.component';
     MatInputModule,
     MatTableModule,
     MatSortModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatButtonModule,
+    MatIconModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

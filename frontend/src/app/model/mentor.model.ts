@@ -1,10 +1,7 @@
-export class Mentor {
-    id!: number;
+import { User } from "./user";
+
+
+export class Mentor extends User {
     specialite!: string;
     active!: boolean;
-    user!: {
-      id: number;
-  };
-    
-  }
-  
+}

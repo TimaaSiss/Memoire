@@ -17,6 +17,8 @@ import { QuestionnaireDetailsComponent } from './questionnaire-details/questionn
 import { CareerDetailsComponent } from './career-details/career-details.component';
 import { FormationDetailsComponent } from './formation-details/formation-details.component';
 import { EtablissementComponent } from './etablissements/etablissements.component';
+import { MentorProfileComponent } from './profile-mentor/profile-mentor.component';
+
 const routes: Routes = [
   { path: '', component: HomeComponent }, // Route par défaut pour HomeComponent
   { path: 'register', component: InscriptionComponent }, // Route vers InscriptionComponent
@@ -34,11 +36,9 @@ const routes: Routes = [
   { path: 'questionnaires/:id', component: QuestionnaireDetailsComponent },
   {path: 'home', component: HomeComponent},
   { path: 'career-details/:careerName', component: CareerDetailsComponent },
-  {path: 'formation-details/:formationName', component: FormationDetailsComponent}
+  {path: 'formation-details/:formationName', component: FormationDetailsComponent},
+  {path: 'profileMentor', component: MentorProfileComponent}
  // { path: '**', redirectTo: 'questionnaires/1', pathMatch: 'full' }
-
-
-
 
 ];
 

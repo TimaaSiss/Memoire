@@ -27,8 +27,10 @@ export class InscriptionComponent {
         console.log('Utilisateur ajouté avec succès :', response);
         if (response.role === 'ADMIN') {
           this.router.navigate(['/admin']);
-        } else {
+        } else if(response.role === 'USER'){
           this.router.navigate(['/profile']);
+        }else{
+          this.router.navigate(['/profileMentor']);
         }
         this.formData = new User();
       },

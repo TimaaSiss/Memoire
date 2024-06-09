@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { QuestionnaireService } from '@app/services/questionnaire-service.service';
 import { Questionnaire } from '@app/model/questionnaire';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin',
@@ -11,7 +12,7 @@ export class AdminComponent implements OnInit {
   menuOpen= true;
   questionnaires: Questionnaire[] = [];
 
-  constructor(private questionnaireService: QuestionnaireService) { }
+  constructor(private questionnaireService: QuestionnaireService, private router: Router) { }
 
  
 
@@ -40,5 +41,10 @@ export class AdminComponent implements OnInit {
         console.error('Une erreur s\'est produite lors de la récupération des questionnaires : ', error);
       }
     );
+  }
+  logout(): void {
+    // Logique de déconnexion (par exemple, supprimer le token du localStorage)
+    localStorage.removeItem('authToken'); // Exemple de suppression d'un token d'authentification
+    this.router.navigate(['/home']); // Rediriger vers la page d'accueil
   }
 }

@@ -1,8 +1,11 @@
 <div class="admin-container">
-  <div >
+  <div class="header">
     <div></div>
     <div></div>
     <div></div>
+    <button mat-icon-button class="logout-icon" (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
   </div>
 
   <div class="sidebar" [class.active]="menuOpen">

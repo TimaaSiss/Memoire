@@ -1,23 +1,12 @@
 package com.itma.speciassist.model;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Entity
 @Data
-public class Mentor {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
+@EqualsAndHashCode(callSuper = true)
+public class Mentor extends User {
     private String specialite;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id") // Nom de la colonne pour la clé étrangère
-    private User user;
 }

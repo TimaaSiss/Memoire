@@ -22,7 +22,9 @@ export class ConnexionComponent {
         console.log('Connexion réussie : ', user);
         if (user.role === 'ADMIN') {
           this.router.navigate(['/admin']);
-        } else {
+        } else if(user.role==='MENTOR') {
+          this.router.navigate(['/profileMentor']);
+        } else{
           this.router.navigate(['/profile']);
         }
         this.formData = new CredentialsDto();

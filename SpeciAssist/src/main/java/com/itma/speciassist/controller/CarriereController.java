@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.itma.speciassist.model.Carriere;
+import com.itma.speciassist.model.Commentaire;
 import com.itma.speciassist.service.CarriereService;
+import com.itma.speciassist.service.CommentaireService;
 
 @RestController
 @RequestMapping("/carrieres")
@@ -21,6 +23,8 @@ public class CarriereController {
 
     @Autowired
     private CarriereService carriereService;
+    @Autowired
+    private CommentaireService commentaireService;
 
     @GetMapping("/allCarrieres")
     public List<Carriere> getAllCarrieres() {
@@ -50,5 +54,10 @@ public class CarriereController {
     @DeleteMapping("/deleteCarriere/{id}")
     public void deleteCarriere(@PathVariable Integer id) {
         carriereService.deleteCarriere(id);
+    }
+    
+    @GetMapping("/carriere/{carriereId}")
+    public List<Commentaire> getCommentairesByCarriereId(@PathVariable Integer carriereId) {
+        return commentaireService.getCommentairesByCarriereId(carriereId);
     }
 }

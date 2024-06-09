@@ -43,15 +43,20 @@ public class CommentaireServiceImpl implements CommentaireService {
         }
         return null;
     }
+    
+    @Override
+    public List<Commentaire> getCommentairesByCarriereId(Integer carriereId) {
+        return commentaireRepository.findByCarriereId(carriereId);
+    }
+
+    
 
     @Override
     public void deleteCommentaire(Integer id) {
         commentaireRepository.deleteById(id);
     }
 
-	@Override
-	public Commentaire addCommentaire(Integer id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
+
+	
 }
