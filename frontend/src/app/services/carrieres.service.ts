@@ -19,6 +19,7 @@ export class CarriereService {
   getCarriereById(id: number): Observable<Carriere> {
     return this.http.get<Carriere>(`${this.baseUrl}/getCarriere/${id}`);
   }
+  
 
  getCarriereByNom(nom: string): Observable<Carriere> {
     return this.http.get<Carriere>(`${this.baseUrl}/getCarriereByName/${nom}`);

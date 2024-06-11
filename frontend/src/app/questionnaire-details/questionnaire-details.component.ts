@@ -5,6 +5,8 @@ import { ReponseUserService } from '@app/services/reponse-user.service';
 import { Questionnaire, Question } from '../model/questionnaire';
 import { ReponseUser } from '@app/model/reponse-user.model';
 import { User } from '@app/model/user';
+import { ReponseOpenAI } from '@app/model/openai';
+import { ReponseOpenAIService } from '@app/services/openai.service';
 
 @Component({
   selector: 'app-questionnaire-details',
@@ -28,7 +30,8 @@ export class QuestionnaireDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private questionnaireService: QuestionnaireService,
-    private reponseUserService: ReponseUserService
+    private reponseUserService: ReponseUserService,
+    private reponseOpenAIService: ReponseOpenAIService
   ) {
     const currentUserString = localStorage.getItem('currentUser');
     if (currentUserString) {
@@ -37,8 +40,11 @@ export class QuestionnaireDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
     this.loadUnansweredQuestionnaires();
+    this.checkIfAllQuestionnairesCompleted(); // Ajoutez cet appel ici
     this.otherAnswers;
+   
   }
 
   loadUnansweredQuestionnaires(): void {
@@ -164,11 +170,36 @@ export class QuestionnaireDetailsComponent implements OnInit {
       }
     }
   
+     // Rediriger vers la page de résultat après avoir complété le dernier questionnaire
+     if (this.currentQuestionnaireIndex + 1 >= this.questionnaires.length) {
+      this.reponseOpenAIService.getReponsesByUserId(this.currentUser.id).subscribe(
+        (existingResponses: ReponseOpenAI[]) => {
+          if (existingResponses && existingResponses.length > 0) {
+            const existingResponse = existingResponses[0]; // Utilisez la première réponse ou appliquez une logique pour sélectionner la réponse appropriée
+            this.router.navigate(['/questionnaire-result'], { state: { response: existingResponse } });
+          } else {
+            this.reponseOpenAIService.generateReponse(this.currentUser.id).subscribe(
+              (newResponse: ReponseOpenAI) => {
+                this.router.navigate(['/questionnaire-result'], { state: { response: newResponse } });
+              },
+              (error) => {
+                console.error('Erreur lors de la génération de la réponse :', error);
+              }
+            );
+          }
+        },
+        (error) => {
+          console.error('Erreur lors de la récupération de la réponse existante :', error);
+        }
+      );
+  
+  
+  } else {
     // Charger le prochain questionnaire ou rediriger vers le profil si aucun questionnaire restant
     this.currentQuestionnaireIndex++;
     this.saveCurrentQuestionnaireIndex();
     this.loadNextQuestionnaire();
-  
+  }
     // Mettre à jour les informations de l'utilisateur dans le stockage local
     localStorage.setItem('currentUser', JSON.stringify(this.currentUser));
   }
@@ -253,6 +284,21 @@ export class QuestionnaireDetailsComponent implements OnInit {
     localStorage.removeItem(partialAnswersKey);
   }
 
+  checkIfAllQuestionnairesCompleted(): void {
+    if (this.currentUser && this.currentUser.id) {
+      this.questionnaireService.getUnansweredQuestionnaires(this.currentUser.id).subscribe(
+        (data: Questionnaire[]) => {
+          if (data.length === 0) {
+            this.router.navigate(['/questionnaire-result'], { state: { userId: this.currentUser.id } }); // Rediriger avec l'ID de l'utilisateur
+   
+          }
+        },
+        (error) => {
+          console.error('Error fetching questionnaires', error);
+        }
+      );
+    }
+  }
   redirectToProfile(): void {
     this.router.navigate(['/profile']);
   }

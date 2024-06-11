@@ -23,6 +23,22 @@
     </div>
   </div>
 </div>
+<br/><br/>
+
+<div class="container">
+  <h1 class="font-weight-bold">Vidéos des Mentors</h1>
+  <div class="scrollable-videos">
+    <div class="video-row">
+      <div class="video-card" *ngFor="let video of mentorVideos">
+        <video width="320" height="240" controls>
+          <source [src]="video.url" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <h2>{{ video.title }}</h2>
+      </div>
+    </div>
+  </div>
+</div>
 
 <div class="comment-section">
   <h2>Commentaires</h2>
@@ -35,5 +51,3 @@
     <button (click)="addCommentaire()">Publier</button>
   </div>
 </div>
-
-

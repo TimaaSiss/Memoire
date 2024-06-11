@@ -18,6 +18,7 @@ import { CareerDetailsComponent } from './career-details/career-details.componen
 import { FormationDetailsComponent } from './formation-details/formation-details.component';
 import { EtablissementComponent } from './etablissements/etablissements.component';
 import { MentorProfileComponent } from './profile-mentor/profile-mentor.component';
+import { QuestionnaireResultComponent } from './questionnaire-result/questionnaire-result.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, // Route par défaut pour HomeComponent
@@ -37,7 +38,9 @@ const routes: Routes = [
   {path: 'home', component: HomeComponent},
   { path: 'career-details/:careerName', component: CareerDetailsComponent },
   {path: 'formation-details/:formationName', component: FormationDetailsComponent},
-  {path: 'profileMentor', component: MentorProfileComponent}
+  {path: 'profileMentor', component: MentorProfileComponent},
+  { path: 'questionnaire-result', component: QuestionnaireResultComponent }, // Ajoutez la nouvelle route
+
  // { path: '**', redirectTo: 'questionnaires/1', pathMatch: 'full' }
 
 ];

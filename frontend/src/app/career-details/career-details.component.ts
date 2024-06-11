@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CarriereService } from './../services/carrieres.service';
 import { CommentaireService } from '@app/services/commentaires.service';
-import { UserService } from '@app/services/user-service.service'; // Importez le UserService
+import { UserService } from '@app/services/user-service.service';
+import { VideoMentorService } from '@app/services/video-mentor.service';
 import { Carriere } from '@app/model/carriere.model';
 import { Commentaire } from '@app/model/commentaires.model';
+import { VideoMentor } from '@app/model/video-mentor';
 import { User } from '@app/model/user';
 
 @Component({
@@ -18,12 +20,14 @@ export class CareerDetailsComponent implements OnInit {
   commentaires: Commentaire[] = [];
   commentContent: string = '';
   currentUser: User | null = null;
+  mentorVideos: VideoMentor[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private carriereService: CarriereService,
     private commentaireService: CommentaireService,
-    private userService: UserService // Injectez le UserService
+    private userService: UserService,
+    private videoMentorService: VideoMentorService
   ) { }
 
   ngOnInit(): void {
@@ -33,6 +37,7 @@ export class CareerDetailsComponent implements OnInit {
         this.careerDetails = data;
         if (this.careerDetails && this.careerDetails.id) {
           this.loadCommentaires(this.careerDetails.id);
+          this.loadMentorVideos(this.careerDetails.id);
         }
       },
       (error: any) => {
@@ -50,6 +55,17 @@ export class CareerDetailsComponent implements OnInit {
       },
       (error: any) => {
         console.error('Error fetching commentaires:', error);
+      }
+    );
+  }
+
+  loadMentorVideos(carriereId: number): void {
+    this.videoMentorService.getVideosByCarriereId(carriereId).subscribe(
+      (data: VideoMentor[]) => {
+        this.mentorVideos = data;
+      },
+      (error: any) => {
+        console.error('Error fetching mentor videos:', error);
       }
     );
   }

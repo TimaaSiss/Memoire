@@ -26,8 +26,8 @@ public class ResponseTextBuilderService {
     public String buildResponseText(Integer userId) {
         StringBuilder textBuilder = new StringBuilder();
 
-        textBuilder.append("Génère-moi une carrière correspondant a ses reponses : ").append("\n\n");
-        // get reponse user
+        textBuilder.append("Sur la base des réponses suivantes, suggère une carrière appropriée et bien evidement en francais s'il te plait :").append("\n\n");
+            // get reponse user
         List<ReponseUser> reponses = reponseService.getReponsesByUserId(userId);
 
         // Grouper les réponses par questionnaire

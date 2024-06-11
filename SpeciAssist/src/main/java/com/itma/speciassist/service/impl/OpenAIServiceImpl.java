@@ -3,6 +3,7 @@ package com.itma.speciassist.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -59,43 +60,43 @@ public class OpenAIServiceImpl implements OpenAIService {
     }
 
     @Override
-   public String callOpenAI(String userInput) {
-    String apiUrl = "https://api.aimlapi.com/chat/completions";
-    HttpHeaders headers = new HttpHeaders();
-    headers.setContentType(MediaType.APPLICATION_JSON);
-    headers.setBearerAuth(openaiApiKey);
+    public String callOpenAI(String userInput) {
+        String apiUrl = "https://api.aimlapi.com/chat/completions";
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(openaiApiKey);
 
-    Map<String, Object> requestBody = new HashMap<>();
-    requestBody.put("model", "mistralai/Mistral-7B-Instruct-v0.2");
-    requestBody.put("messages", List.of(Map.of("role", "user", "content", userInput)));
-    requestBody.put("max_tokens", 150);
+        Map<String, Object> requestBody = new HashMap<>();
+        requestBody.put("model", "mistralai/Mistral-7B-Instruct-v0.2");
+        requestBody.put("messages", List.of(Map.of("role", "user", "content", userInput)));
+        requestBody.put("max_tokens", 150);
 
-    HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
+        HttpEntity<Map<String, Object>> request = new HttpEntity<>(requestBody, headers);
 
-    try {
-        logger.info("Sending request to AIML API");
-        ResponseEntity<String> response = restTemplate.postForEntity(apiUrl, request, String.class);
-        logger.info("Received response from AIML API: {}", response.getStatusCode());
+        try {
+            logger.info("Sending request to AIML API");
+            ResponseEntity<String> response = restTemplate.postForEntity(apiUrl, request, String.class);
+            logger.info("Received response from AIML API: {}", response.getStatusCode());
 
-        if (response.getStatusCode() == HttpStatus.OK || response.getStatusCode() == HttpStatus.CREATED) {
-            logger.debug("Response body: {}", response.getBody());
-            return response.getBody();
-        } else {
-            throw new RuntimeException("Failed to call AIML API: " + response.getStatusCode());
-        }
-    } catch (HttpClientErrorException e) {
-        logger.error("HttpClientErrorException occurred: {}", e.getMessage());
-        if (e.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS) {
-           // retryAfterDelay(60000); // Wait for 60 seconds before retrying
-            return callOpenAI(userInput); // Retry the call after the delay
-        } else {
+            if (response.getStatusCode() == HttpStatus.OK || response.getStatusCode() == HttpStatus.CREATED) {
+                logger.debug("Response body: {}", response.getBody());
+                return response.getBody();
+            } else {
+                throw new RuntimeException("Failed to call AIML API: " + response.getStatusCode());
+            }
+        } catch (HttpClientErrorException e) {
+            logger.error("HttpClientErrorException occurred: {}", e.getMessage());
+            if (e.getStatusCode() == HttpStatus.TOO_MANY_REQUESTS) {
+               // retryAfterDelay(60000); // Wait for 60 seconds before retrying
+                return callOpenAI(userInput); // Retry the call after the delay
+            } else {
+                throw new RuntimeException("Failed to call AIML API: " + e.getMessage(), e);
+            }
+        } catch (Exception e) {
+            logger.error("Exception occurred: {}", e.getMessage());
             throw new RuntimeException("Failed to call AIML API: " + e.getMessage(), e);
         }
-    } catch (Exception e) {
-        logger.error("Exception occurred: {}", e.getMessage());
-        throw new RuntimeException("Failed to call AIML API: " + e.getMessage(), e);
     }
-}
     
     private String parseApiResponse(String apiResponse) {
         try {
@@ -132,9 +133,6 @@ public class OpenAIServiceImpl implements OpenAIService {
         return "";
     }
       
-   
-    
-
     @Override
     public ReponseOpenAI generateAndSaveResponse(Integer userId, String responseText) {
         logger.info("Generating and saving response for userId: {}", userId);
@@ -159,6 +157,9 @@ public class OpenAIServiceImpl implements OpenAIService {
         logger.info("Saved response for userId: {}", userId);
         return savedResponse;
     }
-
-
+    
+    @Override
+    public List<ReponseOpenAI> findAllReponsesByUserId(Integer userId) {
+        return reponseOpenAIRepository.findByUserId(userId);
+    }
 }

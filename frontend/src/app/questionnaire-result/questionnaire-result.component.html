@@ -1,0 +1,8 @@
+<div class="result-container" *ngIf="response">
+    <h1>Résultat du Questionnaire</h1>
+    <p>{{ response.reponseAPI }}</p> <!-- Affichez les détails du résultat ici -->
+    <button (click)="goToProfile()">Retour au profil</button>
+</div>
+<div *ngIf="!response">
+    <p>Chargement des résultats...</p>
+  </div>
