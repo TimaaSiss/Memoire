@@ -1,22 +1,30 @@
 package com.itma.speciassist.service.impl;
 
+import java.nio.CharBuffer;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.itma.speciassist.model.Mentor;
 import com.itma.speciassist.repository.MentorRepository;
 import com.itma.speciassist.service.MentorService;
 
+import lombok.AllArgsConstructor;
+
 @Service
-public class MentorServiceImpl implements MentorService {
+@AllArgsConstructor
+class MentorServiceImpl implements MentorService {
 
-    @Autowired
+  
     private MentorRepository mentorRepository;
-
+    private PasswordEncoder passwordEncoder;
     @Override
     public Mentor addMentor(Mentor mentor) {
+    	  String encodedPassword = passwordEncoder.encode(CharBuffer.wrap(mentor.getPassword()));
+    	  mentor.setPassword(encodedPassword);
+          
         return mentorRepository.save(mentor);
     }
 

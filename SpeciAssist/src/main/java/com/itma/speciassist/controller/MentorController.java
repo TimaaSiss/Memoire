@@ -22,27 +22,27 @@ public class MentorController {
     @Autowired
     private MentorService mentorService;
 
-    @PostMapping("/addMentor")
+    @PostMapping()
     public Mentor addMentor(@RequestBody Mentor mentor) {
         return mentorService.addMentor(mentor);
     }
 
-    @GetMapping("/allMentors")
+    @GetMapping()
     public List<Mentor> getAllMentors() {
         return mentorService.getAllMentors();
     }
 
-    @GetMapping("/getMentor/{id}")
+    @GetMapping("/{id}")
     public Mentor getMentorById(@PathVariable Integer id) {
         return mentorService.getMentorById(id);
     }
 
-    @PutMapping("/updateMentor/{id}")
+    @PutMapping("/{id}")
     public Mentor updateMentor(@PathVariable Integer id, @RequestBody Mentor mentor) {
         return mentorService.updateMentor(id, mentor);
     }
 
-    @DeleteMapping("/deleteMentor/{id}")
+    @DeleteMapping("/{id}")
     public void deleteMentor(@PathVariable Integer id) {
         mentorService.deleteMentor(id);
     }

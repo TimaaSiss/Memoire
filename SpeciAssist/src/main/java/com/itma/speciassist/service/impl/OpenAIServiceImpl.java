@@ -49,7 +49,7 @@ public class OpenAIServiceImpl implements OpenAIService {
     }
 
     @PostConstruct
-    public void init() {
+     public void init() {
         // Log API Key to verify
         logger.info("Using OpenAI API Key in PostConstruct: {}", openaiApiKey);  // REMOVE in production
     }

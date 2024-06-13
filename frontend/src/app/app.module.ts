@@ -52,6 +52,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MentorProfileComponent } from './profile-mentor/profile-mentor.component';
 import { QuestionnaireResultComponent } from './questionnaire-result/questionnaire-result.component';
+import { CommentairesComponent } from './commentaires/commentaires.component';
 
 
 
@@ -95,7 +96,8 @@ import { QuestionnaireResultComponent } from './questionnaire-result/questionnai
          EditMentorComponent,
          AddMentorComponent,
          MentorProfileComponent,
-         QuestionnaireResultComponent
+         QuestionnaireResultComponent,
+         CommentairesComponent
 
   ],
   imports: [

@@ -12,22 +12,22 @@ export class MentorService {
   constructor(private http: HttpClient) { }
 
   addMentor(mentor: Mentor): Observable<Mentor> {
-    return this.http.post<Mentor>(`${this.apiUrl}/addMentor`, mentor);
+    return this.http.post<Mentor>(`${this.apiUrl}`, mentor);
   }
 
   getAllMentors(): Observable<Mentor[]> {
-    return this.http.get<Mentor[]>(`${this.apiUrl}/allMentors`);
+    return this.http.get<Mentor[]>(`${this.apiUrl}`);
   }
 
   getMentorById(id: number): Observable<Mentor> {
-    return this.http.get<Mentor>(`${this.apiUrl}/getMentor/${id}`);
+    return this.http.get<Mentor>(`${this.apiUrl}/${id}`);
   }
 
   updateMentor(id: number, mentor: Mentor): Observable<Mentor> {
-    return this.http.put<Mentor>(`${this.apiUrl}/updateMentor/${id}`, mentor);
+    return this.http.put<Mentor>(`${this.apiUrl}/${id}`, mentor);
   }
 
   deleteMentor(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/deleteMentor/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

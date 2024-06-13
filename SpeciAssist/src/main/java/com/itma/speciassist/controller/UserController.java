@@ -49,9 +49,7 @@ public class UserController {
          //   return ResponseEntity.badRequest().body("Les mots de passe ne correspondent pas");
         //}
         // Assignez la valeur de confirmPassword à l'attribut correspondant dans l'entité User
-        user.setConfirmPassword(user.getPassword());
-
-
+       
         try {
             // Ajoutez votre logique pour ajouter l'utilisateur à la base de données
             User addedUser = userService.addUser(user);

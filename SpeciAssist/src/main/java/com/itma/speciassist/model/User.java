@@ -1,6 +1,8 @@
 package com.itma.speciassist.model;
 
 import java.util.List;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,6 +10,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,21 +19,21 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor 
 @Inheritance(strategy = InheritanceType.JOINED)
-
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nom;
     private String prenom;
+    @Column(unique = true)
     private String username;
     private String mail;
+    @Transient
     private String token;
 
     @NotEmpty(message = "Le champ du mot de passe ne peut pas être vide")
     private String password;
-    private String confirmPassword; // Champ de confirmation du mot de passe
-    
+  
     private boolean status;
 
     private Role role; // Modification de l'attribut de rôle pour utiliser l'énumération

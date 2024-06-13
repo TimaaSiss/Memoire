@@ -20,15 +20,15 @@ export class MentorProfileComponent implements OnInit {
     const currentUserString = localStorage.getItem('currentUser');
     if (currentUserString) {
       const currentUser = JSON.parse(currentUserString);
-      console.log('currentUser:', currentUser); // Vérifiez si l'utilisateur est récupéré correctement
+      console.log('currentUser 111:', currentUser); // Vérifiez si l'utilisateur est récupéré correctement
       
       this.prenom = currentUser.prenom || ''; // Assurez-vous de vérifier si les propriétés existent
       this.nom = currentUser.nom || '';
       this.mail = currentUser.mail || '';
   
-      if (currentUser.specialite) {
+      
         this.mentorService.getMentorById(currentUser.id).subscribe(
-          (mentorDetails: Mentor) => {
+          (mentorDetails) => {
             console.log('mentorDetails:', mentorDetails); // Vérifiez si les détails du mentor sont récupérés correctement
             this.specialite = mentorDetails.specialite || '';
           },
@@ -36,7 +36,7 @@ export class MentorProfileComponent implements OnInit {
             console.error('Erreur lors de la récupération des détails du mentor : ', error);
           }
         );
-      } 
+       
     } 
   }
 }
