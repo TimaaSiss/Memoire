@@ -22,27 +22,27 @@ public class EtablissementController {
     @Autowired
     private EtablissementService etablissementService;
 
-    @GetMapping("/allEtablissements")
+    @GetMapping()
     public List<Etablissement> getAllEtablissements() {
         return etablissementService.allEtablissements();
     }
 
-    @GetMapping("/getEtablissement/{id}")
+    @GetMapping("/{id}")
     public Etablissement getEtablissementById(@PathVariable Integer id) {
         return etablissementService.getEtablissement(id);
     }
 
-    @PostMapping("/addEtablissement")
+    @PostMapping()
     public Etablissement addEtablissement(@RequestBody Etablissement etablissement) {
         return etablissementService.addEtablissement(etablissement);
     }
 
-    @PutMapping("/updateEtablissement/{id}")
+    @PutMapping("update/{id}")
     public Etablissement updateEtablissement(@PathVariable Integer id, @RequestBody Etablissement etablissement) {
         return etablissementService.updateEtablissement(id, etablissement);
     }
 
-    @DeleteMapping("/deleteEtablissement/{id}")
+    @DeleteMapping("/{id}")
     public void deleteEtablissement(@PathVariable Integer id) {
         etablissementService.deleteEtablissement(id);
     }

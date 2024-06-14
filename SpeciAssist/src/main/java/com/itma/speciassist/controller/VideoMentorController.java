@@ -15,7 +15,7 @@ public class VideoMentorController {
     @Autowired
     private VideoMentorService videoMentorService;
 
-    @GetMapping("/byCareer/{carriereId}")
+    @GetMapping("/{carriereId}")
     public List<VideoMentor> getVideosByCarriereId(@PathVariable Long carriereId) {
         return videoMentorService.getVideosByCarriereId(carriereId);
     }

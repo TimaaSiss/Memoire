@@ -1,5 +1,5 @@
 <!-- edit-carriere-dialog.component.html -->
-
+<div class="scrollable-form-container">
 <h2 class="text-center mb-4">Modifier la carrière</h2>
 <form class="edit-carriere-form" (ngSubmit)="onSubmit()">
   <div class="form-group">
@@ -26,6 +26,14 @@
     <label for="image"><strong>Image:</strong></label>
     <input type="text" class="form-control" id="image" [(ngModel)]="editedCarriere.image" name="image" required>
   </div>
+  <div class="form-group">
+    <label><strong>Formations:</strong></label>
+    <div *ngFor="let formation of formations">
+      <input type="checkbox" [value]="formation.id" [checked]="isSelectedFormation(formation.id)" (change)="onFormationSelectionChange(formation.id, $event)">
+      {{ formation.titre }}
+    </div>
+  </div>
   <button type="submit" class="btn btn-primary">Enregistrer</button>
   <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Annuler</button>
 </form>
+</div>

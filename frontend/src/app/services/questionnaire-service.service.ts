@@ -11,33 +11,33 @@ export class QuestionnaireService {
   private questionnairesUrl: string;
 
   constructor(private http: HttpClient) {
-    this.questionnairesUrl = 'http://localhost:8080'; // Assurez-vous de remplacer l'URL par celle de votre API
+    this.questionnairesUrl = 'http://localhost:8080/questionnaires'; // Assurez-vous de remplacer l'URL par celle de votre API
   }
 
   // Méthode pour récupérer les questions associées à un questionnaire spécifique
   public getQuestionsByQuestionnaireId(questionnaireId: number): Observable<Questionnaire> {
-    return this.http.get<Questionnaire>(`${this.questionnairesUrl}/questionnaires/getQuestionnaire/${questionnaireId}`);
+    return this.http.get<Questionnaire>(`${this.questionnairesUrl}/${questionnaireId}`);
   }
   
 
   public getAllQuestionnaires(): Observable<Questionnaire[]> {
-    return this.http.get<Questionnaire[]>(`${this.questionnairesUrl}/questionnaires/all`);
+    return this.http.get<Questionnaire[]>(`${this.questionnairesUrl}`);
   }
 
   public addQuestionnaire(questionnaire: Questionnaire): Observable<Questionnaire> {
-    return this.http.post<Questionnaire>(`${this.questionnairesUrl}/questionnaires/addQuestionnaire`, questionnaire);
+    return this.http.post<Questionnaire>(`${this.questionnairesUrl}`, questionnaire);
   }
 
   public updateQuestionnaire(questionnaireId: number, questionnaire: Questionnaire): Observable<Questionnaire> {
-    return this.http.put<Questionnaire>(`${this.questionnairesUrl}/questionnaires/update/${questionnaireId}`, questionnaire);
+    return this.http.put<Questionnaire>(`${this.questionnairesUrl}/${questionnaireId}`, questionnaire);
   }
 
   public getQuestionnaireById(questionnaireId: number): Observable<Questionnaire> {
-    return this.http.get<Questionnaire>(`${this.questionnairesUrl}/questionnaires/getQuestionnaire/${questionnaireId}`);
+    return this.http.get<Questionnaire>(`${this.questionnairesUrl}/${questionnaireId}`);
   }
 
   public deleteQuestionnaire(questionnaireId: number): Observable<void> {
-    return this.http.delete<void>(`${this.questionnairesUrl}/questionnaires/delete/${questionnaireId}`);
+    return this.http.delete<void>(`${this.questionnairesUrl}/${questionnaireId}`);
   }
 
  // getUnansweredQuestions(userId: number): Observable<Question[]> {
@@ -45,7 +45,7 @@ export class QuestionnaireService {
  // }
 
   getUnansweredQuestionnaires(userId: number): Observable<Questionnaire[]> {
-    return this.http.get<Questionnaire[]>(`${this.questionnairesUrl}/questionnaires/unanswered/${userId}`);
+    return this.http.get<Questionnaire[]>(`${this.questionnairesUrl}/unanswered/${userId}`);
   }
 
 }

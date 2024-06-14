@@ -27,6 +27,12 @@
           <p>{{ formationDetails.prix }}</p>
       </div>
       <div class="info-section">
+        <h2>Carrières Associées</h2>
+        <ul>
+          <li *ngFor="let formation of formationDetails.carrieres">{{ formation.nom }}</li>
+        </ul>
+      </div>
+      <div class="info-section">
           <h2>Établissements</h2>
           <ul>
               <li *ngFor="let etablissement of formationDetails.etablissements">

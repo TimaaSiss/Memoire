@@ -74,7 +74,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/allUsers")
+    @GetMapping()
     public List<User> getAllUsers() {
         return userService.allUsers();
     }
@@ -86,19 +86,19 @@ public class UserController {
         return userService.allUsers(pageable);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public User getUserById(@PathVariable Integer id) {
         return userService.getUserById(id);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable Integer id, @RequestBody User user) {
         userService.updateUser(id, user);
         return ResponseEntity.noContent().build();
     }
    
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
         return ResponseEntity.noContent().build();

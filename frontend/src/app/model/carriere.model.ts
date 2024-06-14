@@ -1,3 +1,5 @@
+import { Formation } from "./formation.model";
+
 export class Carriere {
     id!: number;
     nom!: string;
@@ -5,6 +7,7 @@ export class Carriere {
     secteur!: string;
     competences_requises!: string;
     salaire!: string;
-    image!:string
+    image!:string;
+    formations!:Formation[];
   }
   

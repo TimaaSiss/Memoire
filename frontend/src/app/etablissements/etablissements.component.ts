@@ -16,7 +16,7 @@ import { Etablissement } from '@app/model/etablissement.model';
 export class EtablissementComponent implements OnInit {
   etablissements: Etablissement[] = [];
   selectedEtablissement: Etablissement | null = null;
-   newEtablissement: Etablissement = {id: 0,nom: '', lieu: '', telephone: '', email: '' }; // Ajoutez cette propriété pour représenter la nouvelle formation à ajouter
+   newEtablissement: Etablissement = {id: 0,nom: '',code_libelle:'', lieu: '', telephone: '', email: '', formations:[] }; // Ajoutez cette propriété pour représenter la nouvelle formation à ajouter
    menuOpen=true;
 
    dataSource = new MatTableDataSource<Etablissement>(); // Source de données pour la table

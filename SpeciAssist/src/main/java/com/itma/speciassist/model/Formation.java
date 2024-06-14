@@ -32,6 +32,13 @@ public class Formation {
     )
     private List<Etablissement> etablissements;
 
+    
+    @ManyToMany
+    @JoinTable(
+        name = "formation_carriere",
+        joinColumns = @JoinColumn(name = "formation_id"),
+        inverseJoinColumns = @JoinColumn(name = "carriere_id"))
+    private List<Carriere> carrieres;
 	public Object getFormationWithEtablissementsByTitre() {
 		// TODO Auto-generated method stub
 		return null;

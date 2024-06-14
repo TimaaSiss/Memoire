@@ -14,4 +14,6 @@ public interface FormationRepository extends JpaRepository<Formation, Integer> {
 	List<Formation> findAll();
 
 	Optional<Formation> findByTitre(String titre);
+
+	Formation findFormationWithCarrieresByTitre(String titre);
 }

@@ -25,12 +25,12 @@ public class QuestionnaireController {
     @Autowired
     private QuestionnaireService questionnaireService;
 
-    @GetMapping("/all")
+    @GetMapping()
     public List<Questionnaire> getAllQuestionnaires() {
         return questionnaireService.getAllQuestionnaires();
     }
 
-    @PostMapping("/addQuestionnaire")
+    @PostMapping()
     public ResponseEntity<Questionnaire> addQuestionnaire(@RequestBody Questionnaire questionnaire) {
         try {
             Questionnaire savedQuestionnaire = questionnaireService.addQuestionnaire(questionnaire);
@@ -40,7 +40,7 @@ public class QuestionnaireController {
         }
     }
 
-    @GetMapping("/getQuestionnaire/{id}")
+    @GetMapping("/{id}")
     public Questionnaire getQuestionnaireById(@PathVariable Long id) {
         return questionnaireService.getQuestionnaireById(id);
     }
@@ -50,12 +50,12 @@ public class QuestionnaireController {
         return questionnaireService.getQuestionsByQuestionnaire(id);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public Questionnaire updateQuestionnaire(@PathVariable Long id, @RequestBody Questionnaire questionnaire) {
         return questionnaireService.updateQuestionnaire(id, questionnaire);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteQuestionnaire(@PathVariable Long id) {
         questionnaireService.deleteQuestionnaire(id);
     }

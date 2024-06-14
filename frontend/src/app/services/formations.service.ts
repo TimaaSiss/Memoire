@@ -23,11 +23,11 @@ export class FormationService {
   
  
   getFormationWithEtablissementsByTitre(titre: string): Observable<Formation> {
-    return this.http.get<Formation>(`${this.apiUrl}/getFormationByTitre/${titre}`);
+    return this.http.get<Formation>(`${this.apiUrl}/getFormationByTitre/${encodeURIComponent(titre)}`);
   }
 
   addFormation(formation: Formation): Observable<Formation> {
-    return this.http.post<Formation>(`${this.apiUrl}/addFormation`, formation);
+    return this.http.post<Formation>(`${this.apiUrl}/add`, formation);
   }
 
   updateFormation(id: number, formation: Formation): Observable<Formation> {

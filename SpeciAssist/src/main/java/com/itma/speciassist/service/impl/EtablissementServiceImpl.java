@@ -1,5 +1,5 @@
 package com.itma.speciassist.service.impl;
-
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.itma.speciassist.model.Etablissement;
+import com.itma.speciassist.model.Formation;
 import com.itma.speciassist.repository.EtablissementRepository;
+import com.itma.speciassist.repository.FormationRepository;
 import com.itma.speciassist.service.EtablissementService;
 
 @Service
@@ -17,8 +19,15 @@ public class EtablissementServiceImpl implements EtablissementService {
     @Autowired
     private EtablissementRepository etablissementRepository;
     
+    @Autowired
+    private FormationRepository formationRepository;
+    
     @Override
     public Etablissement addEtablissement(Etablissement etablissement) {
+        List<Formation> formations = formationRepository.findAllById(
+            etablissement.getFormations().stream().map(Formation::getId).toList()
+        );
+        etablissement.setFormations(formations);
         return etablissementRepository.save(etablissement);
     }
 
@@ -33,12 +42,23 @@ public class EtablissementServiceImpl implements EtablissementService {
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Etablissement not found with ID: " + id));
     }
 
+    
     @Override
     public Etablissement updateEtablissement(Integer id, Etablissement etablissement) {
         if (!etablissementRepository.existsById(id)) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Etablissement not found with ID: " + id);
         }
         etablissement.setId(id);
+
+        // Initialiser la liste des formations si elle est null
+        if (etablissement.getFormations() == null) {
+            etablissement.setFormations(new ArrayList<>());
+        }
+
+        List<Formation> formations = formationRepository.findAllById(
+            etablissement.getFormations().stream().map(Formation::getId).toList()
+        );
+        etablissement.setFormations(formations);
         return etablissementRepository.save(etablissement);
     }
 
@@ -49,6 +69,7 @@ public class EtablissementServiceImpl implements EtablissementService {
         }
         etablissementRepository.deleteById(id);
     }
+
 
 	@Override
 	public Etablissement getEtablissementById(Integer etablissementId) {

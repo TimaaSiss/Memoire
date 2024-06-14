@@ -25,12 +25,12 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
-    @GetMapping("/allQuestions")
+    @GetMapping()
     public List<Question> getAllQuestions() {
         return questionService.getAllQuestions();
     }
 
-    @PostMapping("/addQuestion")
+    @PostMapping()
     public Question addQuestion(@RequestBody Question question) {
         // Récupérer le questionnaire correspondant à l'ID spécifié
         Questionnaire questionnaire = question.getQuestionnaire();
@@ -49,17 +49,17 @@ public class QuestionController {
         return addedQuestion;
     }
 
-    @GetMapping("/getQuestion/{id}")
+    @GetMapping("/{id}")
     public Question getQuestionById(@PathVariable Long id) {
         return questionService.getQuestionById(id);
     }
 
-    @PutMapping("/updateQuestion/{id}")
+    @PutMapping("/{id}")
     public Question updateQuestion(@PathVariable Long id, @RequestBody Question question) {
         return questionService.updateQuestion(id, question);
     }
 
-    @DeleteMapping("/deleteQuestion/{id}")
+    @DeleteMapping("/{id}")
     public void deleteQuestion(@PathVariable Long id) {
         questionService.deleteQuestion(id);
     }

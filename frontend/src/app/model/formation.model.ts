@@ -1,7 +1,8 @@
+import { Carriere } from "./carriere.model";
 import { Etablissement } from "./etablissement.model";
 
 export class Formation {
-    id?: number;
+    id!: number;
     titre: string;
     description: string;
     duree: string;
@@ -9,6 +10,7 @@ export class Formation {
     contenu: string;
     image:string;
     etablissements!: Etablissement[];
+    carrieres!: Carriere[];
   
     constructor() {
       this.id = 0;
@@ -18,7 +20,8 @@ export class Formation {
       this.prix = 0;
       this.contenu = '';
       this.image='';
-      this.etablissements=[]
+      this.etablissements=[],
+      this.carrieres=[]
     }
   }
   

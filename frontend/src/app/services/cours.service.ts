@@ -13,22 +13,22 @@ export class CourseService {
   constructor(private http: HttpClient) { }
 
   getAllCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.baseUrl}/allCours`);
+    return this.http.get<Course[]>(`${this.baseUrl}`);
   }
 
   getCourseById(id: number): Observable<Course> {
-    return this.http.get<Course>(`${this.baseUrl}/getCours/${id}`);
+    return this.http.get<Course>(`${this.baseUrl}/${id}`);
   }
 
   addCourse(course: Course): Observable<Course> {
-    return this.http.post<Course>(`${this.baseUrl}/addCours`, course);
+    return this.http.post<Course>(`${this.baseUrl}`, course);
   }
 
   updateCourse(id: number, course: Course): Observable<Course> {
-    return this.http.put<Course>(`${this.baseUrl}/updateCours/${id}`, course);
+    return this.http.put<Course>(`${this.baseUrl}/${id}`, course);
   }
 
   deleteCourse(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/deleteCours/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
 }

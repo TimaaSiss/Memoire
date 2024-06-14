@@ -1,31 +1,66 @@
 <h2 class="text-center">Ajouter une Formation</h2>
-<form class="add-course-form" (ngSubmit)="onSubmit()">
+<form class="add-course-form" [formGroup]="addFormationForm" (ngSubmit)="onSubmit()">
   <div class="dialog-content scrollable-content">
     <div class="form-group">
       <label for="titre">Titre :</label>
-      <input type="text" class="form-control" id="titre" [(ngModel)]="newFormation.titre" name="titre" required>
+      <input type="text" class="form-control" id="titre" formControlName="titre" required>
+      <div *ngIf="addFormationForm.get('titre')?.invalid && (addFormationForm.get('titre')?.dirty || addFormationForm.get('titre')?.touched)"
+           class="text-danger">
+        <small *ngIf="addFormationForm.get('titre')?.errors?.required">Titre requis.</small>
+      </div>
     </div>
     <div class="form-group">
       <label for="description"><strong>Description:</strong></label>
-      <textarea class="form-control" id="description" [(ngModel)]="newFormation.description" name="description" rows="4" required></textarea>
+      <textarea class="form-control" id="description" formControlName="description" rows="4" required></textarea>
+      <div *ngIf="addFormationForm.get('description')?.invalid && (addFormationForm.get('description')?.dirty || addFormationForm.get('description')?.touched)"
+           class="text-danger">
+        <small *ngIf="addFormationForm.get('description')?.errors?.required">Description requise.</small>
+      </div>
     </div>
     <div class="form-group">
       <label for="duree">Durée :</label>
-      <input type="text" class="form-control" id="duree" [(ngModel)]="newFormation.duree" name="duree" required>
+      <input type="text" class="form-control" id="duree" formControlName="duree" required>
+      <div *ngIf="addFormationForm.get('duree')?.invalid && (addFormationForm.get('duree')?.dirty || addFormationForm.get('duree')?.touched)"
+           class="text-danger">
+        <small *ngIf="addFormationForm.get('duree')?.errors?.required">Durée requise.</small>
+      </div>
     </div>
     <div class="form-group">
       <label for="prix">Prix :</label>
-      <input type="text" class="form-control" id="prix" [(ngModel)]="newFormation.prix" name="prix" required>
+      <input type="text" class="form-control" id="prix" formControlName="prix" required>
+      <div *ngIf="addFormationForm.get('prix')?.invalid && (addFormationForm.get('prix')?.dirty || addFormationForm.get('prix')?.touched)"
+           class="text-danger">
+        <small *ngIf="addFormationForm.get('prix')?.errors?.required">Prix requis.</small>
+      </div>
     </div>
     <div class="form-group">
       <label for="contenu">Contenu :</label>
-      <input type="text" class="form-control" id="contenu" [(ngModel)]="newFormation.contenu" name="contenu" required>
+      <input type="text" class="form-control" id="contenu" formControlName="contenu" required>
+      <div *ngIf="addFormationForm.get('contenu')?.invalid && (addFormationForm.get('contenu')?.dirty || addFormationForm.get('contenu')?.touched)"
+           class="text-danger">
+        <small *ngIf="addFormationForm.get('contenu')?.errors?.required">Contenu requis.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="image">Image :</label>
+      <input type="text" class="form-control" id="image" formControlName="image" required>
+      <div *ngIf="addFormationForm.get('image')?.invalid && (addFormationForm.get('image')?.dirty || addFormationForm.get('image')?.touched)"
+           class="text-danger">
+        <small *ngIf="addFormationForm.get('image')?.errors?.required">Image requise.</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label><strong>Carrières associées:</strong></label>
+      <div *ngFor="let carriere of carrieres">
+        <input type="checkbox" [value]="carriere.id" (change)="onCarriereSelectionChange(carriere.id, $event)">
+        {{ carriere.nom }}
+      </div>
     </div>
     <div class="form-group">
       <label>Établissements :</label>
       <div *ngFor="let etablissement of etablissements">
         <input type="checkbox" [value]="etablissement.id" (change)="onEtablissementSelectionChange(etablissement.id, $event)" name="etablissement-{{etablissement.id}}">
-        {{etablissement.nom}}
+        {{ etablissement.nom }}
       </div>
     </div>
   </div>

@@ -21,6 +21,12 @@
       <h2>Salaire</h2>
       <p>{{ careerDetails.salaire }}</p>
     </div>
+    <div class="info-section">
+      <h2>Formations</h2>
+      <ul>
+        <li *ngFor="let formation of careerDetails.formations">{{ formation.titre }}</li>
+      </ul>
+    </div>
   </div>
 </div>
 <br/><br/>

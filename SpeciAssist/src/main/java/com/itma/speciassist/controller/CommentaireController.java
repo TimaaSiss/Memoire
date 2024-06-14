@@ -22,28 +22,28 @@ public class CommentaireController {
     @Autowired
     private CommentaireService commentaireService;
 
-    @GetMapping("/getComment/{id}")
+    @GetMapping("/{id}")
     public Commentaire getCommentaireById(@PathVariable Integer id) {
         return commentaireService.getCommentaire(id);
     }
 
     
-    @GetMapping("/allComments")
+    @GetMapping()
     public List<Commentaire> getAllCommentaires() {
         return commentaireService.getAllCommentaires();
     }
 
-    @PostMapping("/addComment")
+    @PostMapping()
     public Commentaire addCommentaire(@RequestBody Commentaire commentaire) {
         return commentaireService.addCommentaire(commentaire);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public Commentaire updateCommentaire(@PathVariable Integer id, @RequestBody Commentaire commentaire) {
         return commentaireService.updateCommentaire(id, commentaire);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteCommentaire(@PathVariable Integer id) {
         commentaireService.deleteCommentaire(id);
     }

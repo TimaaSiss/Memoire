@@ -15,7 +15,7 @@ import { MatPaginator, PageEvent } from '@angular/material/paginator';
 export class FormationComponent implements OnInit {
   formations: Formation[] = [];
   selectedFormation: Formation | null = null;
-   newFormation: Formation = { titre: '', description: '', duree: '', prix: 0, contenu: '',image:'', etablissements:[] }; // Ajoutez cette propriété pour représenter la nouvelle formation à ajouter
+   newFormation: Formation = {id: 0, titre: '', description: '', duree: '', prix: 0, contenu: '',image:'', etablissements:[], carrieres:[] }; // Ajoutez cette propriété pour représenter la nouvelle formation à ajouter
    menuOpen=true;
 
    dataSource = new MatTableDataSource<Formation>(); // Source de données pour la table

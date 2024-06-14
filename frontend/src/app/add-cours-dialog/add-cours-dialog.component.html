@@ -1,24 +1,39 @@
 <h2 class="text-center">Ajouter un cours</h2>
-<form class="add-course-form" (ngSubmit)="onSubmit()">
+<form class="add-course-form" [formGroup]="addCourseForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="titre">Titre:</label>
-    <input type="text" class="form-control" id="titre" [(ngModel)]="newCourse.titre" name="titre" required>
+    <input type="text" class="form-control" id="titre" formControlName="titre" required>
+    <div *ngIf="addCourseForm.get('titre')?.invalid && (addCourseForm.get('titre')?.dirty || addCourseForm.get('titre')?.touched)" class="text-danger">
+      <small *ngIf="addCourseForm.get('titre')?.errors?.required">Titre requis.</small>
+    </div>
   </div>
   <div class="form-group">
     <label for="description"><strong>Description:</strong></label>
-    <textarea class="form-control" id="description" [(ngModel)]="newCourse.description" name="description" rows="4" required></textarea>
+    <textarea class="form-control" id="description" formControlName="description" rows="4" required></textarea>
+    <div *ngIf="addCourseForm.get('description')?.invalid && (addCourseForm.get('description')?.dirty || addCourseForm.get('description')?.touched)" class="text-danger">
+      <small *ngIf="addCourseForm.get('description')?.errors?.required">Description requise.</small>
+    </div>
   </div>
   <div class="form-group">
     <label for="duree">Durée :</label>
-    <input type="text" class="form-control" id="duree" [(ngModel)]="newCourse.duree" name="duree" required>
+    <input type="text" class="form-control" id="duree" formControlName="duree" required>
+    <div *ngIf="addCourseForm.get('duree')?.invalid && (addCourseForm.get('duree')?.dirty || addCourseForm.get('duree')?.touched)" class="text-danger">
+      <small *ngIf="addCourseForm.get('duree')?.errors?.required">Durée requise.</small>
+    </div>
   </div>
   <div class="form-group">
     <label for="urlCours">URL du cours :</label>
-    <input type="text" class="form-control" id="urlCours" [(ngModel)]="newCourse.urlCours" name="urlCours" required>
+    <input type="text" class="form-control" id="urlCours" formControlName="urlCours" required>
+    <div *ngIf="addCourseForm.get('urlCours')?.invalid && (addCourseForm.get('urlCours')?.dirty || addCourseForm.get('urlCours')?.touched)" class="text-danger">
+      <small *ngIf="addCourseForm.get('urlCours')?.errors?.required">URL du cours requise.</small>
+    </div>
   </div>
   <div class="form-group">
     <label for="niveau">Niveau :</label>
-    <input type="text" class="form-control" id="niveau" [(ngModel)]="newCourse.niveau" name="niveau" required>
+    <input type="text" class="form-control" id="niveau" formControlName="niveau" required>
+    <div *ngIf="addCourseForm.get('niveau')?.invalid && (addCourseForm.get('niveau')?.dirty || addCourseForm.get('niveau')?.touched)" class="text-danger">
+      <small *ngIf="addCourseForm.get('niveau')?.errors?.required">Niveau requis.</small>
+    </div>
   </div>
   <button type="submit" class="btn btn-primary">Ajouter</button>
   <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Annuler</button>

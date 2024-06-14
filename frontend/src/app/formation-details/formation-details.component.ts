@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Formation } from '@app/model/formation.model';
 import { FormationService } from '@app/services/formations.service';
@@ -8,9 +8,8 @@ import { FormationService } from '@app/services/formations.service';
   templateUrl: './formation-details.component.html',
   styleUrls: ['./formation-details.component.scss']
 })
-export class FormationDetailsComponent {
+export class FormationDetailsComponent implements OnInit {
   formationName: string = '';
-  formationId: number= 1;
   formationDetails: Formation | undefined;
 
   constructor(
@@ -19,11 +18,10 @@ export class FormationDetailsComponent {
   ) { }
 
   ngOnInit(): void {
-    const formationName = this.route.snapshot.paramMap.get('formationName');
-    console.log('Formation name:', formationName);
-    if (formationName) {
-        const encodedFormationName = encodeURIComponent(formationName);
-        this.formationService.getFormationWithEtablissementsByTitre(encodedFormationName).subscribe(
+    this.formationName = this.route.snapshot.paramMap.get('formationName') || '';
+    console.log('Formation name:', this.formationName);
+    if (this.formationName) {
+        this.formationService.getFormationWithEtablissementsByTitre(this.formationName).subscribe(
             (data: Formation) => {
                 this.formationDetails = data;
                 console.log('Formation details:', this.formationDetails);
@@ -33,7 +31,5 @@ export class FormationDetailsComponent {
             }
         );
     }
-}
-
   }
-  
+}

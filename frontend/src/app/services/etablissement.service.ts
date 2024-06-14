@@ -12,11 +12,11 @@ export class EtablissementService {
   constructor(private http: HttpClient) { }
 
   getAllEtablissements(): Observable<Etablissement[]> {
-    return this.http.get<Etablissement[]>(`${this.apiUrl}/allEtablissements`);
+    return this.http.get<Etablissement[]>(`${this.apiUrl}`);
   }
 
   getEtablissementById(id: number): Observable<Etablissement> {
-    return this.http.get<Etablissement>(`${this.apiUrl}/getEtablissement/${id}`);
+    return this.http.get<Etablissement>(`${this.apiUrl}/${id}`);
   }
 
  // getFormationByTitre(titre: string): Observable<Etablissement> {
@@ -24,7 +24,7 @@ export class EtablissementService {
  // }
 
   addEtablissement(formation: Etablissement): Observable<Etablissement> {
-    return this.http.post<Etablissement>(`${this.apiUrl}/addEtablissement`, formation);
+    return this.http.post<Etablissement>(`${this.apiUrl}`, formation);
   }
 
   updateEtablissement(id: number, formation: Etablissement): Observable<Etablissement> {
@@ -32,6 +32,6 @@ export class EtablissementService {
   }
 
   deleteEtablissement(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

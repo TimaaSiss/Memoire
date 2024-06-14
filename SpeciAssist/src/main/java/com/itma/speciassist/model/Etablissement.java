@@ -1,5 +1,6 @@
 package com.itma.speciassist.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -18,11 +19,12 @@ public class Etablissement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String nom;
+    private String code_libelle;
     private String lieu;
     private String telephone;
     private String email;
     
     @JsonIgnore
     @ManyToMany(mappedBy = "etablissements")
-    private List<Formation> formations;
+    private List<Formation> formations = new ArrayList<>();
 }

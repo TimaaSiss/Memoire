@@ -27,7 +27,7 @@ public class ReponseUserController {
         return reponseService.addReponse(reponse);
     }
 
-    @GetMapping("/all")
+    @GetMapping()
     public List<ReponseUser> getAllReponses() {
         return reponseService.getAllReponses();
     }
@@ -42,7 +42,7 @@ public class ReponseUserController {
         return reponseService.getReponsesByUserId(userId);
     }
 
-    @GetMapping("/question/{questionId}")
+    @GetMapping("/{questionId}")
     public List<ReponseUser> getReponsesByQuestionId(@PathVariable Integer questionId) {
         return reponseService.getReponsesByQuestionId(questionId);
     }

@@ -1,14 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Course } from '@app/model/cours.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-course-dialog',
   templateUrl: './add-cours-dialog.component.html',
   styleUrls: ['./add-cours-dialog.component.scss']
-
 })
-export class AddCourseDialogComponent {
+export class AddCourseDialogComponent implements OnInit {
+  addCourseForm!: FormGroup;
+
   newCourse: Course = {
     id: 0,
     titre: '',
@@ -18,9 +20,28 @@ export class AddCourseDialogComponent {
     niveau: ''
   };
 
-  constructor(public dialogRef: MatDialogRef<AddCourseDialogComponent>) {}
+  constructor(
+    public dialogRef: MatDialogRef<AddCourseDialogComponent>,
+    private formBuilder: FormBuilder
+  ) {}
+
+  ngOnInit(): void {
+    this.addCourseForm = this.formBuilder.group({
+      titre: ['', Validators.required],
+      description: ['', Validators.required],
+      duree: ['', Validators.required],
+      urlCours: ['', Validators.required],
+      niveau: ['', Validators.required]
+    });
+  }
 
   onSubmit(): void {
+    if (this.addCourseForm.invalid) {
+      alert('Veuillez remplir tous les champs obligatoires.');
+      return;
+    }
+
+    this.newCourse = this.addCourseForm.value;
     this.dialogRef.close(this.newCourse);
   }
 

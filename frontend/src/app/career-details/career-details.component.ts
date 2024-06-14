@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { CarriereService } from './../services/carrieres.service';
+import { CarriereService } from '@app/services/carrieres.service';
 import { CommentaireService } from '@app/services/commentaires.service';
 import { UserService } from '@app/services/user-service.service';
 import { VideoMentorService } from '@app/services/video-mentor.service';

@@ -93,7 +93,7 @@ public class FormationController {
 
 
 
-    @PostMapping("/addFormation")
+    @PostMapping("/add")
     public ResponseEntity<Formation> createFormation(@RequestBody Formation formation) {
         Formation createdFormation = formationService.createFormation(formation);
         return new ResponseEntity<>(createdFormation, HttpStatus.CREATED);
@@ -110,7 +110,7 @@ public class FormationController {
     }
     
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteFormation(@PathVariable Integer id) {
         formationService.deleteFormation(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

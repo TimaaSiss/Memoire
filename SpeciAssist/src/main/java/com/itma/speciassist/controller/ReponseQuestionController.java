@@ -20,22 +20,22 @@ public class ReponseQuestionController {
     @Autowired
     private ReponseQuestionService reponseQuestionService;
 
-    @GetMapping("/getReponse/{id}")
+    @GetMapping("/{id}")
     public ReponseQuestion getReponseById(@PathVariable String id) {
         return reponseQuestionService.getReponseById(id);
     }
 
-    @PostMapping("/add")
+    @PostMapping()
     public ReponseQuestion addReponse(@RequestBody ReponseQuestion reponse) {
         return reponseQuestionService.addReponse(reponse);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ReponseQuestion updateReponse(@PathVariable String id, @RequestBody ReponseQuestion reponse) {
         return reponseQuestionService.updateReponse(id, reponse);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public void deleteReponse(@PathVariable String id) {
         reponseQuestionService.deleteReponse(id);
     }

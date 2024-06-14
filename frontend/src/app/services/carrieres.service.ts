@@ -13,7 +13,7 @@ export class CarriereService {
   constructor(private http: HttpClient) { }
 
   getAllCarrieres(): Observable<Carriere[]> {
-    return this.http.get<Carriere[]>(`${this.baseUrl}/allCarrieres`);
+    return this.http.get<Carriere[]>(`${this.baseUrl}`);
   }
 
   getCarriereById(id: number): Observable<Carriere> {

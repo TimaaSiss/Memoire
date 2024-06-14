@@ -13,7 +13,7 @@ export class VideoMentorService {
   constructor(private http: HttpClient) { }
 
   getVideosByCarriereId(carriereId: number): Observable<VideoMentor[]> {
-    return this.http.get<VideoMentor[]>(`${this.apiUrl}/byCareer/${carriereId}`);
+    return this.http.get<VideoMentor[]>(`${this.apiUrl}/${carriereId}`);
   }
 
   addVideo(videoMentor: VideoMentor): Observable<VideoMentor> {

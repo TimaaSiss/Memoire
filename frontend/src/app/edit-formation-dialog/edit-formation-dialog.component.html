@@ -1,5 +1,5 @@
 <!-- edit-carriere-dialog.component.html -->
-
+<div class="scrollable-form-container">
 <h2 class="text-center mb-4">Modifier la formation</h2>
 <form class="edit-carriere-form" (ngSubmit)="onSubmit()">
   <div class="dialog-content scrollable-content">
@@ -23,7 +23,14 @@
     <label for="salaire"><strong>Prix:</strong></label>
     <input type="text" class="form-control" id="salaire" [(ngModel)]="editedFormation.prix" name="prix" required>
   </div>
-
+  <div class="form-group">
+    <label><strong>Carrières associées:</strong></label>
+    <div *ngFor="let carriere of carrieres">
+      <input type="checkbox" [value]="carriere.id" [checked]="isSelectedCarriere(carriere.id)" (change)="onCarriereSelectionChange(carriere.id, $event)">
+      {{ carriere.nom }}
+    </div>
+  </div>
+  
   <div class="form-group">
     <label>Établissements :</label>
     <div *ngFor="let etablissement of etablissements">
@@ -39,3 +46,4 @@
   <button type="submit" class="btn btn-primary">Enregistrer</button>
   <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Annuler</button>
 </form>
+</div>

@@ -27,7 +27,7 @@ export class UserService {
   }
 
   public save(user: User): Observable<User> {
-    return this.http.post<User>(`${this.usersUrl}/users/addUser`, user).pipe(
+    return this.http.post<User>(`${this.usersUrl}/users`, user).pipe(
       tap(response => {
         // Stockez les informations de l'utilisateur après une inscription réussie
         localStorage.setItem('currentUser', JSON.stringify(response));
@@ -50,11 +50,11 @@ export class UserService {
   }
 
   public delete(userId: number) {
-    return this.http.delete<void>(`${this.usersUrl}/users/delete/${userId}`);
+    return this.http.delete<void>(`${this.usersUrl}/users/${userId}`);
   }
 
   public update(userId: number, user: User): Observable<User> {
-    return this.http.put<User>(`${this.usersUrl}/users/update/${userId}`, user);
+    return this.http.put<User>(`${this.usersUrl}/users/${userId}`, user);
   }
 
   activateUser(userId: number): Observable<void> {

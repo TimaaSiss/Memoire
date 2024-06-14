@@ -26,7 +26,7 @@ public class CarriereController {
     @Autowired
     private CommentaireService commentaireService;
 
-    @GetMapping("/allCarrieres")
+    @GetMapping()
     public List<Carriere> getAllCarrieres() {
         return carriereService.allCarrieres();
     }
@@ -46,7 +46,7 @@ public class CarriereController {
         return carriereService.addCarriere(carriere);
     }
 
-    @PutMapping("/updateCarriere/{id}")
+    @PutMapping("updateCarriere/{id}")
     public Carriere updateCarriere(@PathVariable Integer id, @RequestBody Carriere carriere) {
         return carriereService.updateCarriere(id, carriere);
     }
@@ -56,7 +56,7 @@ public class CarriereController {
         carriereService.deleteCarriere(id);
     }
     
-    @GetMapping("/carriere/{carriereId}")
+    @GetMapping("/{carriereId}")
     public List<Commentaire> getCommentairesByCarriereId(@PathVariable Integer carriereId) {
         return commentaireService.getCommentairesByCarriereId(carriereId);
     }

@@ -1,22 +1,54 @@
+<div class="scrollable-form-container">
 <h2 class="text-center">Ajouter un Établissement</h2>
-<form class="add-course-form" (ngSubmit)="onSubmit()">
+<form class="add-course-form" [formGroup]="addEtablissementForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
-    <label for="titre">Nom :</label>
-    <input type="text" class="form-control" id="titre" [(ngModel)]="newEtablissement.nom" name="nom" required>
-  </div>
-  <div class="form-group">
-    <label for="description">Lieu :</label>
-    <input type="text" class="form-control" id="lieu" [(ngModel)]="newEtablissement.lieu" name="lieu" required>
-  </div>
-  <div class="form-group">
-    <label for="duree">Téléphone :</label>
-    <input type="text" class="form-control" id="telephone" [(ngModel)]="newEtablissement.telephone" name="telephone" required>
-  </div>
-  <div class="form-group">
-    <label for="email">Email</label>
-    <input type="text" class="form-control"  id="email"  [(ngModel)]="newEtablissement.email"  name="email"placeholder="Enter your email address"
-      required #email="ngModel">
+    <label for="nom">Nom :</label>
+    <input type="text" class="form-control" id="nom" formControlName="nom" required>
+    <div *ngIf="addEtablissementForm.get('nom')?.invalid && (addEtablissementForm.get('nom')?.dirty || addEtablissementForm.get('nom')?.touched)"
+         class="text-danger">
+      <small *ngIf="addEtablissementForm.get('nom')?.errors?.required">Nom requis.</small>
+    </div>
+    <div class="form-group">
+      <label for="sigle">Sigle :</label>
+      <input type="text" class="form-control" id="code_libelle" formControlName="code_libelle" required>
+      <div *ngIf="addEtablissementForm.get('code_libelle')?.invalid && (addEtablissementForm.get('code_libelle')?.dirty || addEtablissementForm.get('code_libelle')?.touched)"
+           class="text-danger">
+        <small *ngIf="addEtablissementForm.get('code_libelle')?.errors?.required">Sigle requis.</small>
       </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="lieu">Lieu :</label>
+    <input type="text" class="form-control" id="lieu" formControlName="lieu" required>
+    <div *ngIf="addEtablissementForm.get('lieu')?.invalid && (addEtablissementForm.get('lieu')?.dirty || addEtablissementForm.get('lieu')?.touched)"
+         class="text-danger">
+      <small *ngIf="addEtablissementForm.get('lieu')?.errors?.required">Lieu requis.</small>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="telephone">Téléphone :</label>
+    <input type="text" class="form-control" id="telephone" formControlName="telephone" required>
+    <div *ngIf="addEtablissementForm.get('telephone')?.invalid && (addEtablissementForm.get('telephone')?.dirty || addEtablissementForm.get('telephone')?.touched)"
+         class="text-danger">
+      <small *ngIf="addEtablissementForm.get('telephone')?.errors?.required">Téléphone requis.</small>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="email">Email :</label>
+    <input type="email" class="form-control" id="email" formControlName="email" required>
+    <div *ngIf="addEtablissementForm.get('email')?.invalid && (addEtablissementForm.get('email')?.dirty || addEtablissementForm.get('email')?.touched)"
+         class="text-danger">
+      <small *ngIf="addEtablissementForm.get('email')?.errors?.required">Email requis.</small>
+    </div>
+  </div>
+  <div class="form-group">
+    <label>Formations :</label>
+    <div *ngFor="let formation of formations">
+      <input type="checkbox" [value]="formation.id" (change)="onFormationSelectionChange(formation.id, $event)" name="formation-{{formation.id}}">
+      {{formation.titre}}
+    </div>
+  </div>
   <button type="submit" class="btn btn-primary">Ajouter</button>
   <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Annuler</button>
 </form>
+</div>

@@ -13,23 +13,23 @@ export class CommentaireService {
   constructor(private http: HttpClient) { }
 
   getCommentaire(id: number): Observable<Commentaire> {
-    return this.http.get<Commentaire>(`${this.baseUrl}/commentaires/getComment/${id}`);
+    return this.http.get<Commentaire>(`${this.baseUrl}/commentaires/${id}`);
   }
 
   getCommentairesByCarriereId(carriereId: number): Observable<Commentaire[]> {
-    return this.http.get<Commentaire[]>(`${this.baseUrl}/carrieres/carriere/${carriereId}`);
+    return this.http.get<Commentaire[]>(`${this.baseUrl}/carrieres/${carriereId}`);
   }
 
   getAllCommentaires(): Observable<Commentaire[]> {
-    return this.http.get<Commentaire[]>(`${this.baseUrl}/commentaires/allComments`);
+    return this.http.get<Commentaire[]>(`${this.baseUrl}/commentaires`);
   }
 
   addCommentaire(commentaire: Commentaire): Observable<Commentaire> {
-    return this.http.post<Commentaire>(`${this.baseUrl}/commentaires/addComment`, commentaire);
+    return this.http.post<Commentaire>(`${this.baseUrl}/commentaires`, commentaire);
   }
 
   updateCommentaire(id: number, commentaire: Commentaire): Observable<Commentaire> {
-    return this.http.put<Commentaire>(`${this.baseUrl}/commentaires/update/${id}`, commentaire);
+    return this.http.put<Commentaire>(`${this.baseUrl}/commentaires/${id}`, commentaire);
   }
 
   deleteCommentaire(id: number): Observable<void> {
