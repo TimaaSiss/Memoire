@@ -6,3 +6,140 @@
 
   }
   
+  /* inscription.component.css */
+
+.header_section {
+  width: 100%;
+  float: left;
+  background-color: #000000;
+  height: auto;
+  padding-bottom: 0;
+  border-top: 25px solid #000000;
+}
+
+.logo {
+  width: 100%;
+  float: left;
+  text-align: center;
+}
+
+.menu_text {
+  width: 100%;
+  float: left;
+  padding-top: 25px;
+}
+
+.menu_text ul {
+  margin: 0px;
+  padding: 0px;
+}
+
+.menu_text li {
+  float: left;
+  padding-right: 120px;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.menu_text li a {
+  color: #ffffff;
+}
+
+.menu_text li.active a{
+  color: #f5f4f1;
+}
+
+
+.menu_text li a:hover {
+  color: #aaa9a9;
+}
+
+.overlay {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rgb(175, 170, 170);
+  background-color: rgba(194, 181, 181, 0.9);
+  overflow-x: hidden;
+  transition: 0.5s;
+}
+
+.overlay .closebtn {
+  position: absolute;
+  top: 20px;
+  right: 45px;
+  font-size: 60px;
+}
+.overlay a {
+  padding: 0px;
+  text-decoration: none;
+  font-size: 22px;
+  color: #f1f1f1;
+  display: block;
+  transition: 0.3s;
+}
+.overlay-content {
+  position: relative;
+  top: 25%;
+  width: 100%;
+  text-align: center;
+  margin-top: 30px;
+}
+.toggle_menu {
+  top: -15px;
+  position: relative;
+  left: 85px;
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+  }
+  
+  label {
+    font-weight: bold;
+  }
+.form {
+    max-width: 400px; /* Définir une largeur maximale pour le formulaire */
+    margin: 0 auto; /* Centrer le formulaire horizontalement */
+  
+
+
+  }
+  
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+
+  .header_section::after {
+    display: block;
+    border-bottom: 5px solid #000000;
+    height: 0px;
+    width: 80%;
+    content: "";
+  }
+
+  

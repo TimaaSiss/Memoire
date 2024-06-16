@@ -1,4 +1,35 @@
 <!-- inscription.component.html -->
+<div class="header_section">
+  <div class="container-fluid">
+      <div class="row">
+          <div class="col-md-3">
+             
+          </div>
+          <div class="col-md-9">
+              <div class="menu_text">
+                  <ul>
+                    <li class="active"><a href="index.html">ACCUEIL</a></li>
+                      <!-- <li><a href="about.html">ABOUT</a></li> -->
+                      <li><a routerLink="/connexion">CONNEXION</a></li>
+                      <li><a routerLink="/register">INSCRIPTION</a></li>
+                      <li><a href="contact.html">CONTACTEZ-NOUS</a></li>
+                  </ul>
+              </div>  
+              <div id="myNav" class="overlay">
+                <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                <div class="overlay-content">
+                  <a href="/home">HOME</a>
+                  <a href="/connexion">LOGIN</a>
+                  <a href="/register">REGISTER</a>
+                  <a href="class.html">CONTACT US</a>
+                </div>
+              </div>
+             
+          </div>
+      </div>
+  </div>
+</div>
+
 <h2>Inscription</h2>
 <form class="form" (ngSubmit)="submitForm()">
   <div class="form-group">

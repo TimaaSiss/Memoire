@@ -34,7 +34,7 @@ export class EditEtabDialogComponent implements OnInit {
     });
 
     this.loadFormations();
-   // this.selectedFormationIds = this.data.formations.map(f => f.id);
+    this.selectedFormationIds = this.data.formations.map(f => f.id);
   }
 
   loadFormations(): void {
