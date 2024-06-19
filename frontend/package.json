@@ -23,6 +23,7 @@
     "@angular/router": "^16.2.12",
     "@coreui/angular": "^5.2.0",
     "@coreui/icons": "^3.0.1",
+    "@swimlane/ngx-charts": "^20.5.0",
     "ngx-pagination": "^6.0.3",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

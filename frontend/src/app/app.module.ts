@@ -53,6 +53,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MentorProfileComponent } from './profile-mentor/profile-mentor.component';
 import { QuestionnaireResultComponent } from './questionnaire-result/questionnaire-result.component';
 import { CommentairesComponent } from './commentaires/commentaires.component';
+import { SafePipe } from './pipes/safe.pipe';
 
 
 
@@ -97,7 +98,8 @@ import { CommentairesComponent } from './commentaires/commentaires.component';
          AddMentorComponent,
          MentorProfileComponent,
          QuestionnaireResultComponent,
-         CommentairesComponent
+         CommentairesComponent,
+         SafePipe
 
   ],
   imports: [

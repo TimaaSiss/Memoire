@@ -16,5 +16,7 @@ public interface CoursService {
 
     void deleteCours(Integer id);
 
+	List<Cours> getCoursesByMentorId(Long mentorId);
+
 }
 

@@ -16,8 +16,12 @@ export class VideoMentorService {
     return this.http.get<VideoMentor[]>(`${this.apiUrl}/${carriereId}`);
   }
 
-  addVideo(videoMentor: VideoMentor): Observable<VideoMentor> {
-    return this.http.post<VideoMentor>(this.apiUrl, videoMentor);
+  getVideosByMentor(mentorId: number): Observable<VideoMentor[]> {  // Ajouter cette méthode
+    return this.http.get<VideoMentor[]>(`${this.apiUrl}/mentor/${mentorId}`);
+  }
+
+  addVideo(mentorId: number, video: VideoMentor): Observable<VideoMentor> {
+    return this.http.post<VideoMentor>(`http://localhost:8080/mentor-videos?mentorId=${mentorId}`, video);
   }
 
   updateVideo(id: number, videoMentor: VideoMentor): Observable<VideoMentor> {

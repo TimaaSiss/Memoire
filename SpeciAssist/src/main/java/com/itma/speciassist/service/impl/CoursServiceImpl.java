@@ -49,4 +49,9 @@ public class CoursServiceImpl implements CoursService {
         }
         coursRepository.deleteById(id);
     }
+    
+    @Override
+    public List<Cours> getCoursesByMentorId(Long mentorId) {  // Implémenter cette méthode
+        return coursRepository.findByMentorsId(mentorId);
+    }
 }

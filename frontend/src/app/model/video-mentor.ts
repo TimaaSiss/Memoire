@@ -6,5 +6,5 @@ export interface VideoMentor {
   id?: number;
   url: string;
   title: string;
-  carriere: Carriere;
+  carriereId: number;
 }

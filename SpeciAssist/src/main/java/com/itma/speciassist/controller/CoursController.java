@@ -27,6 +27,10 @@ public class CoursController {
         return coursService.allCours();
     }
 
+    @GetMapping("/mentor/{mentorId}")  // Ajouter cette route
+    public List<Cours> getCoursesByMentorId(@PathVariable Long mentorId) {
+        return coursService.getCoursesByMentorId(mentorId);
+    }
     @GetMapping("/{id}")
     public Cours getCoursById(@PathVariable Integer id) {
         return coursService.getCours(id);

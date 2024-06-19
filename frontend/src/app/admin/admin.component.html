@@ -1,13 +1,15 @@
 <div class="admin-container">
+  <!-- Header -->
   <div class="header">
-    <div></div>
-    <div></div>
-    <div></div>
+    <div></div> <!-- Placeholder for header content -->
+    <div></div> <!-- Placeholder for header content -->
+    <div></div> <!-- Placeholder for header content -->
     <button mat-icon-button class="logout-icon" (click)="logout()">
       <mat-icon>logout</mat-icon>
     </button>
   </div>
 
+  <!-- Sidebar -->
   <div class="sidebar" [class.active]="menuOpen">
     <ul>
       <li><a routerLink="/users">Liste des Utilisateurs</a></li>
@@ -23,10 +25,9 @@
     </ul>
   </div>
   
+  <!-- Admin Content -->
   <div class="admin-content">
     <h1>ESPACE ADMINISTRATEUR</h1>
     <!-- Ajoutez d'autres éléments de contenu ici -->
-
-    
   </div>
 </div>

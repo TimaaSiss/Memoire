@@ -1,15 +1,70 @@
-<!-- profile-mentor.component.html -->
-
 <div class="mentor-profile-container">
-    <div class="header">
-      <h1><a>{{ prenom }} {{ nom }}</a></h1> 
-      <h1><a>specialite: {{ specialite }}</a></h1> 
-      <!-- Ajoutez d'autres informations de mentor ici -->
-    </div>
-  
+  <div class="header text-center">
+    <h1>{{ prenom }} {{ nom }}</h1>
+    <h2>Spécialité: {{ specialite }}</h2>
     <div class="contacts">
-      <h2>Contacts</h2>
+      <h3>Contacts</h3>
       <p>Email: {{ mail }}</p>
-      <!-- Ajoutez d'autres détails de contact si nécessaire -->
     </div>
+  </div>
+
+  <div class="manage-content">
+    <div class="add-video">
+      <h2>Ajouter une vidéo</h2>
+      <form (ngSubmit)="ajouterVideo()">
+        <label>Titre de la vidéo:</label>
+        <input type="text" [(ngModel)]="nouvelleVideo.title" name="titre" required>
+
+        <label>URL de la vidéo:</label>
+        <input type="text" [(ngModel)]="nouvelleVideo.url" name="url" required>
+
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+      </form>
+    </div>
+
+    <div class="video-list">
+      <h2>Vos Vidéos</h2>
+      <div class="video-container">
+        <div *ngFor="let video of videos" class="video-item">
+          <p>{{ video.title }}</p>
+          <iframe [src]="video.url | safe" frameborder="0" allowfullscreen></iframe>
+          <button *ngIf="video.id !== undefined" (click)="supprimerVideo(video.id)" class="btn btn-danger">Supprimer</button>
+          <button *ngIf="video.id !== undefined" (click)="modifierVideo(video)" class="btn btn-secondary">Modifier</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="add-course">
+      <h2>Ajouter un cours</h2>
+      <form (ngSubmit)="ajouterCours()">
+        <label>Titre du cours:</label>
+        <input type="text" [(ngModel)]="nouveauCours.titre" name="titre" required>
+
+        <label>Description:</label>
+        <textarea [(ngModel)]="nouveauCours.description" name="description" required></textarea>
+
+        <label>Durée:</label>
+        <input type="text" [(ngModel)]="nouveauCours.duree" name="duree" required>
+
+        <label>URL du cours:</label>
+        <input type="text" [(ngModel)]="nouveauCours.urlCours" name="urlCours" required>
+
+        <label>Niveau:</label>
+        <input type="text" [(ngModel)]="nouveauCours.niveau" name="niveau" required>
+
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+      </form>
+    </div>
+
+    <div class="course-list">
+      <h2>Vos Cours</h2>
+      <ul>
+        <li *ngFor="let course of courses">
+          {{ course.titre }} - {{ course.urlCours }}
+          <button (click)="supprimerCours(course.id)" class="btn btn-danger">Supprimer</button>
+          <button (click)="modifierCours(course)" class="btn btn-secondary">Modifier</button>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>

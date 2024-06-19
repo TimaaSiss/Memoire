@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface VideoMentorRepository extends JpaRepository<VideoMentor, Long> {
     List<VideoMentor> findByCarriereId(Long carriereId);
+
+	List<VideoMentor> findByMentorId(Long mentorId);
 }
