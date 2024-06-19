@@ -12,8 +12,13 @@ public interface CoursRepository extends JpaRepository<Cours, Integer> {
 	
 	Optional<Cours> findById(Integer id);
 
-	 List<Cours> findByMentorsId(Long mentorId);
+	  
+    List<Cours> findByMentor_Id(Long mentorId); // Utilisation de _ pour accéder à l'ID du mentor
+ 
+	 List<Cours> findByFormationId(Integer formationId);
 
-	//List<Cours> findByMentorId(Long mentorId);
+
+	List<Cours> findByFormation_Titre(String titreFormation);
+
 
 }

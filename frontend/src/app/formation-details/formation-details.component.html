@@ -42,6 +42,13 @@
       </div>
   </div>
 </div>
+
+<div class="info-section">
+    <h2>Cours Associés</h2>
+    <ul>
+      <li *ngFor="let cours of coursList">{{ cours.titre }}</li>
+    </ul>
+  </div>
 <div *ngIf="!formationDetails">
   <p>Loading formation details...</p>
 </div>

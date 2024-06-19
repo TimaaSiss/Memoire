@@ -1,3 +1,4 @@
+<!-- src/app/mentor-profile/mentor-profile.component.html -->
 <div class="mentor-profile-container">
   <div class="header text-center">
     <h1>{{ prenom }} {{ nom }}</h1>
@@ -57,7 +58,7 @@
     </div>
 
     <div class="course-list">
-      <h2>Vos Cours</h2>
+      <h2>Vos Cours:</h2>
       <ul>
         <li *ngFor="let course of courses">
           {{ course.titre }} - {{ course.urlCours }}

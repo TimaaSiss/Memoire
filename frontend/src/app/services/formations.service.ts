@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Formation } from '@app/model/formation.model';
+import { Course } from '@app/model/cours.model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +22,11 @@ export class FormationService {
   }
 
   
- 
+  // Ajouter une méthode pour récupérer les cours associés à une formation
+  getCoursByFormation(titreFormation: string): Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.apiUrl}/cours/${titreFormation}`);
+  }
+
   getFormationWithEtablissementsByTitre(titre: string): Observable<Formation> {
     return this.http.get<Formation>(`${this.apiUrl}/getFormationByTitre/${encodeURIComponent(titre)}`);
   }

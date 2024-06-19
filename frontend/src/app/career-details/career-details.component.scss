@@ -1,139 +1,140 @@
+
 .career-details-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
-  .career-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.career-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.career-header h1 {
+  font-size: 2.5em;
+  margin: 0;
+  color: #333;
+}
+
+.career-header .career-image {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ccc;
+}
+
+.career-info {
+  .info-section {
     margin-bottom: 20px;
-  }
-  
-  .career-header h1 {
-    font-size: 2.5em;
-    margin: 0;
-    color: #333;
-  }
-  
-  .career-header .career-image {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-  }
-  
-  .career-info {
-    .info-section {
-      margin-bottom: 20px;
-  
-      h2 {
-        font-size: 1.5em;
-        margin-bottom: 10px;
-        color: #555;
-      }
-  
-      p, ul {
-        font-size: 1.1em;
-        color: #666;
-        line-height: 1.6;
-      }
-  
-      ul {
-        list-style-type: disc;
-        padding-left: 20px;
-      }
+
+    h2 {
+      font-size: 1.5em;
+      margin-bottom: 10px;
+      color: #555;
+    }
+
+    p, ul {
+      font-size: 1.1em;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    ul {
+      list-style-type: disc;
+      padding-left: 20px;
     }
   }
-  
+}
 
-  .comment-section {
-    background-color: #f9f9f9;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 20px;
-    margin-top: 20px;
+.scrollable-videos {
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 10px 0;
+
+  .video-row {
+    display: flex;
+    gap: 15px;
   }
-  
-  .comment-section h2 {
-    margin-bottom: 20px;
-    color: #333;
-    font-size: 24px;
-  }
-  
-  .comment-section div {
-    margin-bottom: 15px;
-  }
-  
-  .comment-section p {
-    margin: 0;
-    color: #555;
-  }
-  
-  .comment-section p strong {
-    color: #333;
-  }
-  
-  .comment-section p em {
-    font-size: 12px;
-    color: #999;
-  }
-  
-  .comment-section textarea {
-    width: 100%;
-    height: 80px;
+
+  .video-card {
+    background: #f4f4f4;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    margin-bottom: 10px;
-    font-size: 14px;
-    resize: none;
-  }
-  
-  .comment-section button {
-    display: block;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    font-size: 14px;
-    cursor: pointer;
-  }
-  
-  .comment-section button:hover {
-    background-color: #0056b3;
-  }
-
-  //MentorVideo
-
-  .scrollable-videos {
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     display: flex;
-    overflow-x: auto;
-    white-space: nowrap;
-    padding: 10px 0;
-  
-    .video-row {
-      display: flex;
-      gap: 15px;
-    }
-  
-    .video-card {
-      background: #f4f4f4;
-      padding: 10px;
-      border-radius: 5px;
-      text-align: center;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  
-      video {
-        width: 100%;
-        height: auto;
-      }
-    }
+    flex-direction: column;
+    align-items: center;
   }
-  
+
+  .video-card video {
+    width: 320px;
+    height: 240px;
+    border-radius: 5px;
+  }
+}
+
+.comment-section {
+  background-color: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.comment-section h2 {
+  margin-bottom: 20px;
+  color: #333;
+  font-size: 24px;
+}
+
+.comment-section div {
+  margin-bottom: 15px;
+}
+
+.comment-section p {
+  margin: 0;
+  color: #555;
+}
+
+.comment-section p strong {
+  color: #333;
+}
+
+.comment-section p em {
+  font-size: 12px;
+  color: #999;
+}
+
+.comment-section textarea {
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  resize: none;
+}
+
+.comment-section button {
+  display: block;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.comment-section button:hover {
+  background-color: #0056b3;
+}

@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
 @Entity
@@ -23,6 +24,11 @@ public class Formation {
     private double prix;
     private String contenu;
     private String image;
+    
+    @ManyToOne
+    @JoinColumn(name = "cours_id")
+    
+    private Cours cours;
     
     @ManyToMany
     @JoinTable(

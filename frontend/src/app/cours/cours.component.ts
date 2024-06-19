@@ -2,20 +2,20 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Course } from '../model/cours.model';
 import { CourseService } from '../services/cours.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AddCourseDialogComponent } from '@app/add-cours-dialog/add-cours-dialog.component';// votre boîte de dialogue d'ajout de cours ici
+import { AddCourseDialogComponent } from '@app/add-cours-dialog/add-cours-dialog.component'; // votre boîte de dialogue d'ajout de cours ici
 import { EditCourseDialogComponent } from '@app/edit-cours-dialog/edit-cours-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+
 @Component({
   selector: 'app-cours',
   templateUrl: './cours.component.html',
   styleUrls: ['./cours.component.scss']
 })
 export class CoursComponent implements OnInit {
-
   courses: Course[] = [];
   selectedCourse: Course | null = null;
-  menuOpen= true;
+  menuOpen = true;
 
   dataSource = new MatTableDataSource<Course>(); // Source de données pour la table
   displayedColumns: string[] = ['id', 'titre', 'duree', 'salaire', 'description', 'url_cours', 'niveau'];
@@ -23,15 +23,25 @@ export class CoursComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
+  currentUser: any; // Ajout de la propriété currentUser pour stocker l'utilisateur connecté
+
   constructor(private courseService: CourseService, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.loadCourses();
+
     // Vérifier si la valeur de menuOpen est stockée localement
     const storedMenuOpen = localStorage.getItem('menuOpen');
     if (storedMenuOpen !== null) {
       // Si une valeur est trouvée dans le stockage local, la mettre à jour
       this.menuOpen = JSON.parse(storedMenuOpen);
+    }
+
+    // Récupérer l'utilisateur actuel à partir du localStorage
+    const currentUserString = localStorage.getItem('currentUser');
+    if (currentUserString) {
+      this.currentUser = JSON.parse(currentUserString);
+      console.log('currentUser :', this.currentUser);
     }
   }
 
@@ -49,17 +59,17 @@ export class CoursComponent implements OnInit {
       this.dataSource.paginator = this.paginator; // Configurer la pagination
     });
   }
-  
+
   loadMoreCourses(event: PageEvent) {
     const pageIndex = event.pageIndex;
     const pageSize = event.pageSize;
     const startIndex = pageIndex * pageSize;
     const endIndex = startIndex + pageSize;
-  
+
     // Charger les utilisateurs suivants selon l'index de page
     this.dataSource = new MatTableDataSource<Course>(this.courses.slice(startIndex, endIndex));
   }
-  
+
   openAddCourseDialog(): void {
     const dialogRef = this.dialog.open(AddCourseDialogComponent, {
       width: '500px'
@@ -73,9 +83,13 @@ export class CoursComponent implements OnInit {
   }
 
   addCourse(newCourse: Course): void {
-    this.courseService.addCourse(newCourse).subscribe(() => {
-      this.loadCourses();
-    });
+    if (this.currentUser && this.currentUser.id) {
+      this.courseService.addCourse(this.currentUser.id, newCourse).subscribe(() => {
+        this.loadCourses();
+      });
+    } else {
+      console.error('Utilisateur non connecté. Impossible d\'ajouter le cours.');
+    }
   }
 
   openEditDialog(course: Course): void {
@@ -118,5 +132,4 @@ export class CoursComponent implements OnInit {
       this.deleteCourse(course.id);
     }
   }
-
 }

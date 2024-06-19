@@ -4,6 +4,8 @@ import { VideoMentorService } from '@app/services/video-mentor.service';
 import { CourseService } from '@app/services/cours.service';
 import { VideoMentor } from '@app/model/video-mentor';
 import { Course } from '@app/model/cours.model';
+import { FormationService } from '@app/services/formations.service'; // Importer le service de formation
+import { Formation } from '@app/model/formation.model'; // Importer le modèle de formation
 
 @Component({
   selector: 'app-mentor-profile',
@@ -21,11 +23,13 @@ export class MentorProfileComponent implements OnInit {
   nouvelleVideo: VideoMentor = { id: 0, url: '', title: '', carriereId: 0 };
   nouveauCours: Course = new Course();
   currentUser: any;
+  formationDetails: Formation | undefined; // Ajout d'une variable pour les détails de la formation
 
   constructor(
     private mentorService: MentorService,
     private videoMentorService: VideoMentorService,
-    private courseService: CourseService
+    private courseService: CourseService,
+    private formationService: FormationService // Injecter le service de formation
   ) { }
 
   ngOnInit(): void {
@@ -58,6 +62,7 @@ export class MentorProfileComponent implements OnInit {
       (videos) => this.videos = videos,
       (error) => console.error('Erreur lors de la récupération des vidéos :', error)
     );
+
     this.courseService.getCoursesByMentor(mentorId).subscribe(
       (courses) => this.courses = courses,
       (error) => console.error('Erreur lors de la récupération des cours :', error)
@@ -78,11 +83,30 @@ export class MentorProfileComponent implements OnInit {
   }
 
   ajouterCours() {
-    this.courseService.addCourse(this.nouveauCours).subscribe(
+    this.nouveauCours.mentorId = this.currentUser.id; // Assigner mentorId avant l'ajout
+    this.nouveauCours.userId = this.currentUser.id; // Assigner userId avant l'ajout
+    if (this.formationDetails) {
+      this.nouveauCours.formationId = this.formationDetails.id; // Assigner formationId avant l'ajout
+    }
+    
+    this.courseService.addCourse(this.currentUser.id, this.nouveauCours).subscribe(
       (result) => {
         console.log('Cours ajouté avec succès:', result);
         this.courses.push(result);
         this.nouveauCours = new Course();
+
+        // Mettre à jour la formation correspondante si nécessaire
+        if (result.formationId) {
+          this.formationService.getFormationWithEtablissementsByTitre(result.titre).subscribe(
+            (data: Formation) => {
+              this.formationDetails = data;
+              console.log('Formation details updated:', this.formationDetails);
+            },
+            (error: any) => {
+              console.error('Error refreshing formation details:', error);
+            }
+          );
+        }
       },
       (error) => {
         console.error('Erreur lors de l\'ajout du cours : ', error);
@@ -133,7 +157,6 @@ export class MentorProfileComponent implements OnInit {
       // Gérer le cas où video.id est undefined, selon la logique de votre application
     }
   }
-  
 
   modifierCours(course: Course) {
     this.courseService.updateCourse(course.id, course).subscribe(

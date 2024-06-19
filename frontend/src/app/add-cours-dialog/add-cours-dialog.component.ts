@@ -17,7 +17,10 @@ export class AddCourseDialogComponent implements OnInit {
     description: '',
     duree: '',
     urlCours: '',
-    niveau: ''
+    niveau: '',
+    formationId:0,
+    mentorId:0,
+    userId:0
   };
 
   constructor(

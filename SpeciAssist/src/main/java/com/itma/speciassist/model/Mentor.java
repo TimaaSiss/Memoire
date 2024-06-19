@@ -2,8 +2,9 @@ package com.itma.speciassist.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +16,7 @@ public class Mentor extends User {
     private String specialite;
     private Long carriereId; 
     
-    @ManyToMany(mappedBy = "mentors")
+    @JsonIgnore  @OneToMany(mappedBy = "mentor")
     private List<Cours> cours;
     
     @OneToMany(mappedBy = "mentor")

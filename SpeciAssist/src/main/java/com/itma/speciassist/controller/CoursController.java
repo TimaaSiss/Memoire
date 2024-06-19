@@ -3,6 +3,8 @@ package com.itma.speciassist.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,32 +24,45 @@ public class CoursController {
     @Autowired
     private CoursService coursService;
 
-    @GetMapping()
-    public List<Cours> getAllCours() {
-        return coursService.allCours();
+ // Endpoint pour ajouter un cours
+    @PostMapping("/add/{mentorId}")
+    public ResponseEntity<Cours> addCours(@PathVariable("mentorId") Long mentorId, @RequestBody Cours cours) {
+        Cours addedCours = coursService.addCours(mentorId, cours);
+        return new ResponseEntity<>(addedCours, HttpStatus.CREATED);
     }
 
-    @GetMapping("/mentor/{mentorId}")  // Ajouter cette route
-    public List<Cours> getCoursesByMentorId(@PathVariable Long mentorId) {
-        return coursService.getCoursesByMentorId(mentorId);
+    // Endpoint pour récupérer tous les cours
+    @GetMapping("/all")
+    public ResponseEntity<List<Cours>> getAllCours() {
+        List<Cours> coursList = coursService.allCours();
+        return new ResponseEntity<>(coursList, HttpStatus.OK);
     }
+
+    // Endpoint pour récupérer un cours par son ID
     @GetMapping("/{id}")
-    public Cours getCoursById(@PathVariable Integer id) {
-        return coursService.getCours(id);
+    public ResponseEntity<Cours> getCoursById(@PathVariable("id") Integer id) {
+        Cours cours = coursService.getCours(id);
+        return new ResponseEntity<>(cours, HttpStatus.OK);
     }
 
-    @PostMapping()
-    public Cours addCours(@RequestBody Cours cours) {
-        return coursService.addCours(cours);
-    }
-
+    // Endpoint pour mettre à jour un cours
     @PutMapping("/{id}")
-    public Cours updateCours(@PathVariable Integer id, @RequestBody Cours cours) {
-        return coursService.updateCours(id, cours);
+    public ResponseEntity<Cours> updateCours(@PathVariable("id") Integer id, @RequestBody Cours cours) {
+        Cours updatedCours = coursService.updateCours(id, cours);
+        return new ResponseEntity<>(updatedCours, HttpStatus.OK);
     }
 
+    // Endpoint pour supprimer un cours
     @DeleteMapping("/{id}")
-    public void deleteCours(@PathVariable Integer id) {
+    public ResponseEntity<Void> deleteCours(@PathVariable("id") Integer id) {
         coursService.deleteCours(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    // Endpoint pour récupérer tous les cours d'un mentor
+    @GetMapping("/mentor/{mentorId}")
+    public ResponseEntity<List<Cours>> getCoursesByMentorId(@PathVariable("mentorId") Long mentorId) {
+        List<Cours> coursList = coursService.getCoursesByMentorId(mentorId);
+        return new ResponseEntity<>(coursList, HttpStatus.OK);
     }
 }

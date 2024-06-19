@@ -24,7 +24,8 @@ export class AddFormationDialogComponent implements OnInit {
     contenu: '',
     image: '',
     etablissements: [],
-    carrieres: []
+    carrieres: [],
+    courses:[]
   };
   etablissements: Etablissement[] = [];
   selectedEtablissementIds: number[] = []; // Ajoutez cette ligne

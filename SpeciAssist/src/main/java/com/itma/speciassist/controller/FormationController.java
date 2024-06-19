@@ -1,6 +1,7 @@
 package com.itma.speciassist.controller;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,17 +13,22 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itma.speciassist.model.Cours;
 import com.itma.speciassist.model.Etablissement;
 import com.itma.speciassist.model.Formation;
+import com.itma.speciassist.service.CoursService;
 import com.itma.speciassist.service.EtablissementService;
 import com.itma.speciassist.service.FormationService;
 
 @RestController
 @RequestMapping("/formations")
 public class FormationController {
-
+   
+	@Autowired
     private final FormationService formationService;
     private EtablissementService etablissementService;
+    private CoursService coursService; // Assurez-vous que cette dépendance est correctement injectée
+
 
     public FormationController(FormationService formationService) {
         this.formationService = formationService;
@@ -32,6 +38,12 @@ public class FormationController {
     public ResponseEntity<List<Formation>> getAllFormations() {
         List<Formation> formations = formationService.getAllFormations();
         return new ResponseEntity<>(formations, HttpStatus.OK);
+    }
+    
+    // Endpoint pour récupérer les cours associés à une formation par titre
+    @GetMapping("/cours/{titreFormation}")
+    public List<Cours> getCoursByFormation(@PathVariable String titreFormation) {
+        return coursService.getCoursByFormation(titreFormation);
     }
 
     @GetMapping("/getFormation/{id}")
