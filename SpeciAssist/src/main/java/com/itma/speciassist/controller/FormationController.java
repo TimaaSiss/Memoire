@@ -40,11 +40,13 @@ public class FormationController {
         return new ResponseEntity<>(formations, HttpStatus.OK);
     }
     
-    // Endpoint pour récupérer les cours associés à une formation par titre
-    @GetMapping("/cours/{titreFormation}")
-    public List<Cours> getCoursByFormation(@PathVariable String titreFormation) {
-        return coursService.getCoursByFormation(titreFormation);
-    }
+	/*
+	 * // Endpoint pour récupérer les cours associés à une formation par titre
+	 * 
+	 * @GetMapping("/cours/{Formation}") public List<Cours>
+	 * getCoursByFormation(@PathVariable String titreFormation) { return
+	 * coursService.getCoursByFormation(titreFormation); }
+	 */
 
     @GetMapping("/getFormation/{id}")
     public ResponseEntity<Formation> getFormationById(@PathVariable Integer id) {
@@ -109,6 +111,21 @@ public class FormationController {
     public ResponseEntity<Formation> createFormation(@RequestBody Formation formation) {
         Formation createdFormation = formationService.createFormation(formation);
         return new ResponseEntity<>(createdFormation, HttpStatus.CREATED);
+    }
+    
+    @PostMapping("/{formationId}/cours")
+    public ResponseEntity<Formation> addCourseToFormation(
+        @PathVariable Integer formationId,
+        @RequestBody Cours newCourse
+    ) {
+        Formation formation = formationService.getFormationById(formationId);
+
+        if (formation != null) {
+            coursService.addCourseToFormation(newCourse, formation);
+            return ResponseEntity.ok(formation);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
     
 

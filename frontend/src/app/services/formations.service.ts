@@ -22,10 +22,7 @@ export class FormationService {
   }
 
   
-  // Ajouter une méthode pour récupérer les cours associés à une formation
-  getCoursByFormation(titreFormation: string): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.apiUrl}/cours/${titreFormation}`);
-  }
+  
 
   getFormationWithEtablissementsByTitre(titre: string): Observable<Formation> {
     return this.http.get<Formation>(`${this.apiUrl}/getFormationByTitre/${encodeURIComponent(titre)}`);

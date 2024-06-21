@@ -15,55 +15,33 @@ import com.itma.speciassist.service.FormationService;
 
 @Service
 public class CoursServiceImpl implements CoursService {
-    
+
     @Autowired
     private CoursRepository coursRepository;
+
     @Autowired
     private FormationService formationService;
-    
-    @Override
-    public Cours addCours(Long mentorId, Cours cours) {
-        // Récupérer le mentor par son ID (si nécessaire)
-        // Mentor mentor = mentorRepository.findById(mentorId)
-        //                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Mentor not found"));
 
-        // Affecter le mentor au cours
-        // cours.setMentor(mentor);
+    @Override
+    public Cours addCours(Long mentorId, Integer formationId, Cours cours) {
+        // Récupérer la formation par son ID
+        Formation formation = formationService.getFormationById(formationId);
+        if (formation == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Formation not found with ID: " + formationId);
+        }
+
+        // Associer le cours à la formation
+        cours.setFormation(formation);
 
         // Enregistrer le cours dans la base de données
-        Cours savedCours = coursRepository.save(cours);
-
-        // Associer le cours à la formation correspondante
-        associateCoursWithFormation(savedCours);
-
-        return savedCours;
+        return coursRepository.save(cours);
     }
     
-    
-    public void associateCoursWithFormation(Cours cours) {
-        // Récupérer le titre du cours
-        String coursTitre = cours.getTitre();
-
-        // Rechercher une formation correspondant à au moins un mot du titre du cours
-        Formation formation = null;
-        List<Formation> formations = formationService.getAllFormations(); // Supposons que getAllFormations() renvoie toutes les formations
-
-        for (Formation form : formations) {
-            if (coursTitre.toLowerCase().contains(form.getTitre().toLowerCase())) {
-                formation = form;
-                break;
-            }
-        }
-
-        if (formation != null) {
-            cours.setFormation(formation);
-            coursRepository.save(cours);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Formation not found for course: " + coursTitre);
-        }
+    public void addCourseToFormation(Cours course, Formation formation) {
+        course.setFormation(formation); // Assurez-vous que le modèle `Cours` a un champ `formation`
+        coursRepository.save(course);
     }
 
-    
     @Override
     public List<Cours> allCours() {
         return coursRepository.findAll();
@@ -91,15 +69,24 @@ public class CoursServiceImpl implements CoursService {
         }
         coursRepository.deleteById(id);
     }
-    
+
     @Override
     public List<Cours> getCoursesByMentorId(Long mentorId) {
         return coursRepository.findByMentor_Id(mentorId);
     }
-    
-    @Override
-    public List<Cours> getCoursByFormation(String titreFormation) {
-        return coursRepository.findByFormation_Titre(titreFormation);
-    }
 
+   
+
+	@Override
+	public List<Cours> getCoursesByFormation(Integer formationId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	/*
+	 * @Override public void associateCoursWithFormation(Cours cours) { // TODO
+	 * Auto-generated method stub
+	 * 
+	 * }
+	 */
 }

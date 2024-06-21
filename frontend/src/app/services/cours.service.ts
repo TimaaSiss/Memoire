@@ -8,32 +8,36 @@ import { Course } from '../model/cours.model';
 })
 export class CourseService {
 
-  private baseUrl = 'http://localhost:8080/cours';
+  private baseUrl = 'http://localhost:8080';
 
   constructor(private http: HttpClient) { }
 
   getAllCourses(): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.baseUrl}`);
+    return this.http.get<Course[]>(`${this.baseUrl}/cours`);
   }
 
   getCourseById(id: number): Observable<Course> {
-    return this.http.get<Course>(`${this.baseUrl}/${id}`);
+    return this.http.get<Course>(`${this.baseUrl}/cours/${id}`);
   }
 
   getCoursesByMentor(mentorId: number): Observable<Course[]> {
-    return this.http.get<Course[]>(`${this.baseUrl}/mentor/${mentorId}`);
+    return this.http.get<Course[]>(`${this.baseUrl}/cours/mentor/${mentorId}`);
   }
 
+  // Ajouter une méthode pour récupérer les cours associés à une formation
+  getCoursByFormation(formationId: number) :Observable<Course[]> {
+    return this.http.get<Course[]>(`${this.baseUrl}/cours/formation/${formationId}`);
+  }
   
-  addCourse(mentorId: number, course: Course): Observable<Course> {
-    return this.http.post<Course>(`${this.baseUrl}/add/${mentorId}`, course);
+  addCourse(mentorId: number, newCourse: Course, formationId: number): Observable<Course> {
+    return this.http.post<Course>(`${this.baseUrl}/formations/${formationId}/cours`, newCourse);
   }
 
   updateCourse(id: number, course: Course): Observable<Course> {
-    return this.http.put<Course>(`${this.baseUrl}/${id}`, course);
+    return this.http.put<Course>(`${this.baseUrl}/cours/${id}`, course);
   }
 
   deleteCourse(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/cours/${id}`);
   }
 }

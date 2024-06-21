@@ -24,6 +24,11 @@ export class VideoMentorService {
     return this.http.post<VideoMentor>(`http://localhost:8080/mentor-videos?mentorId=${mentorId}`, video);
   }
 
+  uploadVideo(mentorId: number, formData: FormData): Observable<VideoMentor> {
+    const url = `${this.apiUrl}/upload/${mentorId}`;
+    return this.http.post<VideoMentor>(url, formData);
+  }
+
   updateVideo(id: number, videoMentor: VideoMentor): Observable<VideoMentor> {
     return this.http.put<VideoMentor>(`${this.apiUrl}/${id}`, videoMentor);
   }

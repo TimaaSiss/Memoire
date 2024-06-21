@@ -1,7 +1,6 @@
 <div class="career-details-container" *ngIf="formationDetails">
   <div class="career-header">
       <h1>{{ formationDetails.titre }}</h1>
-      <!--<img [src]="'/assets/' + careerDetails.img" alt="{{ careerDetails.nom }}" class="career-image">-->
   </div>
   <div class="career-info">
       <div class="info-section">
@@ -48,7 +47,7 @@
     <ul>
       <li *ngFor="let cours of coursList">{{ cours.titre }}</li>
     </ul>
-  </div>
+</div>
 <div *ngIf="!formationDetails">
   <p>Loading formation details...</p>
 </div>

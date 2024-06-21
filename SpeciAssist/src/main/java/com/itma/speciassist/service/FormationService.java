@@ -21,6 +21,8 @@ public interface FormationService {
 
 	List<Etablissement> getEtablissementsWithFormation(String titre);
 
+	Object findById(Long formationId);
+
 	// Optional<Formation> getFormationWithEtablissements(Long id);
 
 	// List<Etablissement> getFormationWithEtablissements(Integer id);

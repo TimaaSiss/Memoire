@@ -12,13 +12,13 @@
   <div class="manage-content">
     <div class="add-video">
       <h2>Ajouter une vidéo</h2>
-      <form (ngSubmit)="ajouterVideo()">
+      <form (ngSubmit)="ajouterVideo()" enctype="multipart/form-data">
         <label>Titre de la vidéo:</label>
         <input type="text" [(ngModel)]="nouvelleVideo.title" name="titre" required>
-
-        <label>URL de la vidéo:</label>
-        <input type="text" [(ngModel)]="nouvelleVideo.url" name="url" required>
-
+    
+        <label>Uploader la vidéo:</label>
+        <input type="file" (change)="onFileSelected($event)" accept="video/mp4,video/x-m4v,video/*" required>
+    
         <button type="submit" class="btn btn-primary">Ajouter</button>
       </form>
     </div>
@@ -28,7 +28,7 @@
       <div class="video-container">
         <div *ngFor="let video of videos" class="video-item">
           <p>{{ video.title }}</p>
-          <iframe [src]="video.url | safe" frameborder="0" allowfullscreen></iframe>
+          <iframe [src]="video.fileName | safe" frameborder="0" allowfullscreen></iframe>
           <button *ngIf="video.id !== undefined" (click)="supprimerVideo(video.id)" class="btn btn-danger">Supprimer</button>
           <button *ngIf="video.id !== undefined" (click)="modifierVideo(video)" class="btn btn-secondary">Modifier</button>
         </div>
@@ -52,6 +52,11 @@
 
         <label>Niveau:</label>
         <input type="text" [(ngModel)]="nouveauCours.niveau" name="niveau" required>
+
+        <label>Formation:</label>
+        <select [(ngModel)]="formationDetails" name="formation" required>
+          <option *ngFor="let formation of formations" [ngValue]="formation">{{ formation.titre }}</option>
+        </select>
 
         <button type="submit" class="btn btn-primary">Ajouter</button>
       </form>

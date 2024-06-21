@@ -2,10 +2,12 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Course } from '../model/cours.model';
 import { CourseService } from '../services/cours.service';
 import { MatDialog } from '@angular/material/dialog';
-import { AddCourseDialogComponent } from '@app/add-cours-dialog/add-cours-dialog.component'; // votre boîte de dialogue d'ajout de cours ici
+import { AddCourseDialogComponent } from '@app/add-cours-dialog/add-cours-dialog.component';
 import { EditCourseDialogComponent } from '@app/edit-cours-dialog/edit-cours-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { FormationService } from '@app/services/formations.service';
+import { Formation } from '@app/model/formation.model';
 
 @Component({
   selector: 'app-cours',
@@ -25,7 +27,11 @@ export class CoursComponent implements OnInit {
   pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
   currentUser: any; // Ajout de la propriété currentUser pour stocker l'utilisateur connecté
 
-  constructor(private courseService: CourseService, public dialog: MatDialog) { }
+  constructor(
+    private courseService: CourseService,
+    private formationService: FormationService,
+    public dialog: MatDialog
+  ) { }
 
   ngOnInit(): void {
     this.loadCourses();
@@ -84,7 +90,8 @@ export class CoursComponent implements OnInit {
 
   addCourse(newCourse: Course): void {
     if (this.currentUser && this.currentUser.id) {
-      this.courseService.addCourse(this.currentUser.id, newCourse).subscribe(() => {
+      const formationId = newCourse.formationId; // Assurez-vous que formationId est passé correctement
+      this.courseService.addCourse(this.currentUser.id, newCourse, formationId).subscribe(() => {
         this.loadCourses();
       });
     } else {

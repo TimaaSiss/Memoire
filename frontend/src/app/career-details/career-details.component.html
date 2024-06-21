@@ -38,7 +38,7 @@
     <div class="video-row">
       <div class="video-card" *ngFor="let video of mentorVideos">
         <video width="320" height="240" controls>
-          <source [src]="video.url" type="video/mp4">
+          <source [src]="video.fileName" type="video/mp4">
           Your browser does not support the video tag.
         </video>
         <h2>{{ video.title }}</h2>

@@ -5,17 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.itma.speciassist.model.Cours;
+import com.itma.speciassist.model.Formation;
 import com.itma.speciassist.service.CoursService;
+import com.itma.speciassist.service.FormationService;
 
 @RestController
 @RequestMapping("/cours")
@@ -24,10 +19,16 @@ public class CoursController {
     @Autowired
     private CoursService coursService;
 
- // Endpoint pour ajouter un cours
-    @PostMapping("/add/{mentorId}")
-    public ResponseEntity<Cours> addCours(@PathVariable("mentorId") Long mentorId, @RequestBody Cours cours) {
-        Cours addedCours = coursService.addCours(mentorId, cours);
+    @Autowired
+    private FormationService formationService;
+
+    // Endpoint pour ajouter un cours
+    @PostMapping("/add/{mentorId}/{formationId}")
+    public ResponseEntity<Cours> addCours(
+            @PathVariable("mentorId") Long mentorId,
+            @PathVariable("formationId") Integer formationId,
+            @RequestBody Cours cours) {
+        Cours addedCours = coursService.addCours(mentorId, formationId, cours);
         return new ResponseEntity<>(addedCours, HttpStatus.CREATED);
     }
 
@@ -43,6 +44,12 @@ public class CoursController {
     public ResponseEntity<Cours> getCoursById(@PathVariable("id") Integer id) {
         Cours cours = coursService.getCours(id);
         return new ResponseEntity<>(cours, HttpStatus.OK);
+    }
+    
+    @GetMapping("/{formationId}")
+    public ResponseEntity<List<Cours>> getCoursesByFormation(@PathVariable Integer formationId) {
+        List<Cours> courses = coursService.getCoursesByFormation(formationId);
+        return ResponseEntity.ok(courses);
     }
 
     // Endpoint pour mettre à jour un cours
@@ -64,5 +71,12 @@ public class CoursController {
     public ResponseEntity<List<Cours>> getCoursesByMentorId(@PathVariable("mentorId") Long mentorId) {
         List<Cours> coursList = coursService.getCoursesByMentorId(mentorId);
         return new ResponseEntity<>(coursList, HttpStatus.OK);
+    }
+
+    // Endpoint pour récupérer toutes les formations
+    @GetMapping("/formations")
+    public ResponseEntity<List<Formation>> getAllFormations() {
+        List<Formation> formations = formationService.getAllFormations();
+        return new ResponseEntity<>(formations, HttpStatus.OK);
     }
 }

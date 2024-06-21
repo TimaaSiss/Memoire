@@ -1,6 +1,7 @@
 // src/main/java/com/itma/speciassist/controller/VideoMentorController.java
 package com.itma.speciassist.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import com.itma.speciassist.model.VideoMentor;
 import com.itma.speciassist.service.VideoMentorService;
+
+import org.springframework.util.StringUtils;
 
 @RestController
 @RequestMapping("/mentor-videos")
@@ -41,9 +46,30 @@ public class VideoMentorController {
         return videoMentorService.getAllVideos(); // Ajouter cette méthode
     }
     
-    @PostMapping
-    public ResponseEntity<VideoMentor> addVideo(@RequestParam Long mentorId, @RequestBody VideoMentor videoMentor) {
-        VideoMentor savedVideoMentor = videoMentorService.addVideo(mentorId, videoMentor);
+	/*
+	 * @PostMapping public ResponseEntity<VideoMentor> addVideo(@RequestParam Long
+	 * mentorId, @RequestBody VideoMentor videoMentor) { VideoMentor
+	 * savedVideoMentor = videoMentorService.addVideo(mentorId, videoMentor); return
+	 * new ResponseEntity<>(savedVideoMentor, HttpStatus.CREATED); }
+	 */
+    
+    @PostMapping("/upload/{mentorId}")
+    public ResponseEntity<VideoMentor> uploadVideo(@PathVariable Long mentorId,
+                                                   @RequestParam("file") MultipartFile file,
+                                                   @RequestParam("title") String title) throws IOException {
+        if (file.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Aucun fichier sélectionné pour l'upload.");
+        }
+
+        // Nom du fichier à enregistrer sur le serveur
+        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+
+        // Enregistrer le fichier dans un répertoire sur le serveur
+        VideoMentor videoMentor = new VideoMentor();
+        videoMentor.setTitle(title);
+        videoMentor.setFileName(fileName);
+
+        VideoMentor savedVideoMentor = videoMentorService.addVideo(mentorId, videoMentor, file);
         return new ResponseEntity<>(savedVideoMentor, HttpStatus.CREATED);
     }
 

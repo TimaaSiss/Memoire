@@ -4,7 +4,7 @@ import { Carriere } from './carriere.model';
 
 export interface VideoMentor {
   id?: number;
-  url: string;
+  fileName: string;
   title: string;
   carriereId: number;
 }

@@ -3,6 +3,7 @@ package com.itma.speciassist.service;
 import java.util.List;
 
 import com.itma.speciassist.model.Cours;
+import com.itma.speciassist.model.Formation;
 
 public interface CoursService {
 
@@ -18,11 +19,13 @@ public interface CoursService {
 
 	List<Cours> getCoursesByMentorId(Long mentorId);
 
-	Cours addCours(Long mentorId, Cours cours);
+	 Cours addCours(Long mentorId, Integer formationId, Cours cours);
 
-	void associateCoursWithFormation(Cours cours);
+	//void associateCoursWithFormation(Cours cours);
+	void addCourseToFormation(Cours newCourse, Formation formation);
 
-	List<Cours> getCoursByFormation(String titreFormation);
+	
+	 List<Cours> getCoursesByFormation(Integer formationId);
 
 	
 

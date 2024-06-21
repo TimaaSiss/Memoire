@@ -112,6 +112,12 @@ public class FormationServiceImpl implements FormationService {
 		createFormation(f);
     }
 
+	@Override
+	public Object findById(Long formationId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 	

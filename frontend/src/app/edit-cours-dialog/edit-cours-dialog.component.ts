@@ -3,6 +3,7 @@
 import { Component, Inject } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Course } from '../model/cours.model';
+import { Formation } from '@app/model/formation.model';
 
 @Component({
   selector: 'app-edit-course-dialog',
@@ -12,6 +13,9 @@ import { Course } from '../model/cours.model';
 export class EditCourseDialogComponent {
 
   editedCourse: Course;
+  formations: Formation[] = [];
+  selectedFormationId: number | null = null;
+
 
   constructor(
     public dialogRef: MatDialogRef<EditCourseDialogComponent>,

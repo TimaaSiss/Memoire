@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Course } from '@app/model/cours.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Formation } from '@app/model/formation.model';
 
 @Component({
   selector: 'app-add-course-dialog',
@@ -10,6 +11,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AddCourseDialogComponent implements OnInit {
   addCourseForm!: FormGroup;
+  formations: Formation[] = [];
+  selectedFormationId: number | null = null;
 
   newCourse: Course = {
     id: 0,

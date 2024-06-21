@@ -2,6 +2,8 @@ package com.itma.speciassist.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,7 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import lombok.Data;
 
 @Entity
@@ -25,10 +27,10 @@ public class Formation {
     private String contenu;
     private String image;
     
-    @ManyToOne
-    @JoinColumn(name = "cours_id")
+    @JsonIgnore
+    @OneToMany(mappedBy = "formation")
+    private List<Cours> cours;
     
-    private Cours cours;
     
     @ManyToMany
     @JoinTable(
