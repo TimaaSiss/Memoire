@@ -21,11 +21,11 @@ public interface CoursService {
 
 	 Cours addCours(Long mentorId, Integer formationId, Cours cours);
 
-	//void associateCoursWithFormation(Cours cours);
-	void addCourseToFormation(Cours newCourse, Formation formation);
-
+	 
 	
 	 List<Cours> getCoursesByFormation(Integer formationId);
+
+	void addCourseToFormation(Cours newCourse);
 
 	
 

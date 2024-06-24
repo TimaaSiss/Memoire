@@ -1,37 +1,53 @@
-<!-- src/app/career-details/career-details.component.html -->
 <div class="career-details-container" *ngIf="careerDetails">
+  <!-- Header Section -->
   <div class="career-header">
-    <h1>{{ careerDetails.nom }}</h1>
+    <h1><strong>{{ careerDetails.nom }}</strong></h1>
   </div>
-  <div class="career-info">
-    <div class="info-section">
-      <h2>Description</h2>
-      <p>{{ careerDetails.description }}</p>
-    </div>
-    <div class="info-section">
-      <h2>Secteur</h2>
+
+  <!-- Sector and Salary Section -->
+  <div class="career-info-top">
+    <div class="info-section sector-section">
+      <i class="bi bi-bank"><i class="bi bi-bank"></i><i class="bi bi-bank"></i></i>
+      <h2><i class="fas fa-industry"></i> Secteur</h2>
       <p>{{ careerDetails.secteur }}</p>
     </div>
-    <div class="info-section">
-      <h2>Compétences requises</h2>
-      <ul>
-        <li *ngFor="let competence of careerDetails.competences_requises.split(',')">{{ competence.trim() }}</li>
-      </ul>
-    </div>
-    <div class="info-section">
-      <h2>Salaire</h2>
+    <div class="info-section salary-section">
+      <i class="bi bi-coin"><i class="bi bi-coin"></i><i class="bi bi-coin"></i></i>
+      <h2><i class="fas fa-coins"></i> Salaire</h2>
       <p>{{ careerDetails.salaire }}</p>
     </div>
-    <div class="info-section">
-      <h2>Formations</h2>
-      <ul>
-        <li *ngFor="let formation of careerDetails.formations">{{ formation.titre }}</li>
-      </ul>
+  </div>
+  <br/><br/>
+  <!-- Description Section -->
+  <div class="info-section description-section">
+    <h2><strong>Description</strong></h2>
+    <p>{{ careerDetails.description }}</p>
+  </div>
+  
+  <!-- Skills Section -->
+  <div class="info-section">
+    <h2><strong>Compétences requises</strong></h2>
+    <ul>
+      <li *ngFor="let competence of careerDetails.competences_requises.split(',')">{{ competence.trim() }}</li>
+    </ul>
+  </div>
+
+  <!-- Formations Section -->
+  <div class="formation-section">
+    <h2><strong>Formations</strong></h2>
+    <div class="scrollable-formations">
+      <div class="formation-row">
+        <div class="formation-card" *ngFor="let formation of careerDetails?.formations" [style.backgroundImage]="'url(' + formation.image + ')'" (click)="viewFormationDetails(formation.titre)">
+          <h2>{{ formation.titre }}</h2>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
 <br/><br/>
 
+<!-- Videos Section -->
 <div class="container">
   <h1 class="font-weight-bold">Vidéos des Mentors</h1>
   <div class="scrollable-videos">
@@ -47,13 +63,15 @@
   </div>
 </div>
 
+<!-- Comments Section -->
 <div class="comment-section">
   <h2>Commentaires</h2>
-  <div *ngFor="let commentaire of commentaires">
-    <p><strong>{{ commentaire.user?.nom }} {{ commentaire.user?.prenom }}:</strong> {{ commentaire.contenu }}</p>
-    <p><em>Publié le {{ commentaire.datePublication | date:'short' }}</em></p>
+  <div class="comment-container" *ngFor="let commentaire of commentaires">
+    <p class="comment-header"><strong>{{ commentaire.user?.nom }} {{ commentaire.user?.prenom }}:</strong></p>
+    <p class="comment-content">{{ commentaire.contenu }}</p>
+    <p class="comment-date"><em>Publié le {{ commentaire.datePublication | date: 'short' }}</em></p>
   </div>
-  <div *ngIf="currentUser">
+  <div *ngIf="currentUser" class="comment-form">
     <textarea [(ngModel)]="commentContent" placeholder="Ajoutez un commentaire..."></textarea>
     <button (click)="addCommentaire()">Publier</button>
   </div>

@@ -19,6 +19,8 @@ public interface CommentaireService {
 
 	List<Commentaire> getCommentairesByCarriereId(Integer carriereId);
 
+	List<Commentaire> getCommentairesByFormationId(Integer formationId);
+
 	
 }
 

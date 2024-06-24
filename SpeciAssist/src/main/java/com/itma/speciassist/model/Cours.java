@@ -26,7 +26,7 @@ public class Cours {
     @JoinColumn(name = "utilisateur_id") // Nom de la colonne pour la clé étrangère vers User
     private User user;
     
-    @JsonIgnore
+    
     @ManyToOne
     @JoinColumn(name = "mentor_id") // Nom de la colonne pour la clé étrangère vers Mentor
     private Mentor mentor;

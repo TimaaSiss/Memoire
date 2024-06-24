@@ -2,32 +2,32 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Mentor } from '@app/model/mentor.model';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MentorService {
-  private apiUrl = 'http://localhost:8080/mentors'; // Remplacez l'URL par celle de votre API
-
-  constructor(private http: HttpClient) { }
+ 
+  constructor(private http: HttpClient, private configService: ConfigService) { }
 
   addMentor(mentor: Mentor): Observable<Mentor> {
-    return this.http.post<Mentor>(`${this.apiUrl}`, mentor);
+    return this.http.post<Mentor>(`${this.configService.apiUrl}/mentors`, mentor);
   }
 
   getAllMentors(): Observable<Mentor[]> {
-    return this.http.get<Mentor[]>(`${this.apiUrl}`);
+    return this.http.get<Mentor[]>(`${this.configService.apiUrl}/mentors`);
   }
 
   getMentorById(id: number): Observable<Mentor> {
-    return this.http.get<Mentor>(`${this.apiUrl}/${id}`);
+    return this.http.get<Mentor>(`${this.configService.apiUrl}/mentors/${id}`);
   }
 
   updateMentor(id: number, mentor: Mentor): Observable<Mentor> {
-    return this.http.put<Mentor>(`${this.apiUrl}/${id}`, mentor);
+    return this.http.put<Mentor>(`${this.configService.apiUrl}/mentors/${id}`, mentor);
   }
 
   deleteMentor(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.configService.apiUrl}/mentors/${id}`);
   }
 }

@@ -33,7 +33,7 @@ public class CoursController {
     }
 
     // Endpoint pour récupérer tous les cours
-    @GetMapping("/all")
+    @GetMapping()
     public ResponseEntity<List<Cours>> getAllCours() {
         List<Cours> coursList = coursService.allCours();
         return new ResponseEntity<>(coursList, HttpStatus.OK);
@@ -46,7 +46,7 @@ public class CoursController {
         return new ResponseEntity<>(cours, HttpStatus.OK);
     }
     
-    @GetMapping("/{formationId}")
+    @GetMapping("/formation/{formationId}")
     public ResponseEntity<List<Cours>> getCoursesByFormation(@PathVariable Integer formationId) {
         List<Cours> courses = coursService.getCoursesByFormation(formationId);
         return ResponseEntity.ok(courses);

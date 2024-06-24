@@ -21,4 +21,7 @@ public interface CoursRepository extends JpaRepository<Cours, Integer> {
 	List<Cours> findByFormation_Titre(String titreFormation);
 
 
+	List<Cours> findByFormation_Id(Integer formationId);
+
+
 }

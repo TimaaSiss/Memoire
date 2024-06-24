@@ -1,53 +1,78 @@
 <div class="career-details-container" *ngIf="formationDetails">
+  <!-- Header Section -->
   <div class="career-header">
-      <h1>{{ formationDetails.titre }}</h1>
+    <h1>{{ formationDetails.titre }}</h1>
   </div>
-  <div class="career-info">
-      <div class="info-section">
-          <h2>Description</h2>
-          <p>{{ formationDetails.description }}</p>
-      </div>
-      <div class="info-section">
-          <h2>Secteur</h2>
-          <p>{{ formationDetails.contenu }}</p>
-      </div>
-      <div class="info-section">
-          <h2>Compétences requises</h2>
-          <ul>
-              <li *ngFor="let competence of formationDetails.contenu.split(',')">{{ competence.trim() }}</li>
-          </ul>
-      </div>
-      <div class="info-section">
-          <h2>Durée</h2>
-          <p>{{ formationDetails.duree }}</p>
-      </div>
-      <div class="info-section">
-          <h2>Prix</h2>
-          <p>{{ formationDetails.prix }}</p>
-      </div>
-      <div class="info-section">
-        <h2>Carrières Associées</h2>
-        <ul>
-          <li *ngFor="let formation of formationDetails.carrieres">{{ formation.nom }}</li>
-        </ul>
-      </div>
-      <div class="info-section">
-          <h2>Établissements</h2>
-          <ul>
-              <li *ngFor="let etablissement of formationDetails.etablissements">
-                  {{ etablissement.nom }} - {{ etablissement.lieu }}
-              </li>
-          </ul>
-      </div>
-  </div>
-</div>
 
-<div class="info-section">
+  <!-- Establishments, Duration and Price Section -->
+  <div class="career-info-top">
+    <div class="info-section establishment-section">
+      <i class="bi bi-building"></i>
+      <h2>Établissements</h2>
+      <ul>
+        <li *ngFor="let etablissement of formationDetails.etablissements">
+            {{ etablissement.code_libelle }} - {{ etablissement.lieu }}
+        </li>
+      </ul>
+    </div>
+    <div class="info-section duration-section">
+      <i class="bi bi-clock"></i>
+      <h2>Durée</h2>
+      <p>{{ formationDetails.duree }}</p>
+    </div>
+    <div class="info-section price-section">
+      <i class="bi bi-currency-dollar"></i>
+      <h2>Prix</h2>
+      <p>{{ formationDetails.prix }}</p>
+    </div>
+  </div>
+
+  <br/><br/>
+
+  <!-- Description Section -->
+  <div class="info-section description-section">
+      <h2>Description</h2>
+      <p>{{ formationDetails.description }}</p>
+  </div>
+
+  <!-- Content Section -->
+  <div class="info-section">
+      <h2>Contenu</h2>
+      <p>{{ formationDetails.contenu }}</p>
+  </div>
+
+  <!-- Associated Careers Section -->
+  <div class="info-section">
+      <h2>Carrières Associées</h2>
+      <ul>
+          <li *ngFor="let formation of formationDetails.carrieres">{{ formation.nom }}</li>
+      </ul>
+  </div>
+
+  <!-- Associated Courses Section -->
+  <div class="info-section">
     <h2>Cours Associés</h2>
     <ul>
-      <li *ngFor="let cours of coursList">{{ cours.titre }}</li>
+      <li *ngFor="let cours of coursList">
+        <a [href]="cours.urlCours" target="_blank">{{ cours.titre }}</a>
+      </li>
     </ul>
-</div>
+  </div>
+
+  <!-- Comments Section -->
+  <div class="comment-section">
+    <h2>Commentaires</h2>
+    <div class="comment-container" *ngFor="let commentaire of commentaires">
+      <p class="comment-header"><strong>{{ commentaire.user?.nom }} {{ commentaire.user?.prenom }}:</strong></p>
+      <p class="comment-content">{{ commentaire.contenu }}</p>
+      <p class="comment-date"><em>Publié le {{ commentaire.datePublication | date: 'short' }}</em></p>
+    </div>
+    <div *ngIf="currentUser" class="comment-form">
+      <textarea [(ngModel)]="commentContent" placeholder="Ajoutez un commentaire..."></textarea>
+      <button (click)="addCommentaire()">Publier</button>
+    </div>
+  </div>
+
 <div *ngIf="!formationDetails">
   <p>Loading formation details...</p>
 </div>

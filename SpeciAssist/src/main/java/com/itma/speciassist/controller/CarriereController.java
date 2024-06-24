@@ -26,7 +26,7 @@ public class CarriereController {
     @Autowired
     private CommentaireService commentaireService;
 
-    @GetMapping()
+    @GetMapping("/all")
     public List<Carriere> getAllCarrieres() {
         return carriereService.allCarrieres();
     }

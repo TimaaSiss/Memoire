@@ -54,6 +54,7 @@ import { MentorProfileComponent } from './profile-mentor/profile-mentor.componen
 import { QuestionnaireResultComponent } from './questionnaire-result/questionnaire-result.component';
 import { CommentairesComponent } from './commentaires/commentaires.component';
 import { SafePipe } from './pipes/safe.pipe';
+import { QuestionnaireHistoryComponent } from './questionnaire-history/questionnaire-history.component';
 
 
 
@@ -99,7 +100,8 @@ import { SafePipe } from './pipes/safe.pipe';
          MentorProfileComponent,
          QuestionnaireResultComponent,
          CommentairesComponent,
-         SafePipe
+         SafePipe,
+         QuestionnaireHistoryComponent
 
   ],
   imports: [

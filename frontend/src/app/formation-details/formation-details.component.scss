@@ -1,53 +1,173 @@
 .career-details-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    border-radius: 8px;
-    background-color: #f9f9f9;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  }
-  
   .career-header {
+    text-align: center;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+
+    h1 {
+      margin: 0;
+    }
+  }
+
+  .career-info-top {
     display: flex;
-    align-items: center;
     justify-content: space-between;
-    margin-bottom: 20px;
-  }
-  
-  .career-header h1 {
-    font-size: 2.5em;
-    margin: 0;
-    color: #333;
-  }
-  
-  .career-header .career-image {
-    width: 120px;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 2px solid #ccc;
-  }
-  
-  .career-info {
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+
     .info-section {
-      margin-bottom: 20px;
-  
+      flex: 1;
+      padding: 10px;
+
       h2 {
-        font-size: 1.5em;
-        margin-bottom: 10px;
-        color: #555;
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        margin-top: 0;
+
+        i {
+          margin-right: 8px;
+        }
       }
-  
+
       p, ul {
-        font-size: 1.1em;
-        color: #666;
-        line-height: 1.6;
+        margin-top: 5px;
       }
-  
-      ul {
-        list-style-type: disc;
-        padding-left: 20px;
+
+      &.establishment-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        h2 {
+          margin-bottom: 5px;
+        }
+      }
+
+      &.duration-section, &.price-section {
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+
+        h2 {
+          margin-bottom: 5px;
+        }
       }
     }
   }
-  
+
+  .description-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+
+    h2 {
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    p {
+      margin: 0;
+      color: #666;
+      line-height: 1.6;
+    }
+  }
+
+  .info-section {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+
+    h2 {
+      margin-top: 0;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+
+      li {
+        background: #e9ecef;
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .comment-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
+    }
+
+    .comment-container {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+      .comment-header {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .comment-content {
+        margin-bottom: 10px;
+        line-height: 1.5;
+      }
+
+      .comment-date {
+        font-size: 12px;
+        color: #777;
+      }
+    }
+
+    .comment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      textarea {
+        width: 100%;
+        height: 80px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        resize: none;
+        font-family: inherit;
+      }
+
+      button {
+        align-self: flex-start;
+        padding: 10px 20px;
+        background-color: #4caf50;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: #45a049;
+        }
+      }
+    }
+  }
+}

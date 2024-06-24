@@ -21,4 +21,6 @@ public class Mentor extends User {
     
     @OneToMany(mappedBy = "mentor")
     private List<VideoMentor> videoMentors;
+
+	
 }

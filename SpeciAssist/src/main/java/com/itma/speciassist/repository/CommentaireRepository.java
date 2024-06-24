@@ -11,4 +11,6 @@ import com.itma.speciassist.model.Commentaire;
 public interface CommentaireRepository extends JpaRepository<Commentaire, Integer> {
 	 List<Commentaire> findByCarriereId(Integer carriereId);
 
+	List<Commentaire> findByFormationId(Integer formationId);
+
 }

@@ -2,6 +2,7 @@
     <input type="text" placeholder="Rechercher..." [(ngModel)]="searchTerm" (input)="filterCareers(); filterFormations()">
     <button>Rechercher</button>  <button (click)="logout()"><i class="bi bi-box-arrow-right"></i></button>
 </div>
+<button (click)="navigateToHistory()"><i class="bi bi-book"></i></button> <!-- Icone du livre -->
 
 <div class="container" >
     <br><br>

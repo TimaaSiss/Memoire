@@ -1,5 +1,6 @@
 package com.itma.speciassist.controller;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,12 +14,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itma.speciassist.model.Commentaire;
 import com.itma.speciassist.model.Cours;
 import com.itma.speciassist.model.Etablissement;
 import com.itma.speciassist.model.Formation;
+import com.itma.speciassist.model.Mentor;
+import com.itma.speciassist.model.User;
+import com.itma.speciassist.service.CommentaireService;
 import com.itma.speciassist.service.CoursService;
 import com.itma.speciassist.service.EtablissementService;
 import com.itma.speciassist.service.FormationService;
+import com.itma.speciassist.service.MentorService;
+import com.itma.speciassist.service.UserService;
 
 @RestController
 @RequestMapping("/formations")
@@ -27,12 +34,21 @@ public class FormationController {
 	@Autowired
     private final FormationService formationService;
     private EtablissementService etablissementService;
+    private MentorService mentorservice;
+    private UserService userservice;
     private CoursService coursService; // Assurez-vous que cette dépendance est correctement injectée
+    private CommentaireService commentaireService;
 
 
-    public FormationController(FormationService formationService) {
+    @Autowired
+    public FormationController(CoursService coursService,EtablissementService etablissementService, FormationService formationService, MentorService mentorservice, UserService userservice, CommentaireService commentaireService) {
+        this.coursService = coursService;
         this.formationService = formationService;
-    }
+        this.mentorservice = mentorservice;
+        this.userservice = userservice;
+        this.etablissementService = etablissementService;
+        this.commentaireService = commentaireService;
+     }
 
     @GetMapping("/allFormations")
     public ResponseEntity<List<Formation>> getAllFormations() {
@@ -42,7 +58,7 @@ public class FormationController {
     
 	/*
 	 * // Endpoint pour récupérer les cours associés à une formation par titre
-	 * 
+	 
 	 * @GetMapping("/cours/{Formation}") public List<Cours>
 	 * getCoursByFormation(@PathVariable String titreFormation) { return
 	 * coursService.getCoursByFormation(titreFormation); }
@@ -114,18 +130,38 @@ public class FormationController {
     }
     
     @PostMapping("/{formationId}/cours")
-    public ResponseEntity<Formation> addCourseToFormation(
-        @PathVariable Integer formationId,
-        @RequestBody Cours newCourse
-    ) {
-        Formation formation = formationService.getFormationById(formationId);
-
-        if (formation != null) {
-            coursService.addCourseToFormation(newCourse, formation);
-            return ResponseEntity.ok(formation);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<Cours> addCourseToFormation(@PathVariable Integer formationId, @RequestBody Map<String,Object> body) {
+        
+        System.out.println(body);
+        
+        Integer idmentor = (Integer) body.get("mentorId");
+        Integer iduser = (Integer) body.get("mentorId");
+        Integer idformation = (Integer) body.get("formationId");
+        
+        String titre = (String) body.get("titre");
+        String description = (String) body.get("description");
+        String duree = (String) body.get("duree");
+        String urlCours = (String) body.get("urlCours");
+        String niveau = (String) body.get("niveau");
+        
+        User user = userservice.getUserById(iduser);
+        Mentor mentor = mentorservice.getMentorById(idmentor);
+        Formation formation = formationService.getFormationById(idformation);
+        
+        Cours cours =  new Cours();
+        cours.setTitre(titre);
+        cours.setDescription(description);
+        cours.setDuree(duree);
+        cours.setNiveau(niveau);
+        cours.setUrlCours(urlCours);
+        cours.setFormation(formation);
+        cours.setMentor(mentor);
+        cours.setUser(user);
+        
+        System.out.println(cours);
+        
+        coursService.addCourseToFormation(cours);
+        return new ResponseEntity<>(cours, HttpStatus.CREATED);
     }
     
 
@@ -143,5 +179,10 @@ public class FormationController {
     public ResponseEntity<Void> deleteFormation(@PathVariable Integer id) {
         formationService.deleteFormation(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+    
+    @GetMapping("/{formationId}")
+    public List<Commentaire> getCommentairesByFormationId(@PathVariable Integer formationId) {
+        return commentaireService.getCommentairesByFormationId(formationId);
     }
 }

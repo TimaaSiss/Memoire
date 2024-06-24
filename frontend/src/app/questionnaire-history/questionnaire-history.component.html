@@ -1,0 +1,15 @@
+<!-- questionnaire-history.component.html -->
+<div class="container">
+    <h2>Historique des Réponses</h2>
+    <div *ngFor="let response of userResponses">
+      
+      <div class="questionnaire">
+       
+        <div class="question">
+          <h4>Question: {{ response.question.libelle }}</h4>
+          <p>Réponse: {{ response.reponseChoisie || response.reponseTextuelle }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  

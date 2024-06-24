@@ -1,4 +1,3 @@
-<!-- src/app/mentor-profile/mentor-profile.component.html -->
 <div class="mentor-profile-container">
   <div class="header text-center">
     <h1>{{ prenom }} {{ nom }}</h1>
@@ -17,7 +16,7 @@
         <input type="text" [(ngModel)]="nouvelleVideo.title" name="titre" required>
     
         <label>Uploader la vidéo:</label>
-        <input type="file" (change)="onFileSelected($event)" accept="video/mp4,video/x-m4v,video/*" required>
+        <input type="file" (change)="onFileSelected($event)" name="file" accept="video/mp4,video/x-m4v,video/*" required>
     
         <button type="submit" class="btn btn-primary">Ajouter</button>
       </form>
@@ -28,7 +27,10 @@
       <div class="video-container">
         <div *ngFor="let video of videos" class="video-item">
           <p>{{ video.title }}</p>
-          <iframe [src]="video.fileName | safe" frameborder="0" allowfullscreen></iframe>
+          <video width="320" height="240" controls>
+            <source [src]="'http://localhost:8080/uploads/' + video.fileName" type="video/mp4">
+            Votre navigateur ne supporte pas la balise vidéo.
+          </video>
           <button *ngIf="video.id !== undefined" (click)="supprimerVideo(video.id)" class="btn btn-danger">Supprimer</button>
           <button *ngIf="video.id !== undefined" (click)="modifierVideo(video)" class="btn btn-secondary">Modifier</button>
         </div>
@@ -68,7 +70,7 @@
         <li *ngFor="let course of courses">
           {{ course.titre }} - {{ course.urlCours }}
           <button (click)="supprimerCours(course.id)" class="btn btn-danger">Supprimer</button>
-          <button (click)="modifierCours(course)" class="btn btn-secondary">Modifier</button>
+          <button (click)="openEditDialog(course)" class="btn btn-secondary">Modifier</button>
         </li>
       </ul>
     </div>

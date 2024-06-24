@@ -2,21 +2,21 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Etablissement } from '@app/model/etablissement.model';
 import { Observable } from 'rxjs';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EtablissementService {
-  private apiUrl = 'http://localhost:8080/etablissements'; // Remplacez ceci par votre URL backend
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private configService: ConfigService) { }
 
   getAllEtablissements(): Observable<Etablissement[]> {
-    return this.http.get<Etablissement[]>(`${this.apiUrl}`);
+    return this.http.get<Etablissement[]>(`${this.configService.apiUrl}/etablissements`);
   }
 
   getEtablissementById(id: number): Observable<Etablissement> {
-    return this.http.get<Etablissement>(`${this.apiUrl}/${id}`);
+    return this.http.get<Etablissement>(`${this.configService.apiUrl}/etablissements/${id}`);
   }
 
  // getFormationByTitre(titre: string): Observable<Etablissement> {
@@ -24,14 +24,14 @@ export class EtablissementService {
  // }
 
   addEtablissement(formation: Etablissement): Observable<Etablissement> {
-    return this.http.post<Etablissement>(`${this.apiUrl}`, formation);
+    return this.http.post<Etablissement>(`${this.configService.apiUrl}/etablissements`, formation);
   }
 
   updateEtablissement(id: number, formation: Etablissement): Observable<Etablissement> {
-    return this.http.put<Etablissement>(`${this.apiUrl}/update/${id}`, formation);
+    return this.http.put<Etablissement>(`${this.configService.apiUrl}/etablissements/update/${id}`, formation);
   }
 
   deleteEtablissement(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+    return this.http.delete<void>(`${this.configService.apiUrl}/etablissements/${id}`);
   }
 }

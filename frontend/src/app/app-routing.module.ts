@@ -20,6 +20,7 @@ import { EtablissementComponent } from './etablissements/etablissements.componen
 import { MentorProfileComponent } from './profile-mentor/profile-mentor.component';
 import { QuestionnaireResultComponent } from './questionnaire-result/questionnaire-result.component';
 import { CommentairesComponent } from './commentaires/commentaires.component';
+import { QuestionnaireHistoryComponent } from './questionnaire-history/questionnaire-history.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent }, // Route par défaut pour HomeComponent
@@ -42,6 +43,8 @@ const routes: Routes = [
   {path: 'profileMentor', component: MentorProfileComponent},
   { path: 'questionnaire-result', component: QuestionnaireResultComponent }, // Ajoutez la nouvelle route
   { path: 'commentaires', component: CommentairesComponent },
+  { path: 'questionnaire-history', component: QuestionnaireHistoryComponent },
+ 
  // { path: '**', redirectTo: 'questionnaires/1', pathMatch: 'full' }
 
 ];

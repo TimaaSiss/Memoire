@@ -25,6 +25,11 @@ public class Commentaire {
     @JoinColumn(name = "carriere_id")
     @JsonIgnoreProperties("commentaires")
     private Carriere carriere;
+    
+    @ManyToOne
+    @JoinColumn(name = "formation_id")
+    @JsonIgnoreProperties("commentaires")
+    private Formation formation;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

@@ -1,140 +1,237 @@
-
 .career-details-container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-  border-radius: 8px;
-  background-color: #f9f9f9;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+  .career-header {
+    text-align: center;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
 
-.career-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
+    h1 {
+      margin: 0;
+    }
+  }
 
-.career-header h1 {
-  font-size: 2.5em;
-  margin: 0;
-  color: #333;
-}
+  .career-info-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
 
-.career-header .career-image {
-  width: 120px;
-  height: 120px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 2px solid #ccc;
-}
+    .info-section {
+      flex: 1;
+      padding: 10px;
 
-.career-info {
-  .info-section {
+      h2 {
+        display: flex;
+        align-items: center;
+        font-weight: bold;
+        margin-top: 0;
+
+        i {
+          margin-right: 8px;
+        }
+      }
+
+      p {
+        margin-top: 5px;
+      }
+
+      &.sector-section {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        h2 {
+          margin-bottom: 5px;
+        }
+      }
+
+      &.salary-section {
+        text-align: right;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+
+        h2 {
+          margin-bottom: 5px;
+        }
+      }
+    }
+  }
+
+  .description-section {
+    background-color: #f9f9f9;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
 
     h2 {
-      font-size: 1.5em;
-      margin-bottom: 10px;
-      color: #555;
+      margin-bottom: 15px;
+      color: #333;
     }
 
-    p, ul {
-      font-size: 1.1em;
+    p {
+      margin: 0;
       color: #666;
       line-height: 1.6;
     }
+  }
+
+  .info-section {
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+
+    h2 {
+      margin-top: 0;
+    }
 
     ul {
-      list-style-type: disc;
-      padding-left: 20px;
+      list-style-type: none;
+      padding: 0;
+
+      li {
+        background: #e9ecef;
+        margin: 5px 0;
+        padding: 10px;
+        border-radius: 4px;
+      }
     }
   }
-}
 
-.scrollable-videos {
-  display: flex;
-  overflow-x: auto;
-  white-space: nowrap;
-  padding: 10px 0;
-
-  .video-row {
-    display: flex;
-    gap: 15px;
+  .formation-section {
+    margin-top: 50px;
   }
 
-  .video-card {
-    background: #f4f4f4;
+  .scrollable-formations {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px 0;
+    display: flex;
+  }
+
+  .formation-row {
+    display: inline-flex;
+  }
+
+  .formation-card {
+    display: inline-block;
+    width: 250px;
+    height: 250px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-size: cover;
+    cursor: pointer;
+    position: relative;
+  }
+
+  .formation-card h2 {
+    margin: 0;
     padding: 10px;
-    border-radius: 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
   }
 
-  .video-card video {
-    width: 320px;
-    height: 240px;
-    border-radius: 5px;
+  .container {
+    .scrollable-videos {
+      display: flex;
+      overflow-x: auto;
+      padding: 10px;
+
+      .video-row {
+        display: flex;
+        flex-wrap: nowrap;
+
+        .video-card {
+          min-width: 320px;
+          margin-right: 15px;
+          background: #fff;
+          padding: 10px;
+          border: 1px solid #ddd;
+          border-radius: 4px;
+
+          h2 {
+            margin-top: 10px;
+          }
+        }
+      }
+    }
   }
-}
 
-.comment-section {
-  background-color: #f9f9f9;
-  border: 1px solid #e0e0e0;
-  border-radius: 8px;
-  padding: 20px;
-  margin-top: 20px;
-}
+  .comment-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
-.comment-section h2 {
-  margin-bottom: 20px;
-  color: #333;
-  font-size: 24px;
-}
+    h2 {
+      font-size: 24px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #ccc;
+      padding-bottom: 10px;
+    }
 
-.comment-section div {
-  margin-bottom: 15px;
-}
+    .comment-container {
+      background-color: #ffffff;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
-.comment-section p {
-  margin: 0;
-  color: #555;
-}
+      .comment-header {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
 
-.comment-section p strong {
-  color: #333;
-}
+      .comment-content {
+        margin-bottom: 10px;
+        line-height: 1.5;
+      }
 
-.comment-section p em {
-  font-size: 12px;
-  color: #999;
-}
+      .comment-date {
+        font-size: 12px;
+        color: #777;
+      }
+    }
 
-.comment-section textarea {
-  width: 100%;
-  height: 80px;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  resize: none;
-}
+    .comment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
 
-.comment-section button {
-  display: block;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  padding: 10px 20px;
-  font-size: 14px;
-  cursor: pointer;
-}
+      textarea {
+        width: 100%;
+        height: 80px;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        resize: none;
+        font-family: inherit;
+      }
 
-.comment-section button:hover {
-  background-color: #0056b3;
+      button {
+        align-self: flex-start;
+        padding: 10px 20px;
+        background-color: #4caf50;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+          background-color: #45a049;
+        }
+      }
+    }
+  }
 }

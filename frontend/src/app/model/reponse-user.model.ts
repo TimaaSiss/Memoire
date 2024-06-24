@@ -10,4 +10,5 @@ export class ReponseUser {
     date?: Date;
     user!: User;
     question!: Question;
+    
 }

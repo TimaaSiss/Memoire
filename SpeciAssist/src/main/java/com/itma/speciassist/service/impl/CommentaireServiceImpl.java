@@ -49,6 +49,10 @@ public class CommentaireServiceImpl implements CommentaireService {
         return commentaireRepository.findByCarriereId(carriereId);
     }
 
+    @Override
+    public List<Commentaire> getCommentairesByFormationId(Integer formationId) {
+        return commentaireRepository.findByFormationId(formationId);
+    }
     
 
     @Override

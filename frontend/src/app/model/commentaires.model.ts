@@ -1,4 +1,5 @@
 import { Carriere } from "./carriere.model";
+import { Formation } from "./formation.model";
 import { User } from "./user";
 
 export interface Commentaire {
@@ -6,5 +7,6 @@ export interface Commentaire {
     contenu: string;
     datePublication?: Date;
     carriere?: Carriere;
+    formation?:Formation;
     user?: User;
   }

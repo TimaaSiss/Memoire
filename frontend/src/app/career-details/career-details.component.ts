@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CarriereService } from '@app/services/carrieres.service';
 import { CommentaireService } from '@app/services/commentaires.service';
 import { UserService } from '@app/services/user-service.service';
@@ -8,6 +8,7 @@ import { Carriere } from '@app/model/carriere.model';
 import { Commentaire } from '@app/model/commentaires.model';
 import { VideoMentor } from '@app/model/video-mentor';
 import { User } from '@app/model/user';
+import { FormationService } from '@app/services/formations.service';
 
 @Component({
   selector: 'app-career-details',
@@ -27,7 +28,10 @@ export class CareerDetailsComponent implements OnInit {
     private carriereService: CarriereService,
     private commentaireService: CommentaireService,
     private userService: UserService,
-    private videoMentorService: VideoMentorService
+    private videoMentorService: VideoMentorService,
+    private formationService: FormationService,
+    private router: Router,
+ 
   ) { }
 
   ngOnInit(): void {
@@ -46,6 +50,10 @@ export class CareerDetailsComponent implements OnInit {
     );
 
     this.currentUser = this.userService.getCurrentUser();
+  }
+
+  viewFormationDetails(formationName: string): void {
+    this.router.navigate(['/formation-details', formationName]);
   }
 
   loadCommentaires(carriereId: number): void {

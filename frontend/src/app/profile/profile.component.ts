@@ -83,7 +83,7 @@ export class ProfileComponent implements OnInit {
   }
   
 
-  calculateProgress(userId: string): void {
+  calculateProgress(userId: number): void {
     let answeredQuestions = 0;
   
     // Fetch user responses
@@ -113,6 +113,9 @@ export class ProfileComponent implements OnInit {
   }
   
   
+  navigateToHistory(): void {
+    this.router.navigate(['/questionnaire-history']);
+  }
 
   filterCareers(): void {
     if (this.searchTerm.trim() === '') {
