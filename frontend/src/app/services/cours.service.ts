@@ -31,7 +31,7 @@ export class CourseService {
   }
   
   addCourse(mentorId: number, newCourse: Course, formationId: number): Observable<Course> {
-    const url = `${this.configService.apiUrl}/formations/${formationId}/cours`;
+    const url = `${this.configService.apiUrl}/cours/add/${mentorId}/${formationId}`;
     return this.http.post<Course>(url, newCourse);
   }
 

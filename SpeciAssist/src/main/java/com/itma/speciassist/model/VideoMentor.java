@@ -1,7 +1,6 @@
 package com.itma.speciassist.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -9,7 +8,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
-
 
 @Data
 @Entity
@@ -28,6 +26,5 @@ public class VideoMentor {
 
     @ManyToOne
     @JoinColumn(name = "carriere_id")
-    
     private Carriere carriere;
 }

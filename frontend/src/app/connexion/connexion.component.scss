@@ -15,43 +15,71 @@
   height: auto;
   padding-bottom: 0;
   border-top: 25px solid #000000;
+  padding-top: 10px; /* Ajout de padding-top pour un espacement supplémentaire en haut */
 }
 
 .logo {
-  width: 100%;
+  width: 30%;
   float: left;
   text-align: center;
+  padding-top: 0;
+  padding-bottom: 10px;
+  margin-left: 25px;
+  margin-top: -20px; /* Ajuste la position du logo pour le remonter */
 }
 
 .menu_text {
-  width: 100%;
-  float: left;
-  padding-top: 25px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center; /* Aligne les éléments en bas */
+  padding-bottom: 20px; /* Ajuste le padding-bottom pour décaler les liens vers le bas */
+  height: 100%; /* Assure que le menu prend toute la hauteur de la section */
 }
 
 .menu_text ul {
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
+  display: flex;
 }
 
 .menu_text li {
-  float: left;
-  padding-right: 120px;
+  padding-right: 100px; /* Réduis l'espacement entre les liens */
   font-size: 18px;
   color: #ffffff;
 }
 
 .menu_text li a {
   color: #ffffff;
+  text-decoration: none;
 }
 
-.menu_text li.active a{
+.menu_text li.active a {
   color: #f5f4f1;
 }
 
-
 .menu_text li a:hover {
   color: #aaa9a9;
+}
+
+@media (max-width: 768px) {
+  .header_section {
+    text-align: center;
+    padding-top: 10px; /* Assure un espacement suffisant sur les petits écrans */
+  }
+
+  .menu_text {
+    justify-content: center;
+    padding-bottom: 10px; /* Assure un espacement suffisant sur les petits écrans */
+  }
+
+  .menu_text ul li {
+    margin-left: 10px;
+  }
+
+  .logo {
+    max-width: 150px; /* Taille maximale du logo sur les petits écrans */
+    margin-top: 0; /* Réinitialise le margin-top sur les petits écrans */
+  }
 }
 
 .overlay {

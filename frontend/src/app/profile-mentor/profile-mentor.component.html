@@ -11,14 +11,24 @@
   <div class="manage-content">
     <div class="add-video">
       <h2>Ajouter une vidéo</h2>
-      <form (ngSubmit)="ajouterVideo()" enctype="multipart/form-data">
-        <label>Titre de la vidéo:</label>
-        <input type="text" [(ngModel)]="nouvelleVideo.title" name="titre" required>
-    
-        <label>Uploader la vidéo:</label>
-        <input type="file" (change)="onFileSelected($event)" name="file" accept="video/mp4,video/x-m4v,video/*" required>
-    
-        <button type="submit" class="btn btn-primary">Ajouter</button>
+      <form (ngSubmit)="ajouterVideo()">
+        <div>
+          <label for="title">Title:</label>
+          <input type="text" [(ngModel)]="nouvelleVideo.title" name="title" required>
+        </div>
+        <div>
+          <label for="carriereId">Carrière:</label>
+          <select [(ngModel)]="nouvelleVideo.carriereId" name="carriereId" required>
+            <option *ngFor="let carriere of carrieres" [value]="carriere.id">
+              {{ carriere.nom }}
+            </option>
+          </select>
+        </div>
+        <div>
+          <label for="file">Video File:</label>
+          <input type="file" (change)="onFileSelected($event)" required>
+        </div>
+        <button type="submit">Upload</button>
       </form>
     </div>
 
@@ -27,8 +37,8 @@
       <div class="video-container">
         <div *ngFor="let video of videos" class="video-item">
           <p>{{ video.title }}</p>
-          <video width="320" height="240" controls>
-            <source [src]="'http://localhost:8080/uploads/' + video.fileName" type="video/mp4">
+          <video *ngIf="video.id !== undefined" width="320" height="240" controls>
+            <source [src]="sanitizedVideoUrls[video.id]" type="video/mp4">
             Votre navigateur ne supporte pas la balise vidéo.
           </video>
           <button *ngIf="video.id !== undefined" (click)="supprimerVideo(video.id)" class="btn btn-danger">Supprimer</button>
@@ -49,26 +59,21 @@
         <label>Durée:</label>
         <input type="text" [(ngModel)]="nouveauCours.duree" name="duree" required>
 
-        <label>URL du cours:</label>
-        <input type="text" [(ngModel)]="nouveauCours.urlCours" name="urlCours" required>
-
-        <label>Niveau:</label>
-        <input type="text" [(ngModel)]="nouveauCours.niveau" name="niveau" required>
-
         <label>Formation:</label>
         <select [(ngModel)]="formationDetails" name="formation" required>
           <option *ngFor="let formation of formations" [ngValue]="formation">{{ formation.titre }}</option>
         </select>
 
-        <button type="submit" class="btn btn-primary">Ajouter</button>
+        <button type="submit">Ajouter</button>
       </form>
     </div>
 
     <div class="course-list">
-      <h2>Vos Cours:</h2>
+      <h2>Vos Cours</h2>
       <ul>
         <li *ngFor="let course of courses">
-          {{ course.titre }} - {{ course.urlCours }}
+          <h3>{{ course.titre }}</h3>
+          <p>{{ course.description }}</p>
           <button (click)="supprimerCours(course.id)" class="btn btn-danger">Supprimer</button>
           <button (click)="openEditDialog(course)" class="btn btn-secondary">Modifier</button>
         </li>

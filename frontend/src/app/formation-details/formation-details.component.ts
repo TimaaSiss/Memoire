@@ -7,6 +7,7 @@ import { CourseService } from '@app/services/cours.service';
 import { Commentaire } from '@app/model/commentaires.model';
 import { CommentaireService } from '@app/services/commentaires.service';
 import { User } from '@app/model/user';
+import { UserService } from '@app/services/user-service.service';
 
 @Component({
   selector: 'app-formation-details',
@@ -20,12 +21,13 @@ export class FormationDetailsComponent implements OnInit {
   formationId: number = 0;
   commentaires: Commentaire[] = []; // Liste des commentaires associés à la formation
   commentContent: string = '';
-  currentUser?: User | null = null;
+  currentUser: User | null = null;
   constructor(
     private route: ActivatedRoute,
     private formationService: FormationService,
     private courseService: CourseService,
-    private commentaireService: CommentaireService
+    private commentaireService: CommentaireService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
@@ -51,6 +53,8 @@ export class FormationDetailsComponent implements OnInit {
               console.error('Error fetching associated courses:', error);
             }
           );
+
+          this.currentUser = this.userService.getCurrentUser();
 
           // Charger les commentaires spécifiques à cette formation
           this.loadCommentaires();

@@ -1,17 +1,23 @@
 package com.itma.speciassist.service;
 
+import java.nio.file.Path;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Stream;
 
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.itma.speciassist.model.VideoMentor;
 
 public interface VideoMentorService {
     List<VideoMentor> getVideosByCarriereId(Long carriereId);
-    List<VideoMentor> getAllVideos();
     VideoMentor updateVideo(Long id, VideoMentor videoMentor);
-    void deleteVideo(Long id);
-	List<VideoMentor> getVideosByMentorId(Long mentorId);
-	  VideoMentor addVideo(Long mentorId, VideoMentor videoMentor, MultipartFile file);
-	//VideoMentor addVideo(Long mentorId, VideoMentor videoMentor);
+    List<VideoMentor> getVideosByMentorId(Long mentorId);
+    Resource loadAsResource(String fileName);
+    Stream<Path> loadAll();
+    Optional<VideoMentor> store(MultipartFile file, Long mentorId, Long carriereId, String title);
+    Path load(String fileName);
+    void deleteAll();
+    void init();
 }

@@ -27,13 +27,21 @@ public class CoursServiceImpl implements CoursService {
 
     @Override
     public Cours addCours(Long mentorId, Integer formationId, Cours cours) {
-        Formation formation = formationService.getFormationById(formationId);
+      try { 
+    	  Formation formation = formationService.getFormationById(formationId);
+      
         if (formation == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Formation not found with ID: " + formationId);
         }
         cours.setFormation(formation);
         return coursRepository.save(cours);
-    }
+        }catch (Exception e) {
+        	System.out.println(e.getMessage());
+        	return new Cours();
+        }
+        
+} 
+    
     
     @Override
     public void addCourseToFormation(Cours course) {

@@ -2,12 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { MentorService } from '@app/services/mentors.service';
 import { VideoMentorService } from '@app/services/video-mentor.service';
 import { CourseService } from '@app/services/cours.service';
+import { FormationService } from '@app/services/formations.service';
+
 import { VideoMentor } from '@app/model/video-mentor';
 import { Course } from '@app/model/cours.model';
-import { FormationService } from '@app/services/formations.service';
 import { Formation } from '@app/model/formation.model';
+import { Carriere } from '@app/model/carriere.model';
 import { EditCourseDialogComponent } from '@app/edit-cours-dialog/edit-cours-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { CarriereService } from '@app/services/carrieres.service';
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-mentor-profile',
@@ -25,17 +29,22 @@ export class MentorProfileComponent implements OnInit {
   nouvelleVideo: VideoMentor = { id: 0, fileName: '', title: '', carriereId: 0 };
   nouveauCours: Course = new Course();
   currentUser: any;
-  formations: Formation[] = []; // Ajout d'une variable pour stocker les formations disponibles
+  formations: Formation[] = [];
+  carrieres: Carriere[] = [];
   formationDetails: Formation | undefined;
   selectedCourse: Course | null = null;
   selectedFile: File | null = null;
+  sanitizedVideoUrls: { [key: number]: SafeUrl } = {};
+
 
   constructor(
     private mentorService: MentorService,
     private videoMentorService: VideoMentorService,
     private courseService: CourseService,
     private formationService: FormationService,
-    public dialog: MatDialog
+    private carriereService: CarriereService,
+    public dialog: MatDialog,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -61,15 +70,9 @@ export class MentorProfileComponent implements OnInit {
         }
       );
 
-      // Charger les formations disponibles
-      this.formationService.getAllFormations().subscribe(
-        (formations) => {
-          this.formations = formations;
-        },
-        (error) => {
-          console.error('Erreur lors de la récupération des formations :', error);
-        }
-      );
+      this.loadCarrieres();
+      this.loadFormations();
+       
     }
   }
 
@@ -85,6 +88,34 @@ export class MentorProfileComponent implements OnInit {
     );
   }
 
+  loadVideoUrl(video: VideoMentor): void {
+    if (video.id !== undefined) {
+      this.videoMentorService.getVideo(video.fileName).subscribe(
+        (blob) => {
+          const url = URL.createObjectURL(blob);
+          this.sanitizedVideoUrls[video.id] = this.sanitizer.bypassSecurityTrustUrl(url);
+        },
+        (error) => console.error('Erreur lors de la récupération de la vidéo :', error)
+      );
+    } else {
+      console.error('ID de la vidéo non défini. Impossible de charger l\'URL de la vidéo.');
+    }
+  }
+  
+  loadCarrieres(): void {
+    this.carriereService.getAllCarrieres().subscribe(
+      (carrieres) => this.carrieres = carrieres,
+      (error) => console.error('Erreur lors de la récupération des carrières :', error)
+    );
+  }
+
+  loadFormations(): void {
+    this.formationService.getAllFormations().subscribe(
+      (formations) => this.formations = formations,
+      (error) => console.error('Erreur lors de la récupération des formations :', error)
+    );
+  }
+
   ajouterVideo(): void {
     if (!this.selectedFile) {
       console.error('Aucun fichier sélectionné.');
@@ -92,31 +123,35 @@ export class MentorProfileComponent implements OnInit {
     }
   
     const formData = new FormData();
-    formData.append('title', this.nouvelleVideo.title);
     formData.append('file', this.selectedFile);
+    formData.append('mentorId', this.currentUser.id.toString());
+    formData.append('carriereId', this.nouvelleVideo.carriereId.toString());
+    formData.append('title', this.nouvelleVideo.title);
   
     this.videoMentorService.uploadVideo(this.currentUser.id, formData).subscribe(
       (result) => {
         console.log('Vidéo ajoutée avec succès:', result);
         this.videos.push(result);
+        if (result.id !== undefined) {
+          this.loadVideoUrl(result); // Load URL for the newly added video
+        }
         this.nouvelleVideo = { id: 0, title: '', fileName: '', carriereId: this.carriereId };
         this.selectedFile = null;
       },
       (error) => {
-        console.error('Erreur lors de l\'ajout de la vidéo : ', error);
+        console.error('Erreur lors de l\'ajout de la vidéo :', error);
       }
     );
   }
   
+
   onFileSelected(event: any): void {
     if (event.target.files.length > 0) {
       this.selectedFile = event.target.files[0];
     }
   }
-  
-  
-  
-  ajouterCours() {
+
+  ajouterCours(): void {
     console.log(this.currentUser.id);
     this.nouveauCours.mentorId = this.currentUser.id;
     this.nouveauCours.userId = this.currentUser.id;
@@ -138,21 +173,20 @@ export class MentorProfileComponent implements OnInit {
           }
         },
         (error) => {
-          console.error('Erreur lors de l\'ajout du cours : ', error);
+          console.error('Erreur lors de l\'ajout du cours :', error);
         }
       );
     } else {
       console.error('Aucune formation sélectionnée.');
     }
   }
-  
-  // Méthode pour rafraîchir les détails de la formation après l'ajout d'un cours
-  refreshFormationDetails(formationId: number) {
+
+  refreshFormationDetails(formationId: number): void {
     this.courseService.getCoursesByFormation(formationId).subscribe(
       (courses) => {
         console.log('Cours associés à la formation après ajout :', courses);
         if (this.formationDetails) {
-          this.formationDetails.courses = courses; // Mettre à jour les cours de la formation
+          this.formationDetails.courses = courses;
         }
       },
       (error) => {
@@ -160,33 +194,32 @@ export class MentorProfileComponent implements OnInit {
       }
     );
   }
-  
 
-  supprimerVideo(id: number) {
+  supprimerVideo(id: number): void {
     this.videoMentorService.deleteVideo(id).subscribe(
       () => {
         console.log('Vidéo supprimée avec succès');
         this.videos = this.videos.filter(video => video.id !== id);
       },
       (error) => {
-        console.error('Erreur lors de la suppression de la vidéo : ', error);
+        console.error('Erreur lors de la suppression de la vidéo :', error);
       }
     );
   }
 
-  supprimerCours(id: number) {
+  supprimerCours(id: number): void {
     this.courseService.deleteCourse(id).subscribe(
       () => {
         console.log('Cours supprimé avec succès');
         this.courses = this.courses.filter(course => course.id !== id);
       },
       (error) => {
-        console.error('Erreur lors de la suppression du cours : ', error);
+        console.error('Erreur lors de la suppression du cours :', error);
       }
     );
   }
 
-  modifierVideo(video: VideoMentor) {
+  modifierVideo(video: VideoMentor): void {
     if (video.id !== undefined) {
       this.videoMentorService.updateVideo(video.id, video).subscribe(
         (result) => {
@@ -197,7 +230,7 @@ export class MentorProfileComponent implements OnInit {
           }
         },
         (error) => {
-          console.error('Erreur lors de la mise à jour de la vidéo : ', error);
+          console.error('Erreur lors de la mise à jour de la vidéo :', error);
         }
       );
     } else {
@@ -208,29 +241,29 @@ export class MentorProfileComponent implements OnInit {
   openEditDialog(course: Course): void {
     const dialogRef = this.dialog.open(EditCourseDialogComponent, {
       width: '500px',
-      data: course // Passez le cours à votre composant de boîte de dialogue de modification
+      data: course
     });
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // Si des données sont renvoyées depuis la boîte de dialogue, mettez à jour le cours
         this.updateCourse(result);
       }
     });
   }
 
   updateCourse(course: Course): void {
-    if (this.selectedCourse) {
-      this.courseService.updateCourse(this.selectedCourse.id, this.selectedCourse)
-        .subscribe(updatedCourse => {
-          // Mettre à jour le cours dans la liste des cours
+    if (course.id !== undefined) {
+      this.courseService.updateCourse(course.id, course).subscribe(
+        (updatedCourse) => {
           const index = this.courses.findIndex(c => c.id === updatedCourse.id);
           if (index !== -1) {
             this.courses[index] = updatedCourse;
           }
-          // Réinitialiser le cours sélectionné
-          this.selectedCourse = null;
-        });
+        },
+        (error) => {
+          console.error('Erreur lors de la mise à jour du cours :', error);
+        }
+      );
     }
   }
 }

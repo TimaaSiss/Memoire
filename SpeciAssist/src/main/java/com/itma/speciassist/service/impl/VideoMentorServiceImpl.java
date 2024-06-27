@@ -1,5 +1,8 @@
 package com.itma.speciassist.service.impl;
 
+import com.itma.speciassist.exception.StorageException;
+import com.itma.speciassist.exception.StorageFileNotFoundException;
+import com.itma.speciassist.exception.StorageProperties;
 import com.itma.speciassist.model.Carriere;
 import com.itma.speciassist.model.Mentor;
 import com.itma.speciassist.model.VideoMentor;
@@ -7,24 +10,40 @@ import com.itma.speciassist.repository.CarriereRepository;
 import com.itma.speciassist.repository.MentorRepository;
 import com.itma.speciassist.repository.VideoMentorRepository;
 import com.itma.speciassist.service.VideoMentorService;
+
+import jakarta.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileSystemUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 @Service
 public class VideoMentorServiceImpl implements VideoMentorService {
 
-    private static final String VIDEO_DIRECTORY = "C:\\Users\\HP\\Desktop\\"; // Update this path
+    private final Path rootLocation;
+
+    @Autowired
+    public VideoMentorServiceImpl(StorageProperties properties) {
+        if (properties.getLocation().trim().length() == 0) {
+            throw new StorageException("File upload location cannot be empty.");
+        }
+        this.rootLocation = Paths.get(properties.getLocation());
+    }
 
     @Autowired
     private VideoMentorRepository videoMentorRepository;
@@ -34,8 +53,34 @@ public class VideoMentorServiceImpl implements VideoMentorService {
     private CarriereRepository carriereRepository;
 
     @Override
-    public List<VideoMentor> getAllVideos() {
-        return videoMentorRepository.findAll();
+    public Stream<Path> loadAll() {
+        try {
+            return Files.walk(this.rootLocation, 1)
+                    .filter(path -> !path.equals(this.rootLocation))
+                    .map(this.rootLocation::relativize);
+        } catch (IOException e) {
+            throw new StorageException("Failed to read stored files", e);
+        }
+    }
+
+    @Override
+    public Path load(String fileName) {
+        return rootLocation.resolve(fileName);
+    }
+
+    @Override
+    public Resource loadAsResource(String fileName) {
+        try {
+            Path file = load(fileName);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new StorageFileNotFoundException("Could not read file: " + fileName);
+            }
+        } catch (MalformedURLException e) {
+            throw new StorageFileNotFoundException("Could not read file: " + fileName, e);
+        }
     }
 
     @Override
@@ -59,47 +104,63 @@ public class VideoMentorServiceImpl implements VideoMentorService {
     }
 
     @Override
-    public void deleteVideo(Long id) {
-        videoMentorRepository.deleteById(id);
+    public void deleteAll() {
+        FileSystemUtils.deleteRecursively(rootLocation.toFile());
     }
 
     @Override
-    public VideoMentor addVideo(Long mentorId, VideoMentor videoMentor, MultipartFile file) {
-        Mentor mentor = mentorRepository.findById(mentorId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Mentor not found"));
-
-        videoMentor.setMentor(mentor);
-
-        // Rechercher une carrière correspondante au titre de la vidéo
-        List<Carriere> carrieres = carriereRepository.findAll();
-        Carriere matchedCarriere = null;
-        for (Carriere carriere : carrieres) {
-            if (videoMentor.getTitle().toLowerCase().contains(carriere.getNom().toLowerCase())) {
-                matchedCarriere = carriere;
-                break;
-            }
-        }
-
-        // Si aucune carrière correspondante n'est trouvée, définir carriere comme null
-        videoMentor.setCarriere(matchedCarriere);
-
+    public void init() {
         try {
-            // Vérifier si le fichier est bien une vidéo
-            String fileType = Files.probeContentType(Paths.get(file.getOriginalFilename()));
-            if (fileType == null || !fileType.startsWith("video")) {
-                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Le fichier sélectionné n'est pas une vidéo.");
+            Files.createDirectories(rootLocation);
+        } catch (IOException e) {
+            throw new StorageException("Could not initialize storage", e);
+        }
+    }
+
+    @Override
+    public Optional<VideoMentor> store(MultipartFile file, Long mentorId, Long carriereId, String title) {
+        try {
+            if (file.isEmpty()) {
+                throw new StorageException("Failed to store empty file.");
             }
 
-            // Sauvegarde du fichier dans le répertoire d'upload
-            String fileName = file.getOriginalFilename();
-            Path targetLocation = Paths.get(VIDEO_DIRECTORY).resolve(fileName);
-            Files.copy(file.getInputStream(), targetLocation);
+            // Enregistrement du fichier sur le disque
+            Path destinationFile = this.rootLocation.resolve(Paths.get(file.getOriginalFilename()))
+                    .normalize().toAbsolutePath();
+            if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
+                throw new StorageException("Cannot store file outside current directory.");
+            }
+            try (InputStream inputStream = file.getInputStream()) {
+                Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
+            }
 
-            // Sauvegarde des métadonnées de la vidéo dans la base de données
-            videoMentor.setFileName(fileName);
-            return videoMentorRepository.save(videoMentor);
-        } catch (Exception e) {
-            throw new RuntimeException("Erreur lors de l'upload de la vidéo: " + e.getMessage());
+            // Debug: log mentorId and carriereId
+            System.out.println("Mentor ID: " + mentorId);
+            System.out.println("Carriere ID: " + carriereId);
+
+            // Enregistrement des détails du fichier dans la base de données
+            Optional<Mentor> mentorOpt = mentorRepository.findById(mentorId);
+            Optional<Carriere> carriereOpt = carriereRepository.findById(carriereId);
+
+            if (mentorOpt.isPresent() && carriereOpt.isPresent()) {
+                VideoMentor videoMentor = new VideoMentor();
+                videoMentor.setFileName(file.getOriginalFilename());
+                videoMentor.setTitle(title);
+                videoMentor.setMentor(mentorOpt.get());
+                videoMentor.setCarriere(carriereOpt.get());
+                videoMentorRepository.save(videoMentor);
+                return Optional.of(videoMentor);
+            } else {
+                if (!mentorOpt.isPresent()) {
+                    System.out.println("Mentor not found for ID: " + mentorId);
+                }
+                if (!carriereOpt.isPresent()) {
+                    System.out.println("Carriere not found for ID: " + carriereId);
+                }
+                throw new EntityNotFoundException("Mentor or Carriere not found.");
+            }
+        } catch (IOException e) {
+            throw new StorageException("Failed to store file.", e);
         }
     }
 }
