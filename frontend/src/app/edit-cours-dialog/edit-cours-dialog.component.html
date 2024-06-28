@@ -1,3 +1,4 @@
+<div class="scrollable-form-container">
 <h2 class="text-center mb-4">Modifier le cours</h2>
 <form class="edit-course-form" (ngSubmit)="onSubmit()">
   <div class="form-group">
@@ -23,9 +24,15 @@
   <div class="form-group">
     <label for="formation">Formation :</label>
     <select class="form-control" id="formation" formControlName="formationId" required>
-      <option *ngFor="let formation of formations" [value]="formation.id">{{ formation.titre }}</option>
+      <option *ngFor="let formation of formations" [value]="formation.id">
+        {{ formation.titre }}
+      </option>
     </select>
+    <div *ngIf="editCourseForm.get('formationId')?.invalid && (editCourseForm.get('formationId')?.dirty || editCourseForm.get('formationId')?.touched)" class="text-danger">
+      <small *ngIf="editCourseForm.get('formationId')?.errors?.required">Formation requise.</small>
+    </div>
   </div>
   <button type="submit" class="btn btn-primary">Enregistrer</button>
   <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Annuler</button>
 </form>
+</div>

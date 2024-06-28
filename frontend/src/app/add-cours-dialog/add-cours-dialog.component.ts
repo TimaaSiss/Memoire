@@ -3,6 +3,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { Course } from '@app/model/cours.model';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Formation } from '@app/model/formation.model';
+import { FormationService } from '@app/services/formations.service';
 
 @Component({
   selector: 'app-add-course-dialog',
@@ -28,7 +29,7 @@ export class AddCourseDialogComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<AddCourseDialogComponent>,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder, private formationService: FormationService
   ) {}
 
   ngOnInit(): void {
@@ -37,8 +38,21 @@ export class AddCourseDialogComponent implements OnInit {
       description: ['', Validators.required],
       duree: ['', Validators.required],
       urlCours: ['', Validators.required],
-      niveau: ['', Validators.required]
+      niveau: ['', Validators.required],
+      formationId: ['', Validators.required] 
     });
+
+    // Charger les formations depuis le service
+    this.formationService.getAllFormations().subscribe(
+      (data: Formation[]) => {
+        this.formations = data;
+      },
+      (error: any) => {
+        console.error('Error fetching formations:', error);
+      }
+    );
+
+
   }
 
   onSubmit(): void {

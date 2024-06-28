@@ -1,50 +1,42 @@
 .scrollable-form-container {
-  max-height: 400px; /* Définit la hauteur maximale du conteneur */
-  overflow-y: auto; /* Active le défilement vertical lorsque le contenu dépasse la hauteur maximale */
-  padding-right: 20px; /* Ajoute un espace à droite pour compenser la barre de défilement */
+  max-width: 400px; /* Définit une largeur maximale pour le conteneur */
+  margin: 0 auto; /* Centre le conteneur horizontalement sur la page */
+  padding: 20px; /* Ajoute un peu d'espace intérieur autour du conteneur */
+  overflow: hidden; /* Empêche le débordement horizontal */
 }
-.add-course-form {
-    max-width: 400px; /* Définit une largeur maximale pour le formulaire */
-    margin: 0 auto; /* Centre le formulaire horizontalement sur la page */
-    padding: 20px; /* Ajoute un peu d'espace intérieur autour du formulaire */
-  }
-  
-  .add-course-form h2 {
-    font-size: 1.5rem; /* Taille de police pour le titre */
-    margin-bottom: 1.5rem; /* Marge en bas du titre */
-  }
-  
-  .add-course-form label {
-    font-weight: bold; /* Rend les étiquettes en gras */
-    margin-bottom: 0.5rem; /* Marge en bas de chaque étiquette */
-  }
-  
-  .add-course-form .form-control {
-    width: 100%; /* Définit la largeur des champs de saisie à 100% */
-    padding: 0.375rem 0.75rem; /* Ajoute un peu de remplissage autour des champs de saisie */
-    font-size: 1rem; /* Taille de police des champs de saisie */
-    line-height: 1.5; /* Hauteur de ligne des champs de saisie */
-    color: #495057; /* Couleur du texte dans les champs de saisie */
-    background-color: #fff; /* Couleur de fond des champs de saisie */
-    background-clip: padding-box; /* Assure que la couleur de fond ne dépasse pas les bordures */
-    border: 1px solid #ced4da; /* Définit une bordure autour des champs de saisie */
-    border-radius: 0.25rem; /* Arrondit les coins des champs de saisie */
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; /* Effets de transition pour la bordure et l'ombre */
-  }
-  
-  .add-course-form textarea {
-    resize: vertical; /* Permet le redimensionnement vertical des zones de texte */
-  }
-  
-  .add-course-form button {
-    margin-top: 1rem; /* Marge au-dessus des boutons */
-  }
-  
-  .add-course-form .btn-primary {
-    margin-right: 0.5rem; /* Marge à droite du bouton Ajouter */
-  }
-  
-  .add-course-form .btn-secondary {
-    margin-top: 1rem; /* Marge au-dessus du bouton Annuler */
-  }
-  
+
+.dialog-content {
+  max-height: 70vh; /* Limite la hauteur maximale du contenu */
+  overflow-y: auto; /* Ajoute un défilement vertical */
+  padding-right: 15px; /* Ajoute un espace pour éviter que la barre de défilement cache le contenu */
+}
+
+.form-group {
+  margin-bottom: 20px; /* Ajoute un espace entre chaque groupe de champs */
+}
+
+.form-group label {
+  font-weight: bold; /* Rend les étiquettes en gras pour les mettre en évidence */
+}
+
+textarea {
+  resize: vertical; /* Permet le redimensionnement vertical du champ de texte */
+}
+
+button {
+  margin-right: 10px; /* Ajoute un espace à droite des boutons */
+}
+
+.btn-primary {
+  margin-top: 10px; /* Ajoute un espace au-dessus du bouton Modifier */
+}
+
+.btn-secondary {
+  margin-top: 10px; /* Ajoute un espace au-dessus du bouton Annuler */
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}

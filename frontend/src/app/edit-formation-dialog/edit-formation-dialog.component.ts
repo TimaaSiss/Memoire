@@ -14,9 +14,8 @@ import { EtablissementService } from '@app/services/etablissement.service';
 export class EditFormationDialogComponent implements OnInit {
   editedFormation: Formation;
   etablissements: Etablissement[] = [];
-  carrieres: Carriere[] = []; // Liste des carrières disponibles
-  selectedCarrieres: number[] = []; // Carrières sélectionnées pour cette formation
-
+  carrieres: Carriere[] = [];
+  selectedCarrieres: number[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<EditFormationDialogComponent>,
@@ -28,25 +27,21 @@ export class EditFormationDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Charger les établissements depuis le service
     this.etablissementService.getAllEtablissements().subscribe(data => {
       this.etablissements = data;
     });
 
     this.loadCarrieres();
-   
 
     // Copier les données reçues pour les éditer
     this.editedFormation = { ...this.data };
   }
 
   loadCarrieres(): void {
-    // Exemple de chargement de carrières depuis un service (à adapter selon votre implémentation)
     this.carriereService.getAllCarrieres().subscribe(
       (data: Carriere[]) => {
         this.carrieres = data;
-        // Charger les carrières déjà associées à cette formation
-       // this.selectedCarrieres = this.editedFormation.carrieres.map(carriere => carriere.id);
+        this.selectedCarrieres = this.editedFormation.carrieres.map(carriere => carriere.id);
       },
       (error: any) => {
         console.error('Error fetching carrieres:', error);
@@ -60,23 +55,20 @@ export class EditFormationDialogComponent implements OnInit {
 
   onCarriereSelectionChange(carriereId: number, event: any): void {
     if (event.target.checked) {
-      // Ajoutez la carrière à la liste des carrières sélectionnées
       this.selectedCarrieres.push(carriereId);
     } else {
-      // Retirez la carrière de la liste des carrières sélectionnées
       this.selectedCarrieres = this.selectedCarrieres.filter(id => id !== carriereId);
     }
   }
 
   onSubmit(): void {
-    // Emettre les données éditées vers le composant parent
-    this.dialogRef.close(this.editedFormation);
+     // Ajouter les carrières sélectionnées à l'objet editedFormation
+  this.editedFormation.carrieres = this.carrieres.filter(carriere => this.selectedCarrieres.includes(carriere.id));
+  console.log('Formation envoyée:', this.editedFormation);
+  this.dialogRef.close(this.editedFormation);
   }
 
   onCancelClick(): void {
-     // Ajoutez les carrières sélectionnées à l'objet editedFormation
-     this.editedFormation.carrieres = this.carrieres.filter(carriere => this.selectedCarrieres.includes(carriere.id));
-
     this.dialogRef.close();
   }
 

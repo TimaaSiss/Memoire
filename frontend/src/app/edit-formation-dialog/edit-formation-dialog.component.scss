@@ -1,42 +1,46 @@
 .edit-carriere-form {
-    max-width: 400px; /* Définit une largeur maximale pour le formulaire */
-    margin: 0 auto; /* Centre le formulaire horizontalement sur la page */
-    padding: 20px; /* Ajoute un peu d'espace intérieur autour du formulaire */
-  }
-  
-  .edit-carriere-form label {
-    font-weight: bold; /* Rend les étiquettes en gras pour les mettre en évidence */
-  }
-  
-  .edit-carriere-form .form-group {
-    margin-bottom: 20px; /* Ajoute un espace entre chaque groupe de champs */
-  }
-  
-  .edit-carriere-form textarea {
-    resize: vertical; /* Permet le redimensionnement vertical du champ de texte */
-  }
-  
-  .edit-carriere-form button {
-    margin-right: 10px; /* Ajoute un espace à droite des boutons */
-  }
-  
-  .edit-carriere-form .btn-primary {
-    margin-top: 10px; /* Ajoute un espace au-dessus du bouton Enregistrer */
-  }
-  
-  .edit-carriere-form .btn-secondary {
-    margin-top: 10px; /* Ajoute un espace au-dessus du bouton Annuler */
-  }
-  
+  max-width: 400px; /* Définit une largeur maximale pour le formulaire */
+  margin: 0 auto; /* Centre le formulaire horizontalement sur la page */
+  padding: 20px; /* Ajoute un peu d'espace intérieur autour du formulaire */
+}
 
-  .dialog-content {
-    max-height: 70vh; // Ajustez cette valeur en fonction de votre besoin
-    overflow-y: auto;
-  }
-  
-  .dialog-actions {
-    display: flex;
-    justify-content: space-between;
-    padding: 1rem;
-  }
-  
+.edit-carriere-form label {
+  font-weight: bold; /* Rend les étiquettes en gras pour les mettre en évidence */
+}
+
+.edit-carriere-form .form-group {
+  margin-bottom: 20px; /* Ajoute un espace entre chaque groupe de champs */
+}
+
+.edit-carriere-form textarea {
+  resize: vertical; /* Permet le redimensionnement vertical du champ de texte */
+}
+
+.edit-carriere-form button {
+  margin-right: 10px; /* Ajoute un espace à droite des boutons */
+}
+
+.edit-carriere-form .btn-primary {
+  margin-top: 10px; /* Ajoute un espace au-dessus du bouton Enregistrer */
+}
+
+.edit-carriere-form .btn-secondary {
+  margin-top: 10px; /* Ajoute un espace au-dessus du bouton Annuler */
+}
+
+.scrollable-form-container {
+  max-height: 70vh; /* Ajustez cette valeur en fonction de votre besoin */
+  overflow-y: auto; /* Ajoute un défilement vertical */
+  padding-right: 15px; /* Ajustez l'espace pour ne pas cacher le contenu par la barre de défilement */
+}
+
+.dialog-content {
+  max-height: calc(70vh - 100px); /* Ajustez la hauteur en fonction de votre besoin */
+  overflow-y: auto;
+}
+
+.dialog-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 1rem;
+}

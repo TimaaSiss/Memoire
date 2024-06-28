@@ -40,7 +40,6 @@ import { CareerDetailsComponent } from './career-details/career-details.componen
 import { FormationDetailsComponent } from './formation-details/formation-details.component';
 import { EtablissementComponent } from './etablissements/etablissements.component';
 import { AddEtablissementDialogComponent } from './add-etablissement-dialog/add-etablissement-dialog.component';
-import { EditEtablissementDialogComponent } from './edit-etablissement-dialog/edit-etablissement-dialog.component';
 import { EditFormationDialogComponent } from './edit-formation-dialog/edit-formation-dialog.component';
 import { EditMentorDialogComponent } from './edit-mentor-dialog/edit-mentor-dialog.component';
 import { AddMentorDialogComponent } from './add-mentor-dialog/add-mentor-dialog.component';
@@ -89,7 +88,6 @@ import { QuestionnaireHistoryComponent } from './questionnaire-history/questionn
          FormationDetailsComponent,
          EtablissementComponent,
          AddEtablissementDialogComponent,
-         EditEtablissementDialogComponent,
          EditFormationDialogComponent,
          EditMentorDialogComponent,
          AddMentorDialogComponent,

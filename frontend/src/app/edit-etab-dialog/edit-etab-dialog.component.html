@@ -1,55 +1,59 @@
 <div class="scrollable-form-container">
-<h2 class="text-center">Modifier un Établissement</h2>
-<form [formGroup]="editEtablissementForm" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="nom">Nom :</label>
-    <input type="text" class="form-control" id="nom" formControlName="nom" required>
-    <div *ngIf="editEtablissementForm.get('nom')?.invalid && (editEtablissementForm.get('nom')?.dirty || editEtablissementForm.get('nom')?.touched)"
-         class="text-danger">
-      <small *ngIf="editEtablissementForm.get('nom')?.errors?.required">Nom requis.</small>
+  <h2 class="text-center">Modifier un Établissement</h2>
+  <form [formGroup]="editEtablissementForm" (ngSubmit)="onSubmit()">
+    <div class="dialog-content">
+      <div class="form-group">
+        <label for="nom">Nom :</label>
+        <input type="text" class="form-control" id="nom" formControlName="nom" required>
+        <div *ngIf="editEtablissementForm.get('nom')?.invalid && (editEtablissementForm.get('nom')?.dirty || editEtablissementForm.get('nom')?.touched)"
+             class="text-danger">
+          <small *ngIf="editEtablissementForm.get('nom')?.errors?.required">Nom requis.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="sigle">Sigle :</label>
+        <input type="text" class="form-control" id="sigle" formControlName="sigle" required>
+        <div *ngIf="editEtablissementForm.get('sigle')?.invalid && (editEtablissementForm.get('sigle')?.dirty || editEtablissementForm.get('sigle')?.touched)"
+             class="text-danger">
+          <small *ngIf="editEtablissementForm.get('sigle')?.errors?.required">Sigle requis.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="lieu">Lieu :</label>
+        <input type="text" class="form-control" id="lieu" formControlName="lieu" required>
+        <div *ngIf="editEtablissementForm.get('lieu')?.invalid && (editEtablissementForm.get('lieu')?.dirty || editEtablissementForm.get('lieu')?.touched)"
+             class="text-danger">
+          <small *ngIf="editEtablissementForm.get('lieu')?.errors?.required">Lieu requis.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="telephone">Téléphone :</label>
+        <input type="text" class="form-control" id="telephone" formControlName="telephone" required>
+        <div *ngIf="editEtablissementForm.get('telephone')?.invalid && (editEtablissementForm.get('telephone')?.dirty || editEtablissementForm.get('telephone')?.touched)"
+             class="text-danger">
+          <small *ngIf="editEtablissementForm.get('telephone')?.errors?.required">Téléphone requis.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="email">Email :</label>
+        <input type="email" class="form-control" id="email" formControlName="email" required>
+        <div *ngIf="editEtablissementForm.get('email')?.invalid && (editEtablissementForm.get('email')?.dirty || editEtablissementForm.get('email')?.touched)"
+             class="text-danger">
+          <small *ngIf="editEtablissementForm.get('email')?.errors?.required">Email requis.</small>
+          <small *ngIf="editEtablissementForm.get('email')?.errors?.email">Email invalide.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Formations :</label>
+        <div *ngFor="let formation of formations">
+          <input type="checkbox" [value]="formation.id" (change)="onFormationSelectionChange(formation.id, $event)" name="formation-{{formation.id}}" [checked]="isFormationSelected(formation)">
+          {{formation.titre}}
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="sigle">Sigle :</label>
-    <input type="text" class="form-control" id="sigle" formControlName="sigle" required>
-    <div *ngIf="editEtablissementForm.get('sigle')?.invalid && (editEtablissementForm.get('sigle')?.dirty || editEtablissementForm.get('sigle')?.touched)"
-         class="text-danger">
-      <small *ngIf="editEtablissementForm.get('sigle')?.errors?.required">Sigle requis.</small>
+    <div class="dialog-actions">
+      <button type="submit" class="btn btn-primary">Modifier</button>
+      <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Annuler</button>
     </div>
-  </div>
-  <div class="form-group">
-    <label for="lieu">Lieu :</label>
-    <input type="text" class="form-control" id="lieu" formControlName="lieu" required>
-    <div *ngIf="editEtablissementForm.get('lieu')?.invalid && (editEtablissementForm.get('lieu')?.dirty || editEtablissementForm.get('lieu')?.touched)"
-         class="text-danger">
-      <small *ngIf="editEtablissementForm.get('lieu')?.errors?.required">Lieu requis.</small>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="telephone">Téléphone :</label>
-    <input type="text" class="form-control" id="telephone" formControlName="telephone" required>
-    <div *ngIf="editEtablissementForm.get('telephone')?.invalid && (editEtablissementForm.get('telephone')?.dirty || editEtablissementForm.get('telephone')?.touched)"
-         class="text-danger">
-      <small *ngIf="editEtablissementForm.get('telephone')?.errors?.required">Téléphone requis.</small>
-    </div>
-  </div>
-  <div class="form-group">
-    <label for="email">Email :</label>
-    <input type="email" class="form-control" id="email" formControlName="email" required>
-    <div *ngIf="editEtablissementForm.get('email')?.invalid && (editEtablissementForm.get('email')?.dirty || editEtablissementForm.get('email')?.touched)"
-         class="text-danger">
-      <small *ngIf="editEtablissementForm.get('email')?.errors?.required">Email requis.</small>
-      <small *ngIf="editEtablissementForm.get('email')?.errors?.email">Email invalide.</small>
-    </div>
-  </div>
-  <div class="form-group">
-    <label>Formations :</label>
-    <div *ngFor="let formation of formations">
-      <input type="checkbox" [value]="formation.id" (change)="onFormationSelectionChange(formation.id, $event)" name="formation-{{formation.id}}" [checked]="isFormationSelected(formation)">
-      {{formation.titre}}
-    </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Modifier</button>
-   <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Annuler</button>
-</form>
+  </form>
 </div>
