@@ -50,16 +50,16 @@
       </div>
     </div>
     <div class="form-group">
-      <label><strong>Carrières associées:</strong></label>
+      <label><strong>Carrières associées :</strong></label>
       <div *ngFor="let carriere of carrieres">
         <input type="checkbox" [value]="carriere.id" (change)="onCarriereSelectionChange(carriere.id, $event)">
         {{ carriere.nom }}
       </div>
     </div>
     <div class="form-group">
-      <label>Établissements :</label>
+      <label><strong>Établissements :</strong></label>
       <div *ngFor="let etablissement of etablissements">
-        <input type="checkbox" [value]="etablissement.id" (change)="onEtablissementSelectionChange(etablissement.id, $event)" name="etablissement-{{etablissement.id}}">
+        <input type="checkbox" [value]="etablissement.id" (change)="onEtablissementSelectionChange(etablissement.id, $event)">
         {{ etablissement.nom }}
       </div>
     </div>

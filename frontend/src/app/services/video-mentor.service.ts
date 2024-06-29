@@ -22,8 +22,8 @@ export class VideoMentorService {
     return this.http.get<VideoMentor[]>(`${this.configService.apiUrl}/mentor-videos/carriere/${carriereId}`);
   }
 
-  uploadVideo(mentorId: number, formData: FormData): Observable<VideoMentor> {
-    return this.http.post<VideoMentor>(`${this.configService.apiUrl}/mentor-videos/upload`, formData);
+  uploadVideo(mentorId: number, formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.configService.apiUrl}/mentor-videos/upload`, formData);
   }
 
   updateVideo(id: number, videoMentor: VideoMentor): Observable<VideoMentor> {

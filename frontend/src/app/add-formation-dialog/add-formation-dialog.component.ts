@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Formation } from '@app/model/formation.model';
 import { Etablissement } from '@app/model/etablissement.model';
-import { EtablissementService } from '@app/services/etablissement.service';
 import { Carriere } from '@app/model/carriere.model';
+import { EtablissementService } from '@app/services/etablissement.service';
 import { CarriereService } from '@app/services/carrieres.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-formation-dialog',
@@ -13,31 +13,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./add-formation-dialog.component.scss']
 })
 export class AddFormationDialogComponent implements OnInit {
-  addFormationForm!: FormGroup; // Déclarer un FormGroup pour le formulaire réactif
-
-  newFormation: Formation = {
-    id: 0,
-    titre: '',
-    description: '',
-    duree: '',
-    prix: 0,
-    contenu: '',
-    image: '',
-    etablissements: [],
-    carrieres: [],
-    courses:[]
-  };
+  addFormationForm!: FormGroup;
+  newFormation!: Formation; // Remove the initialization here
   etablissements: Etablissement[] = [];
-  selectedEtablissementIds: number[] = []; // Ajoutez cette ligne
-  carrieres: Carriere[] = []; // Liste des carrières disponibles
-  selectedCarrieres: number[] = []; // Carrières sélectionnées pour cette formation
+  selectedEtablissementIds: number[] = [];
+  carrieres: Carriere[] = [];
+  selectedCarrieres: number[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<AddFormationDialogComponent>,
     private etablissementService: EtablissementService,
     private carriereService: CarriereService,
-    private formBuilder: FormBuilder // Injecter le FormBuilder pour construire le formulaire
-  ) {}
+    private formBuilder: FormBuilder
+  ) {
+    
+  }
 
   ngOnInit(): void {
     this.addFormationForm = this.formBuilder.group({
@@ -54,7 +44,6 @@ export class AddFormationDialogComponent implements OnInit {
   }
 
   loadCarrieres(): void {
-    // Exemple de chargement de carrières depuis un service (à adapter selon votre implémentation)
     this.carriereService.getAllCarrieres().subscribe(
       (data: Carriere[]) => {
         this.carrieres = data;
@@ -65,16 +54,10 @@ export class AddFormationDialogComponent implements OnInit {
     );
   }
 
-  isSelectedCarriere(carriereId: number): boolean {
-    return this.selectedCarrieres.includes(carriereId);
-  }
-
   onCarriereSelectionChange(carriereId: number, event: any): void {
     if (event.target.checked) {
-      // Ajoutez la carrière à la liste des carrières sélectionnées
       this.selectedCarrieres.push(carriereId);
     } else {
-      // Retirez la carrière de la liste des carrières sélectionnées
       this.selectedCarrieres = this.selectedCarrieres.filter(id => id !== carriereId);
     }
   }
@@ -98,11 +81,13 @@ export class AddFormationDialogComponent implements OnInit {
 
   onSubmit(): void {
     if (this.addFormationForm.invalid) {
-      // Afficher un message d'erreur si le formulaire est invalide
       alert('Veuillez remplir tous les champs obligatoires.');
       return;
     }
 
+    this.newFormation = this.addFormationForm.value; // Assign form values to newFormation
+
+    // Assign selected etablissements and carrieres
     this.newFormation.etablissements = this.etablissements.filter(etab =>
       this.selectedEtablissementIds.includes(etab.id)
     );
@@ -111,7 +96,6 @@ export class AddFormationDialogComponent implements OnInit {
     );
 
     console.log("Données à envoyer au composant parent :", this.newFormation);
-    // Émettez les données pour les envoyer au composant parent
     this.dialogRef.close(this.newFormation);
   }
 

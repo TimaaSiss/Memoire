@@ -27,9 +27,10 @@ export class CarriereService {
   }
 
   addCarriere(carriere: Carriere): Observable<Carriere> {
+    console.log('Carriere sent to backend:', carriere); // Ajoutez cette ligne
     return this.http.post<Carriere>(`${this.configService.apiUrl}/carrieres/addCarriere`, carriere);
   }
-
+  
   updateCarriere(id: number, carriere: Carriere): Observable<Carriere> {
     console.log("Données envoyées pour la mise à jour :", carriere);
  

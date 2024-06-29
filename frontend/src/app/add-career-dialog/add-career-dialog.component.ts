@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Carriere } from '../model/carriere.model';
-import { Formation } from '../model/formation.model';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Carriere } from '@app/model/carriere.model';
+import { Formation } from '@app/model/formation.model';
 import { FormationService } from '@app/services/formations.service';
 
 @Component({
@@ -11,16 +11,16 @@ import { FormationService } from '@app/services/formations.service';
   styleUrls: ['./add-career-dialog.component.scss']
 })
 export class AddCareerDialogComponent implements OnInit {
-  addCarriereForm!: FormGroup; // Déclarer un FormGroup pour le formulaire réactif
-  newCarriere: Carriere = { id: 0, nom: '', description: '', secteur: '', competences_requises: '', salaire: '', image: '', formations: [] };
+  addCarriereForm!: FormGroup;
+  newCarriere!: Carriere; // Remove the initialization here
   formations: Formation[] = [];
   selectedFormationIds: number[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<AddCareerDialogComponent>,
     private formationService: FormationService,
-    private formBuilder: FormBuilder // Injecter le FormBuilder pour construire le formulaire
-  ) { }
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.addCarriereForm = this.formBuilder.group({
@@ -32,40 +32,42 @@ export class AddCareerDialogComponent implements OnInit {
       image: ['', Validators.required]
     });
 
-    this.formationService.getAllFormations().subscribe(data => {
-      this.formations = data;
-    });
+    this.loadFormations();
   }
 
-  onFormationSelectionChange(formationId: number | undefined, event: any): void {
-    if (formationId === undefined) {
-      return;
-    }
+  loadFormations(): void {
+    this.formationService.getAllFormations().subscribe(
+      (data: Formation[]) => {
+        this.formations = data;
+      },
+      (error: any) => {
+        console.error('Error fetching formations:', error);
+      }
+    );
+  }
 
+  onFormationSelectionChange(formationId: number, event: any): void {
     if (event.target.checked) {
       this.selectedFormationIds.push(formationId);
     } else {
-      const index = this.selectedFormationIds.indexOf(formationId);
-      if (index > -1) {
-        this.selectedFormationIds.splice(index, 1);
-      }
+      this.selectedFormationIds = this.selectedFormationIds.filter(id => id !== formationId);
     }
   }
 
   onSubmit(): void {
     if (this.addCarriereForm.invalid) {
-      // Afficher un message d'erreur si le formulaire est invalide
       alert('Veuillez remplir tous les champs obligatoires.');
       return;
     }
 
-    this.newCarriere = {
-      ...this.addCarriereForm.value,
-      formations: this.formations.filter(formation =>
-        formation.id !== undefined && this.selectedFormationIds.includes(formation.id)
-      )
-    };
+    this.newCarriere = this.addCarriereForm.value; // Assign form values to newCarriere
 
+    // Assign selected formations
+    this.newCarriere.formations = this.formations.filter(formation =>
+      this.selectedFormationIds.includes(formation.id)
+    );
+
+    console.log("Données à envoyer au composant parent :", this.newCarriere);
     this.dialogRef.close(this.newCarriere);
   }
 

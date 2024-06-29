@@ -3,6 +3,7 @@ package com.itma.speciassist.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import jakarta.persistence.CascadeType;
@@ -36,6 +37,7 @@ public class Carriere {
     @OneToMany(mappedBy = "carriere", cascade = CascadeType.ALL)
     private List<Commentaire> commentaires = new ArrayList<>();
     
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
         name = "carriere_formation",

@@ -33,34 +33,31 @@
   </div>
 
   <!-- Formations Section -->
-  <div class="formation-section">
-    <h2><strong>Formations</strong></h2>
-    <div class="scrollable-formations">
-      <div class="formation-row">
-        <div class="formation-card" *ngFor="let formation of careerDetails?.formations" [style.backgroundImage]="'url(' + formation.image + ')'" (click)="viewFormationDetails(formation.titre)">
-          <h2>{{ formation.titre }}</h2>
-        </div>
-      </div>
-    </div>
+  <!-- Formations Section -->
+  <div class="info-section">
+    <h2>Formations Associées</h2>
+    <ul>
+      <li *ngFor="let formation of careerDetails?.formations">
+        <a (click)="viewFormationDetails(formation.titre)">{{ formation.titre }}</a>
+      </li>
+    </ul>
   </div>
-</div>
+
 
 <br/><br/>
 
 <!-- Videos Section -->
-<div class="container">
-  <h1 class="font-weight-bold">Vidéos des Mentors</h1>
-  <div class="scrollable-videos">
-    <div class="video-row">
-      <div class="video-card" *ngFor="let video of mentorVideos">
-        <video width="320" height="240" controls>
-          <source [src]="video.fileName" type="video/mp4">
-          Your browser does not support the video tag.
-        </video>
-        <h2>{{ video.title }}</h2>
-      </div>
-    </div>
-  </div>
+<div class="mentor-videos-section" *ngIf="mentorVideos.length > 0">
+  <h2> Videos des Mentors</h2>
+  <ul>
+    <li *ngFor="let video of mentorVideos">
+      <h3>{{ video.title }}</h3>
+      <video width="320" height="240" controls>
+        <source [src]="video.url" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </li>
+  </ul>
 </div>
 
 <!-- Comments Section -->

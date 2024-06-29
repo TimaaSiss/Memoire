@@ -39,6 +39,7 @@ export class CareerDetailsComponent implements OnInit {
     this.carriereService.getCarriereByNom(this.careerName).subscribe(
       (data: Carriere) => {
         this.careerDetails = data;
+        console.log('Career Details:', this.careerDetails); // Vérifiez ici les données récupérées
         if (this.careerDetails && this.careerDetails.id) {
           this.loadCommentaires(this.careerDetails.id);
           this.loadMentorVideos(this.careerDetails.id);
@@ -48,9 +49,11 @@ export class CareerDetailsComponent implements OnInit {
         console.error('Error fetching career details:', error);
       }
     );
-
+  
     this.currentUser = this.userService.getCurrentUser();
   }
+  
+  
 
   viewFormationDetails(formationName: string): void {
     this.router.navigate(['/formation-details', formationName]);

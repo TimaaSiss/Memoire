@@ -35,7 +35,7 @@ import java.util.stream.Stream;
 @Service
 public class VideoMentorServiceImpl implements VideoMentorService {
 
-    private final Path rootLocation;
+	private final Path rootLocation ;
 
     @Autowired
     public VideoMentorServiceImpl(StorageProperties properties) {
@@ -83,6 +83,7 @@ public class VideoMentorServiceImpl implements VideoMentorService {
         }
     }
 
+
     @Override
     public List<VideoMentor> getVideosByCarriereId(Long carriereId) {
         return videoMentorRepository.findByCarriereId(carriereId);
@@ -125,8 +126,8 @@ public class VideoMentorServiceImpl implements VideoMentorService {
             }
 
             // Enregistrement du fichier sur le disque
-            Path destinationFile = this.rootLocation.resolve(Paths.get(file.getOriginalFilename()))
-                    .normalize().toAbsolutePath();
+            String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+            Path destinationFile = this.rootLocation.resolve(Paths.get(fileName)).normalize().toAbsolutePath();
             if (!destinationFile.getParent().equals(this.rootLocation.toAbsolutePath())) {
                 throw new StorageException("Cannot store file outside current directory.");
             }
@@ -134,9 +135,8 @@ public class VideoMentorServiceImpl implements VideoMentorService {
                 Files.copy(inputStream, destinationFile, StandardCopyOption.REPLACE_EXISTING);
             }
 
-            // Debug: log mentorId and carriereId
-            System.out.println("Mentor ID: " + mentorId);
-            System.out.println("Carriere ID: " + carriereId);
+            // Génération de l'URL de la vidéo
+            String videoUrl = generateVideoUrl(fileName);
 
             // Enregistrement des détails du fichier dans la base de données
             Optional<Mentor> mentorOpt = mentorRepository.findById(mentorId);
@@ -144,8 +144,9 @@ public class VideoMentorServiceImpl implements VideoMentorService {
 
             if (mentorOpt.isPresent() && carriereOpt.isPresent()) {
                 VideoMentor videoMentor = new VideoMentor();
-                videoMentor.setFileName(file.getOriginalFilename());
+                videoMentor.setFileName(fileName);
                 videoMentor.setTitle(title);
+                videoMentor.setUrl(videoUrl);  // Définir l'URL de la vidéo
                 videoMentor.setMentor(mentorOpt.get());
                 videoMentor.setCarriere(carriereOpt.get());
                 videoMentorRepository.save(videoMentor);
@@ -162,5 +163,10 @@ public class VideoMentorServiceImpl implements VideoMentorService {
         } catch (IOException e) {
             throw new StorageException("Failed to store file.", e);
         }
+    }
+
+    private String generateVideoUrl(String fileName) {
+        // Remplacez "http://yourdomain.com/videos/" par votre domaine et chemin d'accès corrects
+        return "http://localhost:8080/mentor-videos/videos/" + fileName;
     }
 }

@@ -23,6 +23,10 @@
         <input type="text" class="form-control" id="salaire" [(ngModel)]="editedFormation.prix" name="prix" required>
       </div>
       <div class="form-group">
+        <label for="image"><strong>Image:</strong></label>
+        <input type="text" class="form-control" id="image" [(ngModel)]="editedFormation.image" name="image" required>
+      </div>
+      <div class="form-group">
         <label><strong>Carrières associées:</strong></label>
         <div *ngFor="let carriere of carrieres">
           <input type="checkbox" [value]="carriere.id" [checked]="isSelectedCarriere(carriere.id)" (change)="onCarriereSelectionChange(carriere.id, $event)">

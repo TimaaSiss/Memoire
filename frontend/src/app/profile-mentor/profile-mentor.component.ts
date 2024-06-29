@@ -26,7 +26,7 @@ export class MentorProfileComponent implements OnInit {
   carriereId: number = 0;
   videos: VideoMentor[] = [];
   courses: Course[] = [];
-  nouvelleVideo: VideoMentor = { id: 0, fileName: '', title: '', carriereId: 0 };
+  nouvelleVideo: VideoMentor = { id: 0, fileName: '', title: '', carriereId: 0, url:'' };
   nouveauCours: Course = new Course();
   currentUser: any;
   formations: Formation[] = [];
@@ -34,7 +34,7 @@ export class MentorProfileComponent implements OnInit {
   formationDetails: Formation | undefined;
   selectedCourse: Course | null = null;
   selectedFile: File | null = null;
-  sanitizedVideoUrls: { [key: number]: SafeUrl } = {};
+  sanitizedVideoUrls: { [key: string]: SafeUrl } = {};
 
 
   constructor(
@@ -90,17 +90,18 @@ export class MentorProfileComponent implements OnInit {
 
   loadVideoUrl(video: VideoMentor): void {
     if (video.id !== undefined) {
-      this.videoMentorService.getVideo(video.fileName).subscribe(
-        (blob) => {
-          const url = URL.createObjectURL(blob);
-          this.sanitizedVideoUrls[video.id] = this.sanitizer.bypassSecurityTrustUrl(url);
-        },
-        (error) => console.error('Erreur lors de la récupération de la vidéo :', error)
-      );
+        this.videoMentorService.getVideo(video.fileName).subscribe(
+            (blob) => {
+                const url = URL.createObjectURL(blob);
+                this.sanitizedVideoUrls[video.id] = this.sanitizer.bypassSecurityTrustUrl(url);
+            },
+            (error) => console.error('Erreur lors de la récupération de la vidéo :', error)
+        );
     } else {
-      console.error('ID de la vidéo non défini. Impossible de charger l\'URL de la vidéo.');
+        console.error('ID de la vidéo non défini. Impossible de charger l\'URL de la vidéo.');
     }
-  }
+}
+
   
   loadCarrieres(): void {
     this.carriereService.getAllCarrieres().subscribe(
@@ -131,11 +132,13 @@ export class MentorProfileComponent implements OnInit {
     this.videoMentorService.uploadVideo(this.currentUser.id, formData).subscribe(
       (result) => {
         console.log('Vidéo ajoutée avec succès:', result);
-        this.videos.push(result);
-        if (result.id !== undefined) {
-          this.loadVideoUrl(result); // Load URL for the newly added video
+        if (result.video) {
+          this.videos.push(result.video);
+          if (result.video.id !== undefined) {
+            this.loadVideoUrl(result.video); // Load URL for the newly added video
+          }
         }
-        this.nouvelleVideo = { id: 0, title: '', fileName: '', carriereId: this.carriereId };
+        this.nouvelleVideo = { id: 0, title: '', fileName: '', carriereId: this.carriereId, url:'' };
         this.selectedFile = null;
       },
       (error) => {
@@ -143,6 +146,7 @@ export class MentorProfileComponent implements OnInit {
       }
     );
   }
+  
   
 
   onFileSelected(event: any): void {

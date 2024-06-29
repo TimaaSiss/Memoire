@@ -35,24 +35,29 @@ public class VideoMentorController {
     }
 
     @PostMapping("/upload")
-    public String handleFileUpload(
+    public ResponseEntity<String> handleFileUpload(
             @RequestParam("file") MultipartFile file,
             @RequestParam("mentorId") Long mentorId,
             @RequestParam("carriereId") Long carriereId,
             @RequestParam("title") String title) {
         Optional<VideoMentor> video = videoMentorService.store(file, mentorId, carriereId, title);
-        return video.isPresent() ? "true" : "false";
+        if (video.isPresent()) {
+            return ResponseEntity.ok("Video uploaded successfully: " + video.get().getUrl());
+        } else {
+            return ResponseEntity.status(500).body("Failed to upload video.");
+        }
     }
-
-
 
     @GetMapping("/videos/{fileName:.+}")
     public ResponseEntity<Resource> getVideo(@PathVariable String fileName) {
         Resource file = videoMentorService.loadAsResource(fileName);
+        String mimeType = "video/mp4"; // Remplacez par le type MIME approprié si nécessaire
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getFilename() + "\"")
+                .header(HttpHeaders.CONTENT_TYPE, mimeType)
                 .body(file);
     }
+
     @PutMapping("/{id}")
     public VideoMentor updateVideo(@PathVariable Long id, @RequestBody VideoMentor videoMentor) {
         return videoMentorService.updateVideo(id, videoMentor);

@@ -32,6 +32,7 @@ public class Formation {
     private List<Cours> cours;
     
     
+   
     @ManyToMany
     @JoinTable(
         name = "formation_etablissement",

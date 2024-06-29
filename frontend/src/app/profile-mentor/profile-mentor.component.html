@@ -37,15 +37,16 @@
       <div class="video-container">
         <div *ngFor="let video of videos" class="video-item">
           <p>{{ video.title }}</p>
-          <video *ngIf="video.id !== undefined" width="320" height="240" controls>
-            <source [src]="sanitizedVideoUrls[video.id]" type="video/mp4">
+          <video *ngIf="video.url !== undefined" width="320" height="240" controls>
+            <source [src]="video.url" type="video/mp4">
             Votre navigateur ne supporte pas la balise vidéo.
           </video>
-          <button *ngIf="video.id !== undefined" (click)="supprimerVideo(video.id)" class="btn btn-danger">Supprimer</button>
-          <button *ngIf="video.id !== undefined" (click)="modifierVideo(video)" class="btn btn-secondary">Modifier</button>
+          <button *ngIf="video.url !== undefined" (click)="supprimerVideo(video.id)" class="btn btn-danger">Supprimer</button>
+          <button *ngIf="video.url !== undefined" (click)="modifierVideo(video)" class="btn btn-secondary">Modifier</button>
         </div>
       </div>
     </div>
+    
 
     <div class="add-course">
       <h2>Ajouter un cours</h2>

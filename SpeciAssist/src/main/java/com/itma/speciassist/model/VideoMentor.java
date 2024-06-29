@@ -15,9 +15,10 @@ public class VideoMentor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    private String url;
     private String fileName;
     private String title;
+    
     
     @ManyToOne
     @JoinColumn(name = "mentor_id", nullable = false)
@@ -27,4 +28,6 @@ public class VideoMentor {
     @ManyToOne
     @JoinColumn(name = "carriere_id")
     private Carriere carriere;
+
+	
 }

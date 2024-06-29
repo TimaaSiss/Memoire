@@ -6,5 +6,6 @@ export interface VideoMentor {
   id: number;
   fileName: string;
   title: string;
+  url:string;
   carriereId: number;
 }
