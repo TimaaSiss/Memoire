@@ -15,7 +15,10 @@ import com.itma.speciassist.repository.CarriereRepository;
 import com.itma.speciassist.repository.FormationRepository;
 import com.itma.speciassist.service.CarriereService;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class CarriereServiceImpl implements CarriereService {
     
     @Autowired
@@ -69,4 +72,11 @@ public class CarriereServiceImpl implements CarriereService {
         Optional<Carriere> carriere = carriereRepository.findByNom(nom);
         return carriere.orElse(null);
     }
+
+	@Override
+	public List<Formation> getFormationByCarriere(Integer carriereId) {
+		Carriere carriere= carriereRepository.findById(carriereId).orElseThrow(null);
+
+		 return carriere.getFormations();
+	}
 }

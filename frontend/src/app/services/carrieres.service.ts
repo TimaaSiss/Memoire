@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Carriere } from '../model/carriere.model';
 import { ConfigService } from './config.service';
+import { Formation } from '@app/model/formation.model';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ export class CarriereService {
 
  getCarriereByNom(nom: string): Observable<Carriere> {
     return this.http.get<Carriere>(`${this.configService.apiUrl}/carrieres/getCarriereByName/${nom}`);
+  }
+
+  getFormationByCarriere(carriereId: number): Observable<Formation[]> {
+    return this.http.get<Formation[]>(`${this.configService.apiUrl}/carrieres/${carriereId}/formations`);
   }
 
   addCarriere(carriere: Carriere): Observable<Carriere> {

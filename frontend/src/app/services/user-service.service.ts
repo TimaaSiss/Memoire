@@ -35,6 +35,10 @@ export class UserService {
     );
   }
 
+  checkUsernameExists(username: string): Observable<boolean> {
+    return this.http.post<boolean>(`${this.configService.apiUrl}/users/checkUsernameExists`, { username });
+  }
+
   public login(credentials: CredentialsDto): Observable<User> {
     return this.http.post<User>(`${this.configService.apiUrl}/username`, credentials).pipe(
       tap(response => {

@@ -3,6 +3,7 @@ package com.itma.speciassist.service;
 import java.util.List;
 
 import com.itma.speciassist.model.Carriere;
+import com.itma.speciassist.model.Formation;
 
 public interface CarriereService {
 
@@ -17,5 +18,7 @@ public interface CarriereService {
 	void deleteCarriere(Integer id);
 
 	Carriere getCarriereByNom(String nom);
+
+	List<Formation> getFormationByCarriere(Integer carriereId);
 
 }

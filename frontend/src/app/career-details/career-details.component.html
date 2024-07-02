@@ -37,7 +37,7 @@
   <div class="info-section">
     <h2>Formations Associées</h2>
     <ul>
-      <li *ngFor="let formation of careerDetails?.formations">
+      <li *ngFor="let formation of formations">
         <a (click)="viewFormationDetails(formation.titre)">{{ formation.titre }}</a>
       </li>
     </ul>

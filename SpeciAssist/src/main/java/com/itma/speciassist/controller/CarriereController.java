@@ -2,6 +2,7 @@ package com.itma.speciassist.controller;
 
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.itma.speciassist.model.Carriere;
 import com.itma.speciassist.model.Commentaire;
+import com.itma.speciassist.model.Formation;
 import com.itma.speciassist.service.CarriereService;
 import com.itma.speciassist.service.CommentaireService;
+import com.itma.speciassist.service.FormationService;
 
+import lombok.AllArgsConstructor;
+
+@AllArgsConstructor
 @RestController
 @RequestMapping("/carrieres")
 public class CarriereController {
@@ -25,6 +31,7 @@ public class CarriereController {
     private CarriereService carriereService;
     @Autowired
     private CommentaireService commentaireService;
+    private FormationService formationService;
 
     @GetMapping("/all")
     public List<Carriere> getAllCarrieres() {
@@ -35,6 +42,12 @@ public class CarriereController {
     public Carriere getCarriereById(@PathVariable Integer id) {
         return carriereService.getCarriere(id);
     }
+    
+    @GetMapping("/{carriereId}/formations")
+    public List<Formation> getFormationByCarriere(@PathVariable Integer carriereId) {
+        return carriereService.getFormationByCarriere(carriereId);
+    }
+    
     
     @GetMapping("/getCarriereByName/{nom}")
     public Carriere getCarriereByNom(@PathVariable String nom) {

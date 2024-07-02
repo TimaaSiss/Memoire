@@ -9,6 +9,7 @@ import { Commentaire } from '@app/model/commentaires.model';
 import { VideoMentor } from '@app/model/video-mentor';
 import { User } from '@app/model/user';
 import { FormationService } from '@app/services/formations.service';
+import { Formation } from '@app/model/formation.model';
 
 @Component({
   selector: 'app-career-details',
@@ -22,6 +23,8 @@ export class CareerDetailsComponent implements OnInit {
   commentContent: string = '';
   currentUser: User | null = null;
   mentorVideos: VideoMentor[] = [];
+  carriereId!: number;
+  formations:Formation[]=[];
 
   constructor(
     private route: ActivatedRoute,
@@ -39,6 +42,15 @@ export class CareerDetailsComponent implements OnInit {
     this.carriereService.getCarriereByNom(this.careerName).subscribe(
       (data: Carriere) => {
         this.careerDetails = data;
+        this.carriereService.getFormationByCarriere(this.careerDetails.id).subscribe(
+          (data: Formation[]) => {
+            this.formations = data;
+          },
+          (error: any) => {
+            console.error('Error fetching commentaires:', error);
+          }
+        );
+
         console.log('Career Details:', this.careerDetails); // Vérifiez ici les données récupérées
         if (this.careerDetails && this.careerDetails.id) {
           this.loadCommentaires(this.careerDetails.id);
@@ -49,8 +61,11 @@ export class CareerDetailsComponent implements OnInit {
         console.error('Error fetching career details:', error);
       }
     );
+
   
     this.currentUser = this.userService.getCurrentUser();
+
+    
   }
   
   

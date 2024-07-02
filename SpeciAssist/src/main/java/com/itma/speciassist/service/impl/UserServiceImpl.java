@@ -129,4 +129,8 @@ public class UserServiceImpl implements UserService {
     public Page<User> allUsers(Pageable pageable) {
         return userRepository.findAll(pageable);
     }
+    
+    public boolean usernameExists(String username) {
+        return userRepository.existsByUsername(username);
+    }
 }

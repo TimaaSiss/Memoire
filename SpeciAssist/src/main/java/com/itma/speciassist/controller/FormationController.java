@@ -175,7 +175,7 @@ public class FormationController {
     }
     
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteFormation(@PathVariable Integer id) {
         formationService.deleteFormation(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

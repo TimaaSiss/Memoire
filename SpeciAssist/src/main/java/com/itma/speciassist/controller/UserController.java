@@ -33,35 +33,36 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PostMapping("/addUser")
-    public ResponseEntity<?> addUser(@RequestBody @Valid User user, BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            // Gérer les erreurs de validation
-            List<String> errors = new ArrayList<>();
-            for (ObjectError error : bindingResult.getAllErrors()) {
-                errors.add(error.getDefaultMessage());
-            }
-            return ResponseEntity.badRequest().body(errors);
-        }
 
-        // Vérifier que le champ de confirmation du mot de passe correspond au mot de passe principal
-       // if (!user.getPassword().equals(user.getConfirmPassword())) {
-         //   return ResponseEntity.badRequest().body("Les mots de passe ne correspondent pas");
-        //}
-        // Assignez la valeur de confirmPassword à l'attribut correspondant dans l'entité User
-       
-        try {
-            // Ajoutez votre logique pour ajouter l'utilisateur à la base de données
-            User addedUser = userService.addUser(user);
-            // Retournez une réponse appropriée avec l'utilisateur ajouté
-            return ResponseEntity.ok(addedUser);
-        } catch (Exception e) {
-            // Gérer toute exception
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur s'est produite lors de l'ajout de l'utilisateur");
+  @PostMapping("/addUser")
+public ResponseEntity<?> addUser(@RequestBody @Valid User user, BindingResult bindingResult) {
+    if (bindingResult.hasErrors()) {
+        // Gérer les erreurs de validation
+        List<String> errors = new ArrayList<>();
+        for (ObjectError error : bindingResult.getAllErrors()) {
+            errors.add(error.getDefaultMessage());
         }
+        return ResponseEntity.badRequest().body(errors);
     }
 
-   
+    if (userService.usernameExists(user.getUsername())) {
+        return ResponseEntity.badRequest().body("Le nom d'utilisateur existe déjà.");
+    }
+
+    try {
+        User addedUser = userService.addUser(user);
+        return ResponseEntity.ok(addedUser);
+    } catch (Exception e) {
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Une erreur s'est produite lors de l'ajout de l'utilisateur");
+    }
+}
+  
+  @PostMapping("/checkUsernameExists")
+  public ResponseEntity<Boolean> checkUsernameExists(@RequestBody String username) {
+      boolean exists = userService.usernameExists(username);
+      return ResponseEntity.ok(exists);
+  }
+
     @PutMapping("/{userId}/activate")
     public ResponseEntity<?> activateUser(@PathVariable Long userId) {
         userService.activateUser(userId);
