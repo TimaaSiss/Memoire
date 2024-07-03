@@ -10,7 +10,7 @@ import { FormationService } from '@app/services/formations.service';
   styleUrls: ['./edit-dialog-career.component.scss']
 })
 export class EditCarriereDialogComponent implements OnInit {
-  editedCarriere: Carriere = { id: 0, nom: '', description: '', secteur: '', competences_requises: '', salaire: '', image: '', formations: [] };
+  editedCarriere: Carriere = { id: 0, nom: '', description: '', secteur: '', competences_requises: '', salaire: '', image: '', formations: [], mentorId:0};
   formations: Formation[] = []; // Liste des formations disponibles
   selectedFormations: number[] = []; // Formations sélectionnées pour cette carrière
 

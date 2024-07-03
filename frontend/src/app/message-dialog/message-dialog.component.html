@@ -1,0 +1,10 @@
+<h2>Envoyer un message</h2>
+<form [formGroup]="messageForm">
+  <mat-form-field>
+    <textarea matInput placeholder="Votre message" formControlName="content"></textarea>
+  </mat-form-field>
+  <div>
+    <button mat-button (click)="onCancel()">Annuler</button>
+    <button mat-button (click)="onSend()" [disabled]="!messageForm.valid">Envoyer</button>
+  </div>
+</form>

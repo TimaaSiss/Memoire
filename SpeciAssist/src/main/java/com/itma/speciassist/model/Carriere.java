@@ -32,7 +32,8 @@ public class Carriere {
     private String competences_requises;
     private String salaire;
     private String image;
-
+    private Integer mentorId;
+    
     @JsonIgnoreProperties("carriere")
     @OneToMany(mappedBy = "carriere", cascade = CascadeType.ALL)
     private List<Commentaire> commentaires = new ArrayList<>();

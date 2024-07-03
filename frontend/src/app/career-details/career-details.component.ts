@@ -10,6 +10,8 @@ import { VideoMentor } from '@app/model/video-mentor';
 import { User } from '@app/model/user';
 import { FormationService } from '@app/services/formations.service';
 import { Formation } from '@app/model/formation.model';
+import { MatDialog } from '@angular/material/dialog';
+import { MessageDialogComponent } from '@app/message-dialog/message-dialog.component';
 
 @Component({
   selector: 'app-career-details',
@@ -25,7 +27,8 @@ export class CareerDetailsComponent implements OnInit {
   mentorVideos: VideoMentor[] = [];
   carriereId!: number;
   formations:Formation[]=[];
-
+  messageContent: string = '';
+  mentorId: number | null = null;
   constructor(
     private route: ActivatedRoute,
     private carriereService: CarriereService,
@@ -34,8 +37,11 @@ export class CareerDetailsComponent implements OnInit {
     private videoMentorService: VideoMentorService,
     private formationService: FormationService,
     private router: Router,
+    private dialog: MatDialog
  
-  ) { }
+  ) {
+    
+   }
 
   ngOnInit(): void {
     this.careerName = this.route.snapshot.paramMap.get('careerName') || '';
@@ -95,7 +101,23 @@ export class CareerDetailsComponent implements OnInit {
       }
     );
   }
+  
 
+  openMessageDialog(mentorId: number): void {
+    const dialogRef = this.dialog.open(MessageDialogComponent, {
+      data: {
+        senderId: this.currentUser?.id,
+        receiverId: mentorId
+      }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Message sent successfully:', result);
+      }
+    });
+  }
+  
   addCommentaire(): void {
     if (this.commentContent.trim() && this.careerDetails && this.currentUser) {
       const newComment: Commentaire = {

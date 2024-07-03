@@ -12,6 +12,10 @@ import { EditCourseDialogComponent } from '@app/edit-cours-dialog/edit-cours-dia
 import { MatDialog } from '@angular/material/dialog';
 import { CarriereService } from '@app/services/carrieres.service';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { MessageService } from '@app/services/message.service';
+import { Message } from '@app/model/message.model';
+import { ActivatedRoute } from '@angular/router';
+import { User } from '@app/model/user';
 
 @Component({
   selector: 'app-mentor-profile',
@@ -24,9 +28,10 @@ export class MentorProfileComponent implements OnInit {
   mail: string = "";
   specialite: string = "";
   carriereId: number = 0;
+  mentorId: number=0;
   videos: VideoMentor[] = [];
   courses: Course[] = [];
-  nouvelleVideo: VideoMentor = { id: 0, fileName: '', title: '', carriereId: 0, url:'' };
+  nouvelleVideo: VideoMentor = { id: 0, fileName: '', title: '', carriereId: 0, url:'', mentorId:0 };
   nouveauCours: Course = new Course();
   currentUser: any;
   formations: Formation[] = [];
@@ -35,6 +40,9 @@ export class MentorProfileComponent implements OnInit {
   selectedCourse: Course | null = null;
   selectedFile: File | null = null;
   sanitizedVideoUrls: { [key: string]: SafeUrl } = {};
+  messages: Message[] = [];
+ // mentorId: number | null = null; // ID du mentor qui a posté la vidéo
+  messageContent: string = '';
 
 
   constructor(
@@ -44,7 +52,9 @@ export class MentorProfileComponent implements OnInit {
     private formationService: FormationService,
     private carriereService: CarriereService,
     public dialog: MatDialog,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private messageService: MessageService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -72,8 +82,17 @@ export class MentorProfileComponent implements OnInit {
 
       this.loadCarrieres();
       this.loadFormations();
+      this.loadMessages();
        
     }
+    this.route.paramMap.subscribe(params => {
+      const mentorIdParam = params.get('mentorId');
+      if (mentorIdParam) {
+        this.mentorId = +mentorIdParam;
+      } else {
+        console.error('MentorId est manquant dans l\'URL');
+      }
+    });
   }
 
   loadVideosAndCourses(mentorId: number): void {
@@ -138,7 +157,7 @@ export class MentorProfileComponent implements OnInit {
             this.loadVideoUrl(result.video); // Load URL for the newly added video
           }
         }
-        this.nouvelleVideo = { id: 0, title: '', fileName: '', carriereId: this.carriereId, url:'' };
+        this.nouvelleVideo = { id: 0, title: '', fileName: '', carriereId: this.carriereId, url:'', mentorId:0 };
         this.selectedFile = null;
       },
       (error) => {
@@ -242,6 +261,28 @@ export class MentorProfileComponent implements OnInit {
     }
   }
 
+  sendMessage(): void {
+    if (this.currentUser && this.mentorId) {
+      const message = {
+        senderId: this.currentUser.id,
+        receiverId: this.mentorId,
+        content: this.messageContent
+      };
+
+      this.messageService.sendMessage(message).subscribe(
+        response => {
+          console.log('Message envoyé avec succès', response);
+        },
+        error => {
+          console.error('Erreur lors de l\'envoi du message', error);
+        }
+      );
+    } else {
+      console.error('CurrentUser ou MentorId est manquant');
+    }
+  }
+
+
   openEditDialog(course: Course): void {
     const dialogRef = this.dialog.open(EditCourseDialogComponent, {
       width: '500px',
@@ -253,6 +294,15 @@ export class MentorProfileComponent implements OnInit {
         this.updateCourse(result);
       }
     });
+  }
+
+  loadMessages(): void {
+    this.messageService.getMessagesByReceiver(this.currentUser.id).subscribe(
+      (messages) => {
+        this.messages = messages;
+      },
+      (error) => console.error('Erreur lors de la récupération des messages :', error)
+    );
   }
 
   updateCourse(course: Course): void {

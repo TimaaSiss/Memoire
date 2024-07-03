@@ -9,5 +9,6 @@ export class Carriere {
     salaire!: string;
     image!:string;
     formations!:Formation[];
+    mentorId!: number;
   }
   

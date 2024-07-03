@@ -55,6 +55,8 @@ import { CommentairesComponent } from './commentaires/commentaires.component';
 import { SafePipe } from './pipes/safe.pipe';
 import { QuestionnaireHistoryComponent } from './questionnaire-history/questionnaire-history.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
+import { MessageDialogComponent } from './message-dialog/message-dialog.component';
+
 
 
 
@@ -101,7 +103,9 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
          CommentairesComponent,
          SafePipe,
          QuestionnaireHistoryComponent,
-         ContactUsComponent
+         ContactUsComponent,
+         MessageDialogComponent,
+        
 
   ],
   imports: [

@@ -1,10 +1,19 @@
-<div *ngIf="currentQuestionnaire; else loading">
-  <h2>{{ currentQuestionnaire.titre }}</h2>
- <li> <a routerLink="/profile">profile</a></li>
-  <div *ngFor="let question of currentQuestionnaire.questions">
-    <h3 id="question-{{ question.id }}">{{ question.libelle }}</h3>
-    <ul>
-      <li *ngFor="let reponse of question.reponseQuestions">
+<div class="background-image"></div>
+<div *ngIf="errorMessage" class="error-message">
+  <p>{{ errorMessage }}</p>
+</div>
+<div *ngIf="warningMessage" class="warning-message">
+  <p>{{ warningMessage }}</p>
+</div>
+<div class="navigation">
+  <a routerLink="/profile" class="profile-link">Profile</a>
+</div>
+<div *ngIf="currentQuestionnaire; else loading" class="questionnaire-container">
+  <h2 class="questionnaire-title">{{ currentQuestionnaire.titre }}</h2>
+  <div *ngFor="let question of currentQuestionnaire.questions" class="question-block">
+    <h3 id="question-{{ question.id }}" class="question-title">{{ question.libelle }}</h3>
+    <ul class="answer-list">
+      <li *ngFor="let reponse of question.reponseQuestions" class="answer-item">
         <label>
           <input 
             type="radio" 
@@ -12,29 +21,25 @@
             [value]="reponse.contenu" 
             (change)="onAnswerSelect(question.id, reponse.contenu)" 
             [checked]="selectedAnswers[question.id] === reponse.contenu"
+            class="answer-input"
           />
           {{ reponse.contenu }}
-          <!-- Show input field next to "Autre (spécifiez) ______________" -->
           <span *ngIf="reponse.contenu === 'Autre (spécifiez) ______________' && selectedAnswers[question.id] === 'Autre (spécifiez) ______________'">
             <input 
               type="text" 
               [(ngModel)]="otherAnswers[question.id]" 
               name="question{{ question.id }}_other" 
+              class="other-answer-input"
             />
-            <button (click)="validateOtherAnswer(question.id)">Valider</button>
+            <button (click)="validateOtherAnswer(question.id)" class="validate-button">Valider</button>
           </span>
         </label>
       </li>
     </ul>
   </div>
-  <button (click)="completeCurrentQuestionnaire()">Valider le Questionnaire</button>
+  <button (click)="completeCurrentQuestionnaire()" class="submit-button"> <i class="bi bi-arrow-right-circle"></i></button>
 </div>
 <ng-template #loading>
   <p>Loading...</p>
 </ng-template>
-<div *ngIf="errorMessage">
-  <p>{{ errorMessage }}</p>
-</div>
-<div *ngIf="warningMessage" style="color: red;">
-  <p>{{ warningMessage }}</p>
-</div>
+

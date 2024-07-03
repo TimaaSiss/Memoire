@@ -48,7 +48,7 @@
 
 <!-- Videos Section -->
 <div class="mentor-videos-section" *ngIf="mentorVideos.length > 0">
-  <h2> Videos des Mentors</h2>
+  <h2>Videos des Mentors</h2>
   <ul>
     <li *ngFor="let video of mentorVideos">
       <h3>{{ video.title }}</h3>
@@ -56,6 +56,9 @@
         <source [src]="video.url" type="video/mp4">
         Your browser does not support the video tag.
       </video>
+      <div *ngIf="currentUser">
+        <button (click)="openMessageDialog(video.mentorId)">Contacter le Mentor</button>
+      </div>
     </li>
   </ul>
 </div>

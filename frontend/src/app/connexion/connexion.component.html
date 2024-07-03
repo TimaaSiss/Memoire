@@ -21,7 +21,8 @@
 
 <div class="background-container">
   <div class="main">
-    <p class="sign" align="center">Se connecter</p>
+    <p class="sign" align="center">CONNEXION</p>
+    <br/>
     <form class="form1" (ngSubmit)="submitForm()">
       <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
       <input class="un" type="text" align="center" placeholder="Nom d'utilisateur" [(ngModel)]="formData.username" name="username" required>

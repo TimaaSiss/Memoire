@@ -15,16 +15,15 @@ import lombok.AllArgsConstructor;
 
 @Service
 @AllArgsConstructor
-class MentorServiceImpl implements MentorService {
+public class MentorServiceImpl implements MentorService {
 
-  
     private MentorRepository mentorRepository;
     private PasswordEncoder passwordEncoder;
+
     @Override
     public Mentor addMentor(Mentor mentor) {
-    	  String encodedPassword = passwordEncoder.encode(CharBuffer.wrap(mentor.getPassword()));
-    	  mentor.setPassword(encodedPassword);
-          
+        String encodedPassword = passwordEncoder.encode(CharBuffer.wrap(mentor.getPassword()));
+        mentor.setPassword(encodedPassword);
         return mentorRepository.save(mentor);
     }
 
