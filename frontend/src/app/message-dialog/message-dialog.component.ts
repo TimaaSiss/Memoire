@@ -24,6 +24,8 @@ export class MessageDialogComponent {
   }
 
   onSend(): void {
+    console.log(this.data);
+    
     if (this.messageForm.valid) {
       // Prépare les données du message avec les IDs de l'expéditeur et du destinataire
       const messageData = {

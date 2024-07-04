@@ -1,0 +1,16 @@
+<div class="sidebar" [class.active]="menuOpen">
+  <div *ngIf="currentUser" class="user-info">
+  </div>
+  <ul>
+    <li><a routerLink="/admin"><i class="bi bi-house"></i>Tableau de bord</a></li>
+    <li><a routerLink="/users">Liste des Utilisateurs</a></li>
+    <li><a routerLink="/adduser">Ajouter un Utilisateur</a></li>
+    <li><a routerLink="/cours">Liste des cours</a></li>
+    <li><a routerLink="/formation">Liste des formations</a></li>
+    <li><a routerLink="/etablissements">Liste des Établissements</a></li>
+    <li><a routerLink="/careers">Liste des carrières</a></li>
+    <li><a routerLink="/mentors">Les mentors</a></li>
+    <li><a routerLink="/questionnaire">Liste des questionnaires</a></li>
+    <li><a routerLink="/commentaires">Commentaires</a></li>
+  </ul>
+</div>

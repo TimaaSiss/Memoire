@@ -15,11 +15,15 @@ export class Question {
   libelle: string;
   reponseQuestions: ReponseQuestion[];
   hasOtherOption: boolean;
-  constructor(id: number, libelle: string, reponseQuestions: ReponseQuestion[], hasOtherOption: boolean) {
+  questionnaire: Questionnaire; // Ajoutez une propriété pour le questionnaire parent
+
+  constructor(id: number, libelle: string, reponseQuestions: ReponseQuestion[], hasOtherOption: boolean, questionnaire: Questionnaire) {
     this.id = id;
     this.libelle = libelle;
     this.reponseQuestions = reponseQuestions;
-    this.hasOtherOption= hasOtherOption
+    this.hasOtherOption= hasOtherOption;
+    this.questionnaire = questionnaire; // Initialisez la propriété questionnaire
+ 
   }
 }
 

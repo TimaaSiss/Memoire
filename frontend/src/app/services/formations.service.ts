@@ -36,5 +36,9 @@ export class FormationService {
   deleteFormation(id: number): Observable<void> {
     return this.http.delete<void>(`${this.configService.apiUrl}/formations/delete/${id}`);
   }
+
+  getFormationCount(): Observable<number> {
+    return this.http.get<number>(`${this.configService.apiUrl}/formations/count`);
+  }
   
 }

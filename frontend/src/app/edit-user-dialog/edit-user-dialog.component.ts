@@ -1,5 +1,5 @@
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { User } from '@app/model/user';
 
 @Component({
@@ -19,8 +19,10 @@ export class EditUserDialogComponent {
   }
 
   onSubmit(): void {
-    // Émettre les données éditées pour les envoyer au composant parent
-    this.dialogRef.close(this.editedUser);
+    if (this.editedUser) {
+      // Émettre les données éditées pour les envoyer au composant parent
+      this.dialogRef.close(this.editedUser);
+    }
   }
 
   onCancelClick(): void {

@@ -73,4 +73,8 @@ export class UserService {
     const currentUser = localStorage.getItem('currentUser');
     return currentUser ? JSON.parse(currentUser) : null;
   }
+
+  getUserCount(): Observable<number> {
+    return this.http.get<number>(`${this.configService.apiUrl}/users/count`);
+  }
 }

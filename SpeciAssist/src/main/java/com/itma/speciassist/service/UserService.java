@@ -29,5 +29,7 @@ public interface UserService {
 
 	boolean usernameExists(String username);
 
+	long getUserCount();
+
 
     }

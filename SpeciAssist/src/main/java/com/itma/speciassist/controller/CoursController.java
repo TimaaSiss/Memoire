@@ -114,4 +114,11 @@ public class CoursController {
 		List<Formation> formations = formationService.getAllFormations();
 		return new ResponseEntity<>(formations, HttpStatus.OK);
 	}
+	
+	@GetMapping("/count")
+	public ResponseEntity<Long> getCoursCount() {
+	    long coursCount = coursService.getCoursCount();
+	    return ResponseEntity.ok(coursCount);
+	}
+
 }

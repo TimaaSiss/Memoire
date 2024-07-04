@@ -53,6 +53,11 @@ public class CarriereController {
     public Carriere getCarriereByNom(@PathVariable String nom) {
         return carriereService.getCarriereByNom(nom);
     }
+    
+    @GetMapping("/count")
+    public long countCarrieres() {
+        return carriereService.countCarrieres();
+    }
 
     @PostMapping("/addCarriere")
     public Carriere addCarriere(@RequestBody Carriere carriere) {

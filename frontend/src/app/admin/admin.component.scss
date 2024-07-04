@@ -1,88 +1,67 @@
 .admin-container {
-    position: relative;
-    width: 100%;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 
-    .header {
+  .main-content {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+  }
+
+  .admin-content {
+    margin-left: 250px;
+    padding: 1rem;
+    width: calc(100% - 250px);
+    overflow-y: auto;
+    margin-top: 70px;
+
+    .dashboard-cards {
       display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 10px;
-     // background-color: #f8f9fa;
-  
-      .logout-icon {
-        cursor: pointer;
-        margin-left: auto;
-        font-size: 24px;
-        color: #000000;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+
+      .card {
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        flex: 1;
+        margin: 0 1rem;
+        text-align: center;
+
+        h3 {
+          margin-bottom: 1rem;
+        }
+
+        p {
+          font-size: 2rem;
+          margin-bottom: 0.5rem;
+        }
+
+        span {
+          color: #888;
+        }
       }
     }
+
+    .user-section {
+      background-color: #cb24d1;
+      box-shadow: 0 2px 4px rgba(172, 98, 168, 0.1);
+    }
+
+    .formation-section {
+      background-color: #81b1f0;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .course-section {
+      background-color: #dd7a9b;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .carriere-section {
+      background-color: #1fa197;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
   }
-  
-  .menu-trigger {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    z-index: 1000;
-    cursor: pointer;
-  }
-  
-  .menu-trigger div {
-    width: 25px;
-    height: 3px;
-    background-color: #333;
-    margin-bottom: 5px;
-  }
-  
-  .sidebar {
-    position: fixed;
-    top: 0;
-    left: -300px;
-    width: 300px;
-    height: 100%;
-    background-color: #333;
-    z-index: 900;
-    transition: left 0.3s ease;
-  }
-  
-  .sidebar.active {
-    left: 0;
-  }
-  
-  .sidebar ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .sidebar ul li {
-    padding: 10px 20px;
-    border-bottom: 1px solid #666;
-  }
-  
-  .sidebar ul li:last-child {
-    border-bottom: none;
-  }
-  
-  .sidebar ul li a {
-    color: #fff;
-    text-decoration: none;
-  }
-  
-  .admin-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #333;
-  }
-  
-  .admin-content h1 {
-    font-size: 36px;
-    font-weight: bold;
-  }
-  
-  .admin-content p {
-    font-size: 18px;
-  }
-  
+}

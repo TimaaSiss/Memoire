@@ -27,6 +27,8 @@ public interface CoursService {
 
 	void addCourseToFormation(Cours newCourse);
 
+	long getCoursCount();
+
 	
 
 }

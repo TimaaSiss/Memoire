@@ -101,6 +101,40 @@
     }
   }
 
+  .scrollable-careers {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 10px 0;
+    display: flex;
+
+    .career-row {
+      display: inline-flex;
+    }
+
+    .career-card {
+      display: inline-block;
+      width: 250px;
+      height: 250px;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-size: cover;
+      cursor: pointer;
+      position: relative;
+
+      h2 {
+        margin: 0;
+        padding: 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+      }
+    }
+  }
+
   .comment-section {
     margin-top: 30px;
     padding: 20px;

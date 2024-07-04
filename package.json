@@ -2,7 +2,9 @@
   "dependencies": {
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",
+    "chart.js": "^4.4.3",
     "jquery": "^3.7.1",
+    "ng2-charts": "^5.0.4",
     "ngx-owl-carousel-o": "^17.0.0",
     "primeicons": "^7.0.0",
     "primeng": "^17.16.1"

@@ -93,4 +93,8 @@ public class CoursServiceImpl implements CoursService {
 	 * 
 	 * }
 	 */
+    
+    public long getCoursCount() {
+        return coursRepository.count(); // Cela compte tous les cours enregistrés dans la base de données
+    }
 }

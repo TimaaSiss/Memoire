@@ -27,6 +27,7 @@ export class CareerDetailsComponent implements OnInit {
   mentorVideos: VideoMentor[] = [];
   carriereId!: number;
   formations:Formation[]=[];
+  formationDetails: Formation | undefined;
   messageContent: string = '';
   mentorId: number | null = null;
   constructor(
@@ -76,8 +77,20 @@ export class CareerDetailsComponent implements OnInit {
   
   
 
-  viewFormationDetails(formationName: string): void {
-    this.router.navigate(['/formation-details', formationName]);
+  viewFormationDetails(formationTitre: string): void {
+    this.router.navigate(['/formation-details', formationTitre]);
+  }
+
+  getFormationDetails(titre: string): void {
+    this.formationService.getFormationWithEtablissementsByTitre(titre).subscribe(
+      (details) => {
+        this.formationDetails = details;
+        console.log(this.formationDetails); // add this line to debbug
+      },
+      (error) => {
+        console.error('Error fetching formation details:', error);
+      }
+    );
   }
 
   loadCommentaires(carriereId: number): void {
@@ -104,13 +117,14 @@ export class CareerDetailsComponent implements OnInit {
   
 
   openMessageDialog(mentorId: number): void {
+    console.log('Opening message dialog with mentorId:', mentorId);
     const dialogRef = this.dialog.open(MessageDialogComponent, {
       data: {
         senderId: this.currentUser?.id,
         receiverId: mentorId
       }
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         console.log('Message sent successfully:', result);

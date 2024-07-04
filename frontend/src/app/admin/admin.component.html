@@ -1,33 +1,38 @@
 <div class="admin-container">
   <!-- Header -->
-  <div class="header">
-    <div></div> <!-- Placeholder for header content -->
-    <div></div> <!-- Placeholder for header content -->
-    <div></div> <!-- Placeholder for header content -->
-    <button mat-icon-button class="logout-icon" (click)="logout()">
-      <mat-icon>logout</mat-icon>
-    </button>
-  </div>
+  <app-header></app-header>
 
-  <!-- Sidebar -->
-  <div class="sidebar" [class.active]="menuOpen">
-    <ul>
-      <li><a routerLink="/users">Liste des Utilisateurs</a></li>
-      <li><a routerLink="/adduser">Ajouter un Utilisateur</a></li>
-      <li><a routerLink="/cours">Liste des cours</a></li>
-      <li><a routerLink="/formation">Liste des formations</a></li>
-      <li><a routerLink="/etablissements">Liste des Établissements</a></li>
-      <li><a routerLink="/careers">Liste des carrières</a></li>
-      <li><a routerLink="/mentors">Les mentors</a></li>
-      <li><a routerLink="/questionnaire">Liste des questionnaires</a></li>
-      <li><a routerLink="/commentaires">Commentaires</a></li>
-      <!-- Ajoutez d'autres liens ici -->
-    </ul>
-  </div>
-  
-  <!-- Admin Content -->
-  <div class="admin-content">
-    <h1>ESPACE ADMINISTRATEUR</h1>
-    <!-- Ajoutez d'autres éléments de contenu ici -->
+  <div class="main-content">
+    <!-- Sidebar -->
+    <app-sidebar></app-sidebar>
+
+    <!-- Admin Content -->
+    <div class="admin-content">
+      <div class="dashboard-cards">
+        <div class="card user-section">
+          <h3>Utilisateurs</h3>
+          <p>{{ userCount }}</p>
+          <span>Increased by 5%</span>
+        </div>
+        <div class="card course-section">
+          <h3>Cours</h3>
+          <p>{{ courseCount }}</p>
+          <span>Increased by 10%</span>
+        </div>
+        <div class="card formation-section">
+          <h3>Formations</h3>
+          <p>{{ formationCount }}</p>
+          <span>Increased by 3%</span>
+        </div>
+        <div class="card carriere-section">
+          <h3>Carrieres</h3>
+          <p>{{ carriereCount }}</p>
+          <span>Increased by 3%</span>
+        </div>
+      </div>
+      <div class="charts-section">
+        <app-chart></app-chart>
+      </div>
+    </div>
   </div>
 </div>

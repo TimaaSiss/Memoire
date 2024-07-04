@@ -1,3 +1,4 @@
+
 import { CarriereComponent } from './carrieres/carrieres.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -56,6 +57,12 @@ import { SafePipe } from './pipes/safe.pipe';
 import { QuestionnaireHistoryComponent } from './questionnaire-history/questionnaire-history.component';
 import { ContactUsComponent } from './contact-us/contact-us.component';
 import { MessageDialogComponent } from './message-dialog/message-dialog.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { HeaderComponent } from './header/header.component';
+import { SidebarComponent } from './sidebar/sidebar.component';
+import { NgChartsModule } from 'ng2-charts';
+import 'chart.js';
+import { ChartComponent } from './chart/chart.component';
 
 
 
@@ -105,6 +112,12 @@ import { MessageDialogComponent } from './message-dialog/message-dialog.componen
          QuestionnaireHistoryComponent,
          ContactUsComponent,
          MessageDialogComponent,
+         DashboardComponent,
+         HeaderComponent,
+         SidebarComponent,
+         ChartComponent,
+         EditUserDialogComponent
+         
         
 
   ],
@@ -122,7 +135,8 @@ import { MessageDialogComponent } from './message-dialog/message-dialog.componen
     MatPaginatorModule,
     MatButtonModule,
     MatIconModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgChartsModule,
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

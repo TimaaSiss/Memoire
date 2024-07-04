@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Formation } from '@app/model/formation.model';
 import { FormationService } from '@app/services/formations.service';
 import { Course } from '@app/model/cours.model';
@@ -8,6 +8,8 @@ import { Commentaire } from '@app/model/commentaires.model';
 import { CommentaireService } from '@app/services/commentaires.service';
 import { User } from '@app/model/user';
 import { UserService } from '@app/services/user-service.service';
+import { Carriere } from '@app/model/carriere.model';
+import { CarriereService } from '@app/services/carrieres.service';
 
 @Component({
   selector: 'app-formation-details',
@@ -17,6 +19,8 @@ import { UserService } from '@app/services/user-service.service';
 export class FormationDetailsComponent implements OnInit {
   formationName: string = '';
   formationDetails: Formation | undefined;
+  selectedCarriere: Carriere | undefined;
+  careers: Carriere[] = [];
   coursList: Course[] = []; // Liste des cours associés à la formation
   formationId: number = 0;
   commentaires: Commentaire[] = []; // Liste des commentaires associés à la formation
@@ -27,7 +31,9 @@ export class FormationDetailsComponent implements OnInit {
     private formationService: FormationService,
     private courseService: CourseService,
     private commentaireService: CommentaireService,
-    private userService: UserService
+    private userService: UserService,
+    private carriereService: CarriereService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -66,6 +72,8 @@ export class FormationDetailsComponent implements OnInit {
     }
   }
 
+  
+
   loadCommentaires(): void {
     if (this.formationId) {
       this.commentaireService.getCommentairesByFormationId(this.formationId).subscribe(
@@ -102,5 +110,20 @@ export class FormationDetailsComponent implements OnInit {
         }
       );
     }
+  }
+
+  getCarriereDetails(nom: string): void {
+    this.carriereService.getCarriereByNom(nom).subscribe(
+      (carriere) => {
+        this.selectedCarriere = carriere;
+      },
+      (error) => {
+        console.error('Error fetching carriere details:', error);
+      }
+    );
+  }
+
+  viewCareerDetails(careerName: string): void {
+    this.router.navigate(['/career-details', careerName]);
   }
 }

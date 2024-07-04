@@ -118,7 +118,9 @@ public class FormationServiceImpl implements FormationService {
 		return null;
 	}
 
-	
+	public long getFormationCount() {
+        return formationRepository.count(); // Cela compte toutes les formations enregistrées dans la base de données
+    }
 
 	
 }

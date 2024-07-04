@@ -185,4 +185,11 @@ public class FormationController {
     public List<Commentaire> getCommentairesByFormationId(@PathVariable Integer formationId) {
         return commentaireService.getCommentairesByFormationId(formationId);
     }
+    
+    @GetMapping("/count")
+    public ResponseEntity<Long> getFormationCount() {
+        long formationCount = formationService.getFormationCount();
+        return ResponseEntity.ok(formationCount);
+    }
+
 }

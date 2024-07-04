@@ -11,7 +11,7 @@
       <h2>Établissements</h2>
       <ul>
         <li *ngFor="let etablissement of formationDetails.etablissements">
-            {{ etablissement.code_libelle }} - {{ etablissement.lieu }}
+          {{ etablissement.code_libelle }} - {{ etablissement.lieu }}
         </li>
       </ul>
     </div>
@@ -31,22 +31,30 @@
 
   <!-- Description Section -->
   <div class="info-section description-section">
-      <h2>Description</h2>
-      <p>{{ formationDetails.description }}</p>
+    <h2>Description</h2>
+    <p>{{ formationDetails.description }}</p>
   </div>
 
   <!-- Content Section -->
   <div class="info-section">
-      <h2>Contenu</h2>
-      <p>{{ formationDetails.contenu }}</p>
+    <h2>Contenu</h2>
+    <p>{{ formationDetails.contenu }}</p>
   </div>
 
   <!-- Associated Careers Section -->
   <div class="info-section">
-      <h2>Carrières Associées</h2>
-      <ul>
-          <li *ngFor="let formation of formationDetails.carrieres">{{ formation.nom }}</li>
-      </ul>
+    <h2>Carrières Associées</h2>
+    <div class="scrollable-careers">
+      <div class="career-row">
+        <!-- Répétez cette colonne pour chaque carrière associée -->
+        <div class="career-card" *ngFor="let carriere of formationDetails.carrieres; let i = index"
+             [ngStyle]="{'background-image': 'url(' + carriere.image + ')'}"
+             [ngClass]="'career-card-' + (i + 1)" (click)="viewCareerDetails(carriere.nom)">
+          <h2>{{ carriere.nom }}</h2>
+          <!-- Autres détails de la carrière -->
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- Associated Courses Section -->
@@ -72,5 +80,4 @@
       <button (click)="addCommentaire()">Publier</button>
     </div>
   </div>
-
-
+</div>

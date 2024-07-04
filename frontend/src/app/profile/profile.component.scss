@@ -1,26 +1,4 @@
 /* styles.css ou app.component.css */
-.search-bar {
-    background-color: #eeede6;
-    padding: 10px;
-    text-align: center;
-}
-
-.search-bar input[type="text"] {
-    width: 70%;
-    padding: 8px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.search-bar button {
-    padding: 8px 15px;
-    background-color: #020202;
-    border: none;
-    border-radius: 4px;
-    color: rgb(248, 243, 243);
-    cursor: pointer;
-}
 
 .scrollable-container {
     overflow-x: auto; /* Activer le défilement horizontal */
@@ -55,8 +33,46 @@
     transition: width 0.5s;
   }
   
+  .search-bar {
+    background-color: #eeede6;
+    padding: 10px;
+    text-align: center;
+}
+
+.search-bar input[type="text"] {
+    width: 70%;
+    padding: 8px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-bar button {
+    padding: 8px 15px;
+    background-color: #020202;
+    border: none;
+    border-radius: 4px;
+    color: rgb(248, 243, 243);
+    cursor: pointer;
+}
 
 
+  .search-bar .search-button,
+  .search-bar .logout-button {
+      padding: 8px 15px;
+      background-color: #020202;
+      border: none;
+      border-radius: 4px;
+      color: rgb(248, 243, 243);
+      cursor: pointer;
+  }
+  
+  .logout-icon {
+    cursor: pointer;
+    font-size: 20px; /* Taille du bouton de déconnexion */
+    margin-left: 200px;
+}
+  
 
 .career-section {
     margin-top: 50px; /* Marge supérieure pour séparer de la section précédente */

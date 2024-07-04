@@ -45,4 +45,8 @@ export class CarriereService {
   deleteCarriere(id: number): Observable<void> {
     return this.http.delete<void>(`${this.configService.apiUrl}/carrieres/deleteCarriere/${id}`);
   }
+
+  getCount(): Observable<number> {
+    return this.http.get<number>(`${this.configService.apiUrl}/carrieres/count`);
+  }
 }

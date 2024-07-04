@@ -5,6 +5,9 @@ import { UserService } from '@app/services/user-service.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
+import { EditUserDialogComponent } from '@app/edit-user-dialog/edit-user-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-user-list',
   templateUrl: './user-list.component.html',
@@ -14,7 +17,7 @@ export class UserListComponent implements OnInit {
 
   users: User[] = [];
   selectedUser: User | null = null;
-  menuOpen= true;
+  menuOpen = true;
   dataSource = new MatTableDataSource<User>(); // Source de données pour la table
   displayedColumns: string[] = ['id', 'nom', 'prenom', 'username', 'mail', 'role', 'status', 'actions'];
 
@@ -22,10 +25,10 @@ export class UserListComponent implements OnInit {
 
   pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
-    this.loadUsers(0,10);
+    this.loadUsers(0, 10);
     // Vérifier si la valeur de menuOpen est stockée localement
     const storedMenuOpen = localStorage.getItem('menuOpen');
     if (storedMenuOpen !== null) {
@@ -47,21 +50,22 @@ export class UserListComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
     });
   }
-  
+
   loadMoreUsers(event: PageEvent) {
     this.loadUsers(event.pageIndex, event.pageSize);
   }
-  
-  
+
   activateUser(userId: number): void {
     this.userService.activateUser(userId).subscribe(() => {
       // Mettre à jour la liste des utilisateurs après activation réussie
+      this.loadUsers(this.paginator.pageIndex, this.paginator.pageSize);
     });
   }
 
   deactivateUser(userId: number): void {
     this.userService.deactivateUser(userId).subscribe(() => {
       // Mettre à jour la liste des utilisateurs après désactivation réussie
+      this.loadUsers(this.paginator.pageIndex, this.paginator.pageSize);
     });
   }
 
@@ -73,7 +77,7 @@ export class UserListComponent implements OnInit {
     } else {
       updateObservable = this.userService.deactivateUser(user.id);
     }
-    
+
     updateObservable.subscribe(() => {
       // Si la mise à jour réussit, vous pouvez afficher un message de succès ou effectuer toute autre action nécessaire
       console.log(`Statut de l'utilisateur ${user.id} mis à jour avec succès.`);
@@ -84,25 +88,27 @@ export class UserListComponent implements OnInit {
       user.status = !user.status;
     });
   }
-  
 
-  editUser(user: User) {
-    // Sélectionnez l'utilisateur pour la modification
-    this.selectedUser = user;
+  openEditDialog(user: User): void {
+    const dialogRef = this.dialog.open(EditUserDialogComponent, {
+      width: '500px',
+      data: user // Passez l'utilisateur à votre composant de boîte de dialogue de modification
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // Si des données sont renvoyées depuis la boîte de dialogue, mettez à jour l'utilisateur
+        this.updateUser(result);
+      }
+    });
   }
 
-  updateUser() {
-    if (this.selectedUser) {
-      // Envoyez la demande de mise à jour de l'utilisateur
-      this.userService.update(this.selectedUser.id, this.selectedUser).subscribe(() => {
-        // Réinitialisez la sélection après la mise à jour réussie
-        this.selectedUser = null;
-        // Rechargez la liste des utilisateurs pour refléter les modifications
-        this.loadUsers(0,10);
-      });
-    }
+  updateUser(updatedUser: User) {
+    this.userService.update(updatedUser.id, updatedUser).subscribe(() => {
+      // Rechargez la liste des utilisateurs pour refléter les modifications
+      this.loadUsers(this.paginator.pageIndex, this.paginator.pageSize);
+    });
   }
- 
 
   confirmDeleteUser(user: User) {
     // Demander confirmation avant la suppression de l'utilisateur
@@ -115,7 +121,7 @@ export class UserListComponent implements OnInit {
     // Envoyez la demande de suppression de l'utilisateur
     this.userService.delete(user.id).subscribe(() => {
       // Rechargez la liste des utilisateurs après la suppression réussie
-      this.loadUsers(0,10);
+      this.loadUsers(this.paginator.pageIndex, this.paginator.pageSize);
     });
   }
 

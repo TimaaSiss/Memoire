@@ -23,6 +23,8 @@ public interface FormationService {
 
 	Object findById(Long formationId);
 
+	long getFormationCount();
+
 	// Optional<Formation> getFormationWithEtablissements(Long id);
 
 	// List<Etablissement> getFormationWithEtablissements(Integer id);

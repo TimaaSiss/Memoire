@@ -1,8 +1,15 @@
 <div class="search-bar">
     <input type="text" placeholder="Rechercher..." [(ngModel)]="searchTerm" (input)="filterCareers(); filterFormations()">
-    <button>Rechercher</button>  <button (click)="logout()"><i class="bi bi-box-arrow-right"></i></button>
+    <button class="search-button">Rechercher</button>
+    <button mat-icon-button class="logout-icon" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+    </button>
 </div>
-<button (click)="navigateToHistory()"><i class="bi bi-book"></i></button> <!-- Icone du livre -->
+
+<button mat-icon-button class="history-icon" (click)="navigateToHistory()"><mat-icon>book</mat-icon></button>
+
+<!-- Reste de votre contenu -->
+
 
 <div class="container" >
     <br><br>

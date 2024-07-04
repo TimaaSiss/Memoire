@@ -91,6 +91,12 @@ public ResponseEntity<?> addUser(@RequestBody @Valid User user, BindingResult bi
     public User getUserById(@PathVariable Integer id) {
         return userService.getUserById(id);
     }
+    
+    @GetMapping("/count")
+    public ResponseEntity<Long> getUserCount() {
+        long userCount = userService.getUserCount();
+        return ResponseEntity.ok(userCount);
+    }
 
     @PutMapping("/{id}")
     public ResponseEntity<Void> updateUser(@PathVariable Integer id, @RequestBody User user) {

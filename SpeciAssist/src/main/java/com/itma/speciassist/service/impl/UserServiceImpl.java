@@ -133,4 +133,8 @@ public class UserServiceImpl implements UserService {
     public boolean usernameExists(String username) {
         return userRepository.existsByUsername(username);
     }
+    
+    public long getUserCount() {
+        return userRepository.count(); // Cela compte tous les utilisateurs enregistrés dans la base de données
+    }
 }

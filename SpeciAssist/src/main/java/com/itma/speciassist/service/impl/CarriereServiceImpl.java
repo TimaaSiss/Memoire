@@ -79,4 +79,9 @@ public class CarriereServiceImpl implements CarriereService {
 
 		 return carriere.getFormations();
 	}
+	
+	 @Override
+	    public long countCarrieres() {
+	        return carriereRepository.count();
+	    }
 }
