@@ -1,0 +1,35 @@
+/* Style pour la boîte de dialogue de messages */
+.messages-dialog {
+    padding: 20px; /* Espacement interne */
+    background-color: #f9f9f9; /* Couleur de fond */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre */
+  }
+  
+  .messages-dialog h2 {
+    margin-bottom: 20px; /* Espacement en bas du titre */
+  }
+  
+  .messages-dialog .message {
+    padding: 10px; /* Espacement interne */
+    margin-bottom: 15px; /* Espacement en bas */
+    border: 1px solid #ddd; /* Bordure */
+    border-radius: 5px; /* Coins arrondis */
+    background-color: #fff; /* Couleur de fond */
+  }
+  
+  .messages-dialog .message strong {
+    display: block; /* Affichage en bloc */
+    margin-bottom: 5px; /* Espacement en bas */
+  }
+  
+  .messages-dialog .message p {
+    margin: 0; /* Enlever les marges */
+  }
+  
+  .messages-dialog .message em {
+    display: block; /* Affichage en bloc */
+    margin-top: 10px; /* Espacement en haut */
+    font-size: 0.875rem; /* Taille de police plus petite */
+    color: #666; /* Couleur du texte */
+  }

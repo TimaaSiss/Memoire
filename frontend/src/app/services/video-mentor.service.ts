@@ -31,6 +31,6 @@ export class VideoMentorService {
   }
 
   deleteVideo(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.configService.apiUrl}/mentor-videos/${id}`);
+    return this.http.delete<void>(`${this.configService.apiUrl}/mentor-videos/delete/${id}`);
   }
 }

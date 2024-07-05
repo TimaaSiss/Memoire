@@ -32,14 +32,14 @@ export class EditCourseDialogComponent {
 
   ngOnInit(): void {
     this.editCourseForm = this.formBuilder.group({
-      titre: ['', Validators.required],
-      description: ['', Validators.required],
-      duree: ['', Validators.required],
-      urlCours: ['', Validators.required],
-      niveau: ['', Validators.required],
-      formationId: ['', Validators.required] 
+      titre: [this.editedCourse.titre, Validators.required],
+      description: [this.editedCourse.description, Validators.required],
+      duree: [this.editedCourse.duree, Validators.required],
+      urlCours: [this.editedCourse.urlCours, Validators.required],
+      niveau: [this.editedCourse.niveau, Validators.required],
+      formationId: [this.editedCourse.formationId, Validators.required]
     });
-
+  
     // Charger les formations depuis le service
     this.formationService.getAllFormations().subscribe(
       (data: Formation[]) => {

@@ -1,0 +1,9 @@
+<div class="messages-dialog">
+    <h2>Messages Reçus</h2>
+    <div *ngFor="let message of data.messages" class="message">
+      <p><strong>De: {{ message.sender.nom }} {{ message.sender.prenom }}</strong></p>
+      <p>{{ message.content }}</p>
+      <p><em>Reçu le {{ message.dateSent | date: 'short' }}</em></p>
+    </div>
+  </div>
+  

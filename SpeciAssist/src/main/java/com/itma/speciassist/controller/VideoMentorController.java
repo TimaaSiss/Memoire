@@ -39,14 +39,17 @@ public class VideoMentorController {
             @RequestParam("file") MultipartFile file,
             @RequestParam("mentorId") Long mentorId,
             @RequestParam("carriereId") Long carriereId,
-            @RequestParam("title") String title) {
-        Optional<VideoMentor> video = videoMentorService.store(file, mentorId, carriereId, title);
+            @RequestParam("title") String title,
+            @RequestParam("userId") Long userId) { // Ajoutez ce paramètre
+
+        Optional<VideoMentor> video = videoMentorService.store(file, mentorId, carriereId, title, userId); // Passez l'ID de l'utilisateur
         if (video.isPresent()) {
             return ResponseEntity.ok("Video uploaded successfully: " + video.get().getUrl());
         } else {
             return ResponseEntity.status(500).body("Failed to upload video.");
         }
     }
+
 
     @GetMapping("/videos/{fileName:.+}")
     public ResponseEntity<Resource> getVideo(@PathVariable String fileName) {
@@ -69,4 +72,10 @@ public class VideoMentorController {
         Path directoryPath = Paths.get(properties.getLocation());
         return Files.list(directoryPath).toList();
     }
+    
+    @DeleteMapping("/delete/{id}")
+    public VideoMentor deleteVideo(@PathVariable Long id) {
+        return videoMentorService.deleteVideo(id);
+    }
+    
 }

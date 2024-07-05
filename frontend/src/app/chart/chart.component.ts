@@ -8,17 +8,16 @@ import { ChartType, ChartOptions } from 'chart.js';
 })
 export class ChartComponent implements OnInit {
 
-  public barChartOptions: ChartOptions = {
+  public pieChartOptions: ChartOptions = {
     responsive: true,
   };
 
-  public barChartLabels: string[] = ['2006', '2007', '2008', '2009', '2010', '2011', '2012'];
-  public barChartType: ChartType = 'bar';
-  public barChartLegend = true;
+  public pieChartLabels: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public pieChartType: ChartType = 'pie';
+  public pieChartLegend = true;
 
-  public barChartData = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'Series A' },
-    { data: [28, 48, 40, 19, 86, 27, 90], label: 'Series B' }
+  public pieChartData = [
+    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First Dataset' }
   ];
 
   constructor() { }

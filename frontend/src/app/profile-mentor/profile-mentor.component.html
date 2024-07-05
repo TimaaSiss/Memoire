@@ -1,93 +1,57 @@
+<button mat-button class="btn-logout" (click)="logout()">
+  Déconnexion
+</button>
 <div class="mentor-profile-container">
   <div class="header text-center">
-    <h1>{{ prenom }} {{ nom }}</h1>
-    <h2>Spécialité: {{ specialite }}</h2>
+    <div class="mentor-info">
+      <h1>{{ prenom }} {{ nom }}</h1>
+      <h2>Spécialité: {{ specialite }}</h2>
+    </div>
     <div class="contacts">
       <h3>Contacts</h3>
       <p>Email: {{ mail }}</p>
     </div>
+    
+    <button class="btn-envelope" (click)="openMessagesDialog()">
+      <i class="bi bi-envelope"></i>
+    </button>
   </div>
 
-  <div class="manage-content">
-    <div class="add-video">
-      <h2>Ajouter une vidéo</h2>
-      <form (ngSubmit)="ajouterVideo()">
-        <div>
-          <label for="title">Title:</label>
-          <input type="text" [(ngModel)]="nouvelleVideo.title" name="title" required>
-        </div>
-        <div>
-          <label for="carriereId">Carrière:</label>
-          <select [(ngModel)]="nouvelleVideo.carriereId" name="carriereId" required>
-            <option *ngFor="let carriere of carrieres" [value]="carriere.id">
-              {{ carriere.nom }}
-            </option>
-          </select>
-        </div>
-        <div>
-          <label for="file">Video File:</label>
-          <input type="file" (change)="onFileSelected($event)" required>
-        </div>
-        <button type="submit">Upload</button>
-      </form>
-    </div>
+  <button class="btn-add-video" (click)="ajouterVideo()">
+    <i class="bi bi-camera-video"></i> Ajouter une vidéo
+  </button>
 
-    <div class="video-list">
-      <h2>Vos Vidéos</h2>
-      <div class="video-container">
-        <div *ngFor="let video of videos" class="video-item">
-          <p>{{ video.title }}</p>
-          <video *ngIf="video.url !== undefined" width="320" height="240" controls>
-            <source [src]="video.url" type="video/mp4">
-            Votre navigateur ne supporte pas la balise vidéo.
-          </video>
-          <button *ngIf="video.url !== undefined" (click)="supprimerVideo(video.id)" class="btn btn-danger">Supprimer</button>
-          <button *ngIf="video.url !== undefined" (click)="modifierVideo(video)" class="btn btn-secondary">Modifier</button>
-        </div>
+  <div class="video-list">
+    <h2>Vos Vidéos</h2>
+    <div class="video-container">
+      <div *ngFor="let video of videos" class="video-item">
+        <p>{{ video.title }}</p>
+        <video *ngIf="video.url !== undefined" width="320" height="240" controls>
+          <source [src]="video.url" type="video/mp4">
+          Votre navigateur ne supporte pas la balise vidéo.
+        </video>
+        <button *ngIf="video.url !== undefined" (click)="supprimerVideo(video.id)" class="btn btn-danger">Supprimer</button>
+        <button *ngIf="video.url !== undefined" (click)="modifierVideo(video)" class="btn btn-secondary">Modifier</button>
       </div>
     </div>
-    
+  </div>
 
-    <div class="add-course">
-      <h2>Ajouter un cours</h2>
-      <form (ngSubmit)="ajouterCours()">
-        <label>Titre du cours:</label>
-        <input type="text" [(ngModel)]="nouveauCours.titre" name="titre" required>
+  <button class="btn-add-video" (click)="openAddCourseDialog()">
+    <i class="bi bi-file-earmark-pdf"></i> Ajouter un cours
+  </button>
 
-        <label>Description:</label>
-        <textarea [(ngModel)]="nouveauCours.description" name="description" required></textarea>
-
-        <label>Durée:</label>
-        <input type="text" [(ngModel)]="nouveauCours.duree" name="duree" required>
-
-        <label>Formation:</label>
-        <select [(ngModel)]="formationDetails" name="formation" required>
-          <option *ngFor="let formation of formations" [ngValue]="formation">{{ formation.titre }}</option>
-        </select>
-
-        <button type="submit">Ajouter</button>
-      </form>
-    </div>
-
-    <div class="course-list">
-      <h2>Vos Cours</h2>
-      <ul>
-        <li *ngFor="let course of courses">
-          <h3>{{ course.titre }}</h3>
-          <p>{{ course.description }}</p>
-          <button (click)="supprimerCours(course.id)" class="btn btn-danger">Supprimer</button>
-          <button (click)="openEditDialog(course)" class="btn btn-secondary">Modifier</button>
-        </li>
-      </ul>
-    </div>
-
-    <div class="messages-section">
-      <h2>Messages Reçus</h2>
-      <div *ngFor="let message of messages">
-        <p><strong>De: {{ message.sender.nom }} {{ message.sender.prenom }}</strong></p>
-        <p>{{ message.content }}</p>
-        <p><em>Reçu le {{ message.dateSent | date: 'short' }}</em></p>
-      </div>
-    </div>
+  <div class="course-list">
+    <h2>Vos Cours</h2>
+    <ul>
+      <li *ngFor="let course of courses.slice(0, showMoreCourses ? courses.length : 1)">
+        <h3>{{ course.titre }}</h3>
+        <p>{{ course.description }}</p>
+        <button (click)="supprimerCours(course.id)" class="btn btn-danger">Supprimer</button>
+        <button (click)="openEditDialog(course)" class="btn btn-secondary">Modifier</button>
+      </li>
+    </ul>
+    <button *ngIf="courses.length > 1" class="btn btn-secondary" (click)="toggleMoreCourses()">
+      {{ showMoreCourses ? 'Voir moins de cours' : 'Voir plus de cours' }}
+    </button>
   </div>
 </div>

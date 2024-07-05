@@ -29,5 +29,9 @@ public class VideoMentor {
     @JoinColumn(name = "carriere_id")
     private Carriere carriere;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
    
 }

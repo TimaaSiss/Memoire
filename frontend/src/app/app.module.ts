@@ -63,6 +63,9 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { NgChartsModule } from 'ng2-charts';
 import 'chart.js';
 import { ChartComponent } from './chart/chart.component';
+import { AddVideoDialogComponent } from './add-video-dialog/add-video-dialog.component';
+import { EditVideoDialogComponent } from './edit-video-dialog/edit-video-dialog.component';
+import { MessagesDialogComponent } from './messages-dialog/messages-dialog.component';
 
 
 
@@ -116,7 +119,10 @@ import { ChartComponent } from './chart/chart.component';
          HeaderComponent,
          SidebarComponent,
          ChartComponent,
-         EditUserDialogComponent
+         EditUserDialogComponent,
+         AddVideoDialogComponent,
+         EditVideoDialogComponent,
+         MessagesDialogComponent
          
         
 

@@ -1,17 +1,8 @@
+<app-header></app-header>
 <div class="mentor-container">
   <div class="sidebar" [class.active]="menuOpen">
-    <ul>
-      <button><a routerLink="/admin"><i class="bi bi-arrow-left-circle"></i></a></button>
-      <li><a routerLink="/users">Liste des Utilisateurs</a></li>
-      <li><a routerLink="/adduser">Ajouter un Utilisateur</a></li>
-      <li><a routerLink="/cours">Liste des cours</a></li>
-      <li><a routerLink="/formation">Liste des formations</a></li>
-      <li><a routerLink="/etablissements">Liste des Établissements</a></li>
-      <li><a routerLink="/careers">Liste des carrières</a></li>
-      <li><a routerLink="/mentors">Les mentors</a></li>
-      <li><a routerLink="/questionnaire">Liste des questionnaires</a></li>
-      <!-- Ajoutez d'autres liens ici -->
-    </ul>
+   
+      <app-sidebar></app-sidebar>
   </div>
   
   <div class="admin-content">

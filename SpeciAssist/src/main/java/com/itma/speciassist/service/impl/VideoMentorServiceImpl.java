@@ -5,9 +5,11 @@ import com.itma.speciassist.exception.StorageFileNotFoundException;
 import com.itma.speciassist.exception.StorageProperties;
 import com.itma.speciassist.model.Carriere;
 import com.itma.speciassist.model.Mentor;
+import com.itma.speciassist.model.User;
 import com.itma.speciassist.model.VideoMentor;
 import com.itma.speciassist.repository.CarriereRepository;
 import com.itma.speciassist.repository.MentorRepository;
+import com.itma.speciassist.repository.UserRepository;
 import com.itma.speciassist.repository.VideoMentorRepository;
 import com.itma.speciassist.service.VideoMentorService;
 
@@ -51,6 +53,8 @@ public class VideoMentorServiceImpl implements VideoMentorService {
     private MentorRepository mentorRepository;
     @Autowired
     private CarriereRepository carriereRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public Stream<Path> loadAll() {
@@ -103,6 +107,7 @@ public class VideoMentorServiceImpl implements VideoMentorService {
         }
         return null;
     }
+    
 
     @Override
     public void deleteAll() {
@@ -119,7 +124,7 @@ public class VideoMentorServiceImpl implements VideoMentorService {
     }
 
     @Override
-    public Optional<VideoMentor> store(MultipartFile file, Long mentorId, Long carriereId, String title) {
+    public Optional<VideoMentor> store(MultipartFile file, Long mentorId, Long carriereId, String title, Long userId) {
         try {
             if (file.isEmpty()) {
                 throw new StorageException("Failed to store empty file.");
@@ -141,6 +146,7 @@ public class VideoMentorServiceImpl implements VideoMentorService {
             // Enregistrement des détails du fichier dans la base de données
             Optional<Mentor> mentorOpt = mentorRepository.findById(mentorId);
             Optional<Carriere> carriereOpt = carriereRepository.findById(carriereId);
+            Optional<User> userOpt = userRepository.findById(userId);
 
             if (mentorOpt.isPresent() && carriereOpt.isPresent()) {
                 VideoMentor videoMentor = new VideoMentor();
@@ -149,6 +155,7 @@ public class VideoMentorServiceImpl implements VideoMentorService {
                 videoMentor.setUrl(videoUrl);  // Définir l'URL de la vidéo
                 videoMentor.setMentor(mentorOpt.get());
                 videoMentor.setCarriere(carriereOpt.get());
+                videoMentor.setUser(userOpt.get());  // Définir l'ID de l'utilisateur
                 videoMentorRepository.save(videoMentor);
                 return Optional.of(videoMentor);
             } else {
@@ -165,8 +172,24 @@ public class VideoMentorServiceImpl implements VideoMentorService {
         }
     }
 
+
     private String generateVideoUrl(String fileName) {
         // Remplacez "http://yourdomain.com/videos/" par votre domaine et chemin d'accès corrects
         return "http://localhost:8080/mentor-videos/videos/" + fileName;
     }
+    
+    @Override
+    public VideoMentor deleteVideo(Long id) {
+        Optional<VideoMentor> videoMentorOptional = videoMentorRepository.findById(id);
+        if (videoMentorOptional.isPresent()) {
+            VideoMentor videoMentor = videoMentorOptional.get();
+            videoMentorRepository.delete(videoMentor);
+            return videoMentor;
+        } else {
+            throw new RuntimeException("Vidéo non trouvée avec l'ID : " + id);
+        }
+    }
+
+	
+	
 }

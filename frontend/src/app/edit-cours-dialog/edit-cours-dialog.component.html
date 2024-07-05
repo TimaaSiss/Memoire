@@ -1,38 +1,38 @@
 <div class="scrollable-form-container">
-<h2 class="text-center mb-4">Modifier le cours</h2>
-<form class="edit-course-form" (ngSubmit)="onSubmit()">
-  <div class="form-group">
-    <label for="titre">Titre :</label>
-    <input type="text" class="form-control" id="titre" [(ngModel)]="editedCourse.titre" name="titre" required>
-  </div>
-  <div class="form-group">
-    <label for="description"><strong>Description:</strong></label>
-    <textarea class="form-control" id="description" [(ngModel)]="editedCourse.description" name="description" rows="4" required></textarea>
-  </div>
-  <div class="form-group">
-    <label for="duree">Durée :</label>
-    <input type="text" class="form-control" id="duree" [(ngModel)]="editedCourse.duree" name="duree" required>
-  </div>
-  <div class="form-group">
-    <label for="urlCours">URL du cours :</label>
-    <input type="text" class="form-control" id="urlCours" [(ngModel)]="editedCourse.urlCours" name="urlCours" required>
-  </div>
-  <div class="form-group">
-    <label for="niveau">Niveau :</label>
-    <input type="text" class="form-control" id="niveau" [(ngModel)]="editedCourse.niveau" name="niveau" required>
-  </div>
-  <div class="form-group">
-    <label for="formation">Formation :</label>
-    <select class="form-control" id="formation" formControlName="formationId" required>
-      <option *ngFor="let formation of formations" [value]="formation.id">
-        {{ formation.titre }}
-      </option>
-    </select>
-    <div *ngIf="editCourseForm.get('formationId')?.invalid && (editCourseForm.get('formationId')?.dirty || editCourseForm.get('formationId')?.touched)" class="text-danger">
-      <small *ngIf="editCourseForm.get('formationId')?.errors?.required">Formation requise.</small>
+  <h2 class="text-center mb-4">Modifier le cours</h2>
+  <form [formGroup]="editCourseForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="titre">Titre :</label>
+      <input type="text" class="form-control" id="titre" formControlName="titre" [(ngModel)]="editedCourse.titre" required>
     </div>
-  </div>
-  <button type="submit" class="btn btn-primary">Enregistrer</button>
-  <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Annuler</button>
-</form>
+    <div class="form-group">
+      <label for="description"><strong>Description:</strong></label>
+      <textarea class="form-control" id="description" formControlName="description" [(ngModel)]="editedCourse.description" rows="4" required></textarea>
+    </div>
+    <div class="form-group">
+      <label for="duree">Durée :</label>
+      <input type="text" class="form-control" id="duree" formControlName="duree" [(ngModel)]="editedCourse.duree" required>
+    </div>
+    <div class="form-group">
+      <label for="urlCours">URL du cours :</label>
+      <input type="text" class="form-control" id="urlCours" formControlName="urlCours" [(ngModel)]="editedCourse.urlCours" required>
+    </div>
+    <div class="form-group">
+      <label for="niveau">Niveau :</label>
+      <input type="text" class="form-control" id="niveau" formControlName="niveau" [(ngModel)]="editedCourse.niveau" required>
+    </div>
+    <div class="form-group">
+      <label for="formation">Formation :</label>
+      <select class="form-control" id="formation" formControlName="formationId" required>
+        <option *ngFor="let formation of formations" [value]="formation.id">
+          {{ formation.titre }}
+        </option>
+      </select>
+      <div *ngIf="editCourseForm.get('formationId')?.invalid && (editCourseForm.get('formationId')?.dirty || editCourseForm.get('formationId')?.touched)" class="text-danger">
+        <small *ngIf="editCourseForm.get('formationId')?.errors?.required">Formation requise.</small>
+      </div>
+    </div>
+    <button type="submit" class="btn btn-primary">Enregistrer</button>
+    <button type="button" class="btn btn-secondary" (click)="onCancelClick()">Annuler</button>
+  </form>
 </div>

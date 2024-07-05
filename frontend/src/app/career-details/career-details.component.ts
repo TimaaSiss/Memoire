@@ -108,12 +108,23 @@ export class CareerDetailsComponent implements OnInit {
     this.videoMentorService.getVideosByCarriereId(carriereId).subscribe(
       (data: VideoMentor[]) => {
         this.mentorVideos = data;
+        console.log('Mentor Videos:', data);
+        data.forEach(video => {
+          if (video.mentor) {
+            console.log('Mentor ID:', video.mentor.id);
+          } else {
+            console.warn('Video without mentor:', video);
+          }
+        });
       },
       (error: any) => {
         console.error('Error fetching mentor videos:', error);
       }
     );
   }
+  
+  
+  
   
 
   openMessageDialog(mentorId: number): void {

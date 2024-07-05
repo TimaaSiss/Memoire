@@ -2,17 +2,96 @@
   width: 80%;
   margin: 0 auto;
   padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .header {
-  background-color: #f8f9fa;
+  background-color: #f0f2f5;
   padding: 20px;
   border-radius: 10px;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+
+  .mentor-info {
+    text-align: center;
+
+    h1 {
+      font-weight: bold;
+      font-size: 2.5rem;
+    }
+
+    h2 {
+      font-size: 1.5rem;
+      color: #555;
+    }
+  }
+
+  .contacts {
+    margin-top: 10px;
+    text-align: center;
+
+    h3 {
+      display: inline-block;
+      margin-right: 10px;
+    }
+
+    p {
+      display: inline-block;
+      margin: 0;
+    }
+
+  }
+
+  .btn-envelope {
+    background-color: #0c0c0c;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+  }
+
+  .btn-envelope:hover {
+    background-color: #0056b3;
+  }
+  .btn-logout {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000; /* Assure que le bouton est au-dessus des autres éléments */
+  }
 }
 
-.contacts {
-  margin-top: 10px;
+.btn-add-video {
+  display: inline-block;
+  background-color: #007bff;
+  color: #ffffff;
+  padding: 15px 30px;
+  font-size: 18px;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.btn-add-video:hover {
+  background-color: #0056b3;
 }
 
 .manage-content {
@@ -21,10 +100,14 @@
   gap: 20px;
 }
 
-.add-video, .add-course, .video-list, .course-list {
+.add-video,
+.add-course,
+.video-list,
+.course-list {
   background-color: #f8f9fa;
   padding: 20px;
   border-radius: 10px;
+  margin-bottom: 20px;
 }
 
 .video-container {
@@ -44,12 +127,55 @@
   align-items: center;
 }
 
-.video-item iframe, .video-item video {
+.video-item p {
+  margin-bottom: 10px;
+}
+
+.video-item video {
   width: 100%;
-  height: 200px;
+  height: auto;
   border-radius: 5px;
 }
 
 button {
   margin-top: 10px;
+}
+
+.btn-add-course {
+  background-color: #28a745;
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.btn-add-course:hover {
+  background-color: #218838;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
+}
+
+.messages-section {
+  margin-top: 20px;
+}
+
+.messages-section p {
+  margin: 0;
+}
+
+.messages-section strong {
+  color: #007bff;
 }

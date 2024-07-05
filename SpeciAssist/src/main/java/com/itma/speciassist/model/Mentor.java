@@ -19,6 +19,7 @@ public class Mentor extends User {
     @JsonIgnore  @OneToMany(mappedBy = "mentor")
     private List<Cours> cours;
     
+    @JsonIgnore
     @OneToMany(mappedBy = "mentor")
     private List<VideoMentor> videoMentors;
 

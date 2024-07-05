@@ -1,0 +1,23 @@
+<div>
+  <h2>Ajouter une vidéo</h2>
+  <form (ngSubmit)="onSubmit()">
+    <div>
+      <label for="title">Title:</label>
+      <input type="text" [(ngModel)]="nouvelleVideo.title" name="title" required>
+    </div>
+    <div>
+      <label for="carriere">Carrière:</label>
+      <select [(ngModel)]="nouvelleVideo.carriere" name="carriere" required>
+        <option *ngFor="let carriere of carrieres" [ngValue]="carriere">
+          {{ carriere.nom }}
+        </option>
+      </select>
+    </div>
+    <div>
+      <label for="file">Video File:</label>
+      <input type="file" (change)="onFileSelected($event)" required>
+    </div>
+    <button type="submit">Upload</button>
+    <button type="button" (click)="onCancelClick()">Annuler</button>
+  </form>
+</div>

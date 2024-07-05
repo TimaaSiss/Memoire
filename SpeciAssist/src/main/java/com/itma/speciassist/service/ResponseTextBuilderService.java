@@ -26,7 +26,7 @@ public class ResponseTextBuilderService {
     public String buildResponseText(Integer userId) {
         StringBuilder textBuilder = new StringBuilder();
 
-        textBuilder.append("Sur la base des réponses suivantes, suggère une carrière appropriée et bien evidement en francais s'il te plait :").append("\n\n");
+        textBuilder.append("Sur la base des réponses suivantes, suggère une carrière appropriée et bien evidement en francais s'il te plait en tags pour l'affichage :").append("\n\n");
             // get reponse user
         List<ReponseUser> reponses = reponseService.getReponsesByUserId(userId);
 

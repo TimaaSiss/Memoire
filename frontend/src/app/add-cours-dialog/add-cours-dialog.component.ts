@@ -51,8 +51,6 @@ export class AddCourseDialogComponent implements OnInit {
         console.error('Error fetching formations:', error);
       }
     );
-
-
   }
 
   onSubmit(): void {
