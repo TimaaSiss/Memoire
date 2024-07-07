@@ -16,7 +16,7 @@ export class MentorComponent implements OnInit {
   mentors: Mentor[] = [];
   newMentor: Mentor = new Mentor();
   selectedMentor: Mentor | null = null;
-  menuOpen= true;
+  menuOpen = true;
 
   dataSource = new MatTableDataSource<Mentor>(); // Source de données pour la table
   displayedColumns: string[] = ['id', 'specialite'];
@@ -25,7 +25,7 @@ export class MentorComponent implements OnInit {
 
   pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
 
-  constructor(private mentorService: MentorService, public dialog: MatDialog) { }
+  constructor(private mentorService: MentorService, public dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.loadMentors();
@@ -51,13 +51,13 @@ export class MentorComponent implements OnInit {
       this.dataSource.paginator = this.paginator; // Configurer la pagination
     });
   }
-  
+
   loadMoreMentors(event: PageEvent) {
     const pageIndex = event.pageIndex;
     const pageSize = event.pageSize;
     const startIndex = pageIndex * pageSize;
     const endIndex = startIndex + pageSize;
-  
+
     // Charger les utilisateurs suivants selon l'index de page
     this.dataSource = new MatTableDataSource<Mentor>(this.mentors.slice(startIndex, endIndex));
   }
@@ -69,17 +69,24 @@ export class MentorComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        this.addMentor();
+        this.addMentor(result);
       }
     });
   }
 
-
-  addMentor(): void {
-    this.mentorService.addMentor(this.newMentor).subscribe(() => {
-      this.newMentor = new Mentor();
-      this.loadMentors();
-    });
+  addMentor(mentor: Mentor): void {
+    this.mentorService.addMentor(mentor).subscribe(
+      (newMentor) => {
+        // Ajouter le nouveau mentor à la liste des mentors
+        this.mentors.push(newMentor);
+        // Mettre à jour la dataSource avec la liste actualisée des mentors
+        this.dataSource = new MatTableDataSource<Mentor>(this.mentors.slice(0, this.pageSize));
+        this.dataSource.paginator = this.paginator;
+      },
+      (error) => {
+        console.error('Error adding mentor', error);
+      }
+    );
   }
 
   openEditDialog(mentor: Mentor): void {

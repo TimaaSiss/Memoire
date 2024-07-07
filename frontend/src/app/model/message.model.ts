@@ -8,4 +8,5 @@ export interface Message {
     content: string;
     dateSent: Date;
     isRead: boolean;
+    replyContent?: string; 
   }

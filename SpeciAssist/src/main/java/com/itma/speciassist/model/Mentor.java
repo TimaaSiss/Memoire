@@ -14,7 +14,7 @@ import lombok.Setter;
 @Setter
 public class Mentor extends User {
     private String specialite;
-    private Long carriereId; 
+   // private Long carriereId; 
     
     @JsonIgnore  @OneToMany(mappedBy = "mentor")
     private List<Cours> cours;

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -42,12 +43,14 @@ public class Formation {
     private List<Etablissement> etablissements;
 
     
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.ALL})
     @JoinTable(
         name = "formation_carriere",
         joinColumns = @JoinColumn(name = "formation_id"),
         inverseJoinColumns = @JoinColumn(name = "carriere_id"))
     private List<Carriere> carrieres;
+    
+    
 	public Object getFormationWithEtablissementsByTitre() {
 		// TODO Auto-generated method stub
 		return null;

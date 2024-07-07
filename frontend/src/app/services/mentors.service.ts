@@ -12,7 +12,7 @@ export class MentorService {
   constructor(private http: HttpClient, private configService: ConfigService) { }
 
   addMentor(mentor: Mentor): Observable<Mentor> {
-    return this.http.post<Mentor>(`${this.configService.apiUrl}/mentors`, mentor);
+    return this.http.post<Mentor>(`${this.configService.apiUrl}/mentors/add`, mentor);
   }
 
   getAllMentors(): Observable<Mentor[]> {

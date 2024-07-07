@@ -24,5 +24,6 @@ public interface VideoMentorService {
 	VideoMentor deleteVideo(Long id);
 	//Optional<VideoMentor> store(MultipartFile file, Long mentorId, Long carriereId, String title, Long userId);
 	//Optional<VideoMentor> store(MultipartFile file, Long mentorId, Long carriereId, String title, User userId);
+	//Optional<VideoMentor> store(MultipartFile file, Long mentorId, Long carriereId, String title, Long userId);
 	Optional<VideoMentor> store(MultipartFile file, Long mentorId, Long carriereId, String title, Long userId);
 }

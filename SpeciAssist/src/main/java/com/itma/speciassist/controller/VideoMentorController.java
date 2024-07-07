@@ -35,7 +35,7 @@ public class VideoMentorController {
     }
 
     @PostMapping("/upload")
-    public ResponseEntity<String> handleFileUpload(
+    public ResponseEntity<VideoMentor> handleFileUpload(
             @RequestParam("file") MultipartFile file,
             @RequestParam("mentorId") Long mentorId,
             @RequestParam("carriereId") Long carriereId,
@@ -44,9 +44,9 @@ public class VideoMentorController {
 
         Optional<VideoMentor> video = videoMentorService.store(file, mentorId, carriereId, title, userId); // Passez l'ID de l'utilisateur
         if (video.isPresent()) {
-            return ResponseEntity.ok("Video uploaded successfully: " + video.get().getUrl());
+            return ResponseEntity.ok(video.get());
         } else {
-            return ResponseEntity.status(500).body("Failed to upload video.");
+            return ResponseEntity.status(500).body(null);
         }
     }
 

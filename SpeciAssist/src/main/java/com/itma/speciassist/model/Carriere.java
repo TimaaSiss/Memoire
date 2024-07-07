@@ -39,12 +39,7 @@ public class Carriere {
     private List<Commentaire> commentaires = new ArrayList<>();
     
     @JsonIgnore
-    @ManyToMany
-    @JoinTable(
-        name = "carriere_formation",
-        joinColumns = @JoinColumn(name = "carriere_id"),
-        inverseJoinColumns = @JoinColumn(name = "formation_id")
-    )
+    @ManyToMany(mappedBy = "carrieres",cascade= CascadeType.REMOVE)
     private List<Formation> formations = new ArrayList<>();
     
 

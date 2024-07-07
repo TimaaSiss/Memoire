@@ -75,7 +75,7 @@ public ResponseEntity<?> addUser(@RequestBody @Valid User user, BindingResult bi
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping()
+    @GetMapping("/all")
     public List<User> getAllUsers() {
         return userService.allUsers();
     }

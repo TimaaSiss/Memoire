@@ -23,4 +23,8 @@ export class MessageService {
   getMessagesBySender(userId: number): Observable<any> {
     return this.http.get(`${this.configService.apiUrl}/messages/sender/${userId}`);
   }
+
+  sendReply(reply: { messageId: number, senderId: number, content: string }): Observable<Message> {
+    return this.http.post<Message>(`${this.configService.apiUrl}/reply`, reply);
+  }
 }

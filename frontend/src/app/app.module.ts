@@ -66,6 +66,8 @@ import { ChartComponent } from './chart/chart.component';
 import { AddVideoDialogComponent } from './add-video-dialog/add-video-dialog.component';
 import { EditVideoDialogComponent } from './edit-video-dialog/edit-video-dialog.component';
 import { MessagesDialogComponent } from './messages-dialog/messages-dialog.component';
+import { MatSelectModule } from '@angular/material/select';
+import { MatOptionModule } from '@angular/material/core';
 
 
 
@@ -143,6 +145,8 @@ import { MessagesDialogComponent } from './messages-dialog/messages-dialog.compo
     MatIconModule,
     ReactiveFormsModule,
     NgChartsModule,
+    MatSelectModule,
+    MatOptionModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

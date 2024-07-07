@@ -61,11 +61,17 @@ public class CarriereServiceImpl implements CarriereService {
     }
 
     @Override
+   @Transactional
     public void deleteCarriere(Integer id) {
-        if (!carriereRepository.existsById(id)) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Carriere not found with ID: " + id);
-        }
-        carriereRepository.deleteById(id);
+        Carriere carriere = carriereRepository.findById(id)
+            .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Carriere not found with ID: " + id));
+
+        // Remove associations with formations
+        carriere.getFormations().clear();
+        carriereRepository.save(carriere);
+
+        // Now delete the carriere
+        carriereRepository.delete(carriere);
     }
 
     public Carriere getCarriereByNom(String nom) {

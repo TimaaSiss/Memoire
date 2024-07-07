@@ -7,6 +7,10 @@ import { CarriereService } from '@app/services/carrieres.service';
 import { FormationService } from '@app/services/formations.service'; // Importer le service Formation
 import { Carriere } from '@app/model/carriere.model';
 import { Formation } from '@app/model/formation.model'; // Importer Formation
+import { Message } from '@app/model/message.model';
+import { MessageService } from '@app/services/message.service';
+import { MessagesDialogComponent } from '@app/messages-dialog/messages-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-profile',
@@ -23,6 +27,7 @@ export class ProfileComponent implements OnInit {
   formations: Formation[] = [];
 
   filteredCareers: Carriere[] = [];
+  messages: Message[] = [];
  
   searchTerm: string = '';
   filteredFormations: Formation[] = [];
@@ -37,7 +42,9 @@ export class ProfileComponent implements OnInit {
     private questionnaireService: QuestionnaireService,
     private reponseUserService: ReponseUserService,
     private carriereService: CarriereService,
-    private formationService: FormationService // Inject formation Service
+    private messageService: MessageService, 
+    private formationService: FormationService, // Inject formation Service
+    public dialog: MatDialog 
   ) { }
 
   ngOnInit(): void {
@@ -132,6 +139,36 @@ export class ProfileComponent implements OnInit {
       this.filteredFormations = this.formations.filter(formation => formation.titre.toLowerCase().includes(this.searchTerm.toLowerCase()));
     }
   }
+
+  loadMessages(): void {
+    if (this.currentUser && this.currentUser.id) {
+      this.messageService.getMessagesByReceiver(this.currentUser.id).subscribe(
+        (messages) => {
+          this.messages = messages;
+          console.log('Messages reçus:', this.messages); // Ajoutez cette ligne pour le débogage
+        },
+        (error) => console.error('Erreur lors de la récupération des messages :', error)
+      );
+    } else {
+      console.error('Utilisateur non défini ou ID utilisateur manquant');
+    }
+  }
+  
+  
+  openMessagesDialog(): void {
+    const dialogRef = this.dialog.open(MessagesDialogComponent, {
+      width: '500px',
+      data: { messages: this.messages }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Boîte de dialogue de messages fermée');
+      }
+    });
+  }
+  
+
 
   navigateToQuestionPage(): void {
     this.router.navigate(['/questionnaires/:id']);

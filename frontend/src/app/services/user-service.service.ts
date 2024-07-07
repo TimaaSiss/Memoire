@@ -18,6 +18,11 @@ export class UserService {
     
   }
 
+
+  getAllUsers(): Observable<User[]> {
+    return this.http.get<User[]>(`${this.configService.apiUrl}/users/all`);
+  }
+
   public findAll(page: number, size: number): Observable<Page<User>> {
     const params = new HttpParams()
       .set('page', page.toString())

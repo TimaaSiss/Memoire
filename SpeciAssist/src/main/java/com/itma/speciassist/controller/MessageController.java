@@ -64,6 +64,32 @@ public class MessageController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
         }
     }
+    
+    @PostMapping("/reply")
+    public ResponseEntity<?> replyMessage(@RequestBody ReplyRequest replyRequest) {
+        try {
+            User sender = userService.getUserById(replyRequest.getSenderId());
+            if (sender == null) {
+                return ResponseEntity.badRequest().body("Sender not found");
+            }
+            
+            Message originalMessage = messageService.getMessageById(replyRequest.getMessageId());
+            if (originalMessage == null) {
+                return ResponseEntity.badRequest().body("Original message not found");
+            }
+
+            User receiver = originalMessage.getSender(); // Assuming the reply is sent to the original sender
+
+            String replyContent = replyRequest.getContent();
+
+            Message replyMessage = messageService.sendMessage(sender, receiver, replyContent);
+
+            return ResponseEntity.ok(replyMessage);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred: " + e.getMessage());
+        }
+    }
+
 
 
 

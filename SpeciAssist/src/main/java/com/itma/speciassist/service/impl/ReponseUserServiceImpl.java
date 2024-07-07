@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.itma.speciassist.model.ReponseUser;
@@ -33,7 +34,7 @@ public class ReponseUserServiceImpl implements ReponseUserService {
 
     @Override
     public List<ReponseUser> getReponsesByUserId(Integer userId) {
-        return reponseRepository.findByUser_Id(userId);
+        return reponseRepository.findByUser_Id(userId, Sort.by(Sort.Direction.ASC, "question.questionnaire.id"));
     }
 
     @Override

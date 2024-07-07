@@ -76,7 +76,7 @@ export class MentorProfileComponent implements OnInit {
         (mentorDetails) => {
           console.log('mentorDetails:', mentorDetails);
           this.specialite = mentorDetails.specialite || '';
-          this.carriereId = mentorDetails.carriereId || 0;
+         // this.carriereId = mentorDetails.carriereId || 0;
           this.nouvelleVideo.carriere.id = this.carriereId;
           this.loadVideosAndCourses(this.currentUser.id);
         },
@@ -157,13 +157,14 @@ export class MentorProfileComponent implements OnInit {
   
         this.videoMentorService.uploadVideo(this.currentUser.id, formData).subscribe(
           (response) => {
-            console.log('Vidéo ajoutée avec succès:', response);
-            if (response.video) {
-              this.videos.push(response.video);
-              if (response.video.id !== undefined) {
-                this.loadVideoUrl(response.video); // Charger l'URL pour la nouvelle vidéo ajoutée
+            
+            if (response) {
+                         
+              this.videos.push(response);
+              if (response.id !== undefined) {
+                this.loadVideoUrl(response); // Charger l'URL pour la nouvelle vidéo ajoutée
               }
-            }
+            } 
           },
           (error) => {
             console.error('Erreur lors de l\'ajout de la vidéo :', error);
@@ -349,16 +350,16 @@ export class MentorProfileComponent implements OnInit {
     this.showMoreCourses = !this.showMoreCourses;
   }
 
-  openMessagesDialog(): void {
+  openMessagesDialog(currentUser: User, messages: Message[]): void {
     const dialogRef = this.dialog.open(MessagesDialogComponent, {
-      width: '500px',
-      data: { messages: this.messages }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Boîte de dialogue de messages fermée');
+      data: {
+        currentUser: currentUser,
+        messages: messages
       }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('Le dialogue a été fermé');
     });
   }
 

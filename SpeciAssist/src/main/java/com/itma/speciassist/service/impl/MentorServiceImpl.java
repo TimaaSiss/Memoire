@@ -22,8 +22,12 @@ public class MentorServiceImpl implements MentorService {
 
     @Override
     public Mentor addMentor(Mentor mentor) {
-        String encodedPassword = passwordEncoder.encode(CharBuffer.wrap(mentor.getPassword()));
-        mentor.setPassword(encodedPassword);
+    	 if (mentor.getPassword() == null) {
+             throw new IllegalArgumentException("rawPassword cannot be null");
+         }
+    	 String encodedPassword = passwordEncoder.encode(mentor.getPassword());
+         mentor.setPassword(encodedPassword);
+         
         return mentorRepository.save(mentor);
     }
 

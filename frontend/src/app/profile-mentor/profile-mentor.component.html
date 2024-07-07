@@ -12,7 +12,7 @@
       <p>Email: {{ mail }}</p>
     </div>
     
-    <button class="btn-envelope" (click)="openMessagesDialog()">
+    <button class="btn-envelope" (click)="openMessagesDialog(currentUser, messages)">
       <i class="bi bi-envelope"></i>
     </button>
   </div>
