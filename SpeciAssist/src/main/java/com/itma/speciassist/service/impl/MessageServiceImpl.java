@@ -46,5 +46,13 @@ public class MessageServiceImpl implements MessageService {
     	}
     }
 
-    // Ajoutez d'autres méthodes de service selon vos besoins
+	@Override
+	public Message getMessageById(Object messageId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+    public Long getUnreadMessagesCount(Long userId) {
+        return messageRepository.countByReceiverIdAndIsReadFalse(userId);
+    }
 }

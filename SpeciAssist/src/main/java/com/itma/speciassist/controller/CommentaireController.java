@@ -43,7 +43,7 @@ public class CommentaireController {
         return commentaireService.updateCommentaire(id, commentaire);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteCommentaire(@PathVariable Integer id) {
         commentaireService.deleteCommentaire(id);
     }

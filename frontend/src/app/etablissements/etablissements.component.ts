@@ -3,6 +3,7 @@ import { EtablissementService } from './../services/etablissement.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { EditEtabDialogComponent } from '@app/edit-etab-dialog/edit-etab-dialog.component';
 
@@ -25,7 +26,7 @@ export class EtablissementComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
   pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
-  constructor(private etablissementService: EtablissementService, public dialog: MatDialog) {}
+  constructor(private etablissementService: EtablissementService, public dialog: MatDialog, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.loadEtablissements();
@@ -82,6 +83,12 @@ export class EtablissementComponent implements OnInit {
     addEtablissement(newEtablissement: Etablissement): void {
     this.etablissementService.addEtablissement(newEtablissement).subscribe(() => {
     this.loadEtablissements();
+    this.snackBar.open('Établissement ajouté avec succès', 'Fermer', {
+      duration: 3000, // Durée en millisecondes
+      verticalPosition: 'top', // Position verticale
+      horizontalPosition: 'right', // Position horizontale
+        panelClass: 'custom-snackbar'
+    });
   });
 }
   
@@ -117,6 +124,12 @@ openEditDialog(etablissement: Etablissement): void {
           }
           // Réinitialiser la formation sélectionnée
           this.selectedEtablissement = null;
+          this.snackBar.open('Établissement mis à jour avec succès', 'Fermer', {
+            duration: 3000, // Durée en millisecondes
+            verticalPosition: 'top', // Position verticale
+            horizontalPosition: 'right', // Position horizontale
+              panelClass: 'custom-snackbar'
+          });
         });
     }
   }
@@ -132,6 +145,12 @@ openEditDialog(etablissement: Etablissement): void {
       if (confirm('Êtes-vous sûr de vouloir supprimer cet établissement ?')) {
         this.etablissementService.deleteEtablissement(etablissement.id).subscribe(() => {
           this.loadEtablissements();
+          this.snackBar.open('Établissement supprimé avec succès', 'Fermer', {
+            duration: 3000, // Durée en millisecondes
+            verticalPosition: 'top', // Position verticale
+            horizontalPosition: 'right', // Position horizontale
+              panelClass: 'custom-snackbar'
+          });
         });
       }
     } else {

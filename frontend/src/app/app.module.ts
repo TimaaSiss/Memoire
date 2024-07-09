@@ -1,3 +1,4 @@
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { CarriereComponent } from './carrieres/carrieres.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -43,7 +44,6 @@ import { EtablissementComponent } from './etablissements/etablissements.componen
 import { AddEtablissementDialogComponent } from './add-etablissement-dialog/add-etablissement-dialog.component';
 import { EditFormationDialogComponent } from './edit-formation-dialog/edit-formation-dialog.component';
 import { EditMentorDialogComponent } from './edit-mentor-dialog/edit-mentor-dialog.component';
-import { AddMentorDialogComponent } from './add-mentor-dialog/add-mentor-dialog.component';
 import { EditEtabDialogComponent } from './edit-etab-dialog/edit-etab-dialog.component';
 import { EditUserDialogComponent } from './edit-user-dialog/edit-user-dialog.component';
 import { EditMentorComponent } from './edit-mentor/edit-mentor.component';
@@ -105,7 +105,6 @@ import { MatOptionModule } from '@angular/material/core';
          AddEtablissementDialogComponent,
          EditFormationDialogComponent,
          EditMentorDialogComponent,
-         AddMentorDialogComponent,
          EditEtabDialogComponent,
          EditUserDialogComponent,
          EditMentorComponent,
@@ -146,7 +145,8 @@ import { MatOptionModule } from '@angular/material/core';
     ReactiveFormsModule,
     NgChartsModule,
     MatSelectModule,
-    MatOptionModule
+    MatOptionModule,
+    MatSnackBarModule
   ],
   providers: [UserService],
   bootstrap: [AppComponent]

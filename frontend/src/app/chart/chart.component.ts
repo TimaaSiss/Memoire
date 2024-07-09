@@ -12,12 +12,12 @@ export class ChartComponent implements OnInit {
     responsive: true,
   };
 
-  public pieChartLabels: string[] = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  public pieChartLabels: string[] = ['Avril', 'Mai', 'Juin', 'Juillet'];
   public pieChartType: ChartType = 'pie';
   public pieChartLegend = true;
 
   public pieChartData = [
-    { data: [65, 59, 80, 81, 56, 55, 40], label: 'My First Dataset' }
+    { data: [17, 8, 8, 5], label: 'Mes premières données en fonctions du nombre d\'utilisateur inscrit' }
   ];
 
   constructor() { }

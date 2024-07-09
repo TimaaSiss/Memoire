@@ -1,1 +1,35 @@
-<p>commentaires works!</p>
+<app-header></app-header>
+<div class="commentaires-container">
+  <app-sidebar></app-sidebar>
+
+  <div class="admin-content">
+    <h1><strong>Liste des Commentaires</strong></h1>
+
+    <!-- Bouton pour ajouter un commentaire, si nécessaire -->
+    <!-- <button class="btn btn-primary mb-3" (click)="openAddDialog()">+ Ajouter un commentaire</button> -->
+
+    <!-- Liste des commentaires -->
+    <div class="commentaires-list">
+      <div *ngIf="successMessage" class="success-message">
+        {{ successMessage }}
+      </div>
+      <div *ngFor="let commentaire of commentaires" class="commentaire-item">
+        <div class="commentaire-header">
+          <p class="commentaire-user"><strong>{{ commentaire.user?.prenom }} {{ commentaire.user?.nom }}</strong></p>
+          <button *ngIf="commentaire.id !== undefined" class="btn btn-danger btn-sm" (click)="deleteCommentaire(commentaire.id)">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+        <p class="commentaire-content">{{ commentaire.contenu }}</p>
+        <p class="commentaire-date">{{ commentaire.datePublication | date:'dd/MM/yyyy' }}</p>
+      </div>
+    </div>
+
+    <!--Pagination-->
+   <!--  <mat-paginator [length]="commentaires.length"
+                   [pageSize]="10"
+                   (page)="loadMoreCommentaires($event)"
+                   [pageSizeOptions]="[10, 20, 50]">
+    </mat-paginator> -->
+  </div>
+</div>

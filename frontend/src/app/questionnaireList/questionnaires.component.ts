@@ -8,6 +8,7 @@ import { ReponseQuestionService } from '@app/services/reponse-questions.service'
 import { Question } from '../model/questionnaire'; // Importation du modèle Question
 import { ReponseQuestion } from '../model/questionnaire';
 import { AddResponseDialogComponent } from '@app/add-response-dialog/add-response-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-questionnaires',
   templateUrl: './questionnaires.component.html',
@@ -25,7 +26,8 @@ export class QuestionnairesComponent implements OnInit {
   constructor(
     private questionnaireService: QuestionnaireService,
     private dialog: MatDialog,
-    private reponseQuestionService: ReponseQuestionService // Injection du service ReponseQuestionService
+    private reponseQuestionService: ReponseQuestionService, // Injection du service ReponseQuestionService
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -110,6 +112,12 @@ export class QuestionnairesComponent implements OnInit {
       this.questionnaireService.addQuestionnaire(this.newQuestionnaire).subscribe(() => {
         this.newQuestionnaire = { id: 0, titre: '', questions: [] };
         this.loadQuestionnaires();
+        this.snackBar.open('Questionnaire ajouté avec succès', 'Fermer', {
+          duration: 3000, // Durée en millisecondes
+          verticalPosition: 'top', // Position verticale
+          horizontalPosition: 'right', // Position horizontale
+            panelClass: 'custom-snackbar'
+        });
       });
     }
   }
@@ -152,6 +160,12 @@ export class QuestionnairesComponent implements OnInit {
       this.questionnaireService.updateQuestionnaire(this.selectedQuestionnaire.id, this.selectedQuestionnaire).subscribe(() => {
         this.selectedQuestionnaire = null;
         this.loadQuestionnaires();
+        this.snackBar.open('Questionnaire mis à jour avec succès', 'Fermer', {
+          duration: 3000, // Durée en millisecondes
+          verticalPosition: 'top', // Position verticale
+          horizontalPosition: 'right', // Position horizontale
+            panelClass: 'custom-snackbar'
+        });
       });
     }
   }
@@ -165,6 +179,12 @@ export class QuestionnairesComponent implements OnInit {
   deleteQuestionnaire(questionnaire: Questionnaire) {
     this.questionnaireService.deleteQuestionnaire(questionnaire.id).subscribe(() => {
       this.loadQuestionnaires();
+      this.snackBar.open('Questionnaire supprimé avec succès', 'Fermer', {
+        duration: 3000, // Durée en millisecondes
+        verticalPosition: 'top', // Position verticale
+        horizontalPosition: 'right', // Position horizontale
+          panelClass: 'custom-snackbar'
+      });
     });
   }
 

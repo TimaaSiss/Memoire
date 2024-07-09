@@ -3,9 +3,9 @@
  <app-sidebar></app-sidebar>
   
   <div class="admin-content">
-    <h1>Liste des Mentors</h1>
+    <h1><strong>LISTE DES MENTORS</strong></h1>
     <!-- Le reste de votre contenu de la page -->
-    <button class="btn btn-primary" (click)="openEditMentor()">Ajouter un mentor</button>
+    <button class="btn btn-primary" (click)="openEditMentor()">+ Ajouter un mentor</button>
     <br /><br />
 
 <table class="table table-bordered table-striped">
@@ -14,14 +14,17 @@
       <tr>
         <th scope="col">#</th>
         <!-- <th scope="col">User_id</th> -->
+        <th scope="col">Nom</th>
+        <th scope="col">Prénom</th> <!-- Nouvelle colonne pour les actions -->
         <th scope="col">Spécialité</th>
-        <th scope="col">Actions</th> <!-- Nouvelle colonne pour les actions -->
+        <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let mentor of mentors">
         <td>{{ mentor.id }}</td>
-
+        <td>{{ mentor.nom }}</td>
+        <td>{{ mentor.prenom }}</td>
         <td>{{ mentor.specialite }}</td>
         <td>
           <div class="action-buttons">

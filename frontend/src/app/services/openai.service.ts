@@ -9,8 +9,6 @@ import { ConfigService } from './config.service';
 })
 export class ReponseOpenAIService {
 
-  
-
   constructor(private http: HttpClient, private configService: ConfigService) { }
 
   generateReponse(userId: number): Observable<ReponseOpenAI> {

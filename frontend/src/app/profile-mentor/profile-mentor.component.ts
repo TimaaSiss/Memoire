@@ -325,11 +325,25 @@ export class MentorProfileComponent implements OnInit {
     this.messageService.getMessagesByReceiver(this.currentUser.id).subscribe(
       (messages) => {
         this.messages = messages;
+        console.log('Messages récupérés pour le mentor:', this.messages); // Ajoutez ce log
       },
       (error) => console.error('Erreur lors de la récupération des messages :', error)
     );
   }
-
+  
+  openMessagesDialog(): void {
+    const dialogRef = this.dialog.open(MessagesDialogComponent, {
+      width: '500px',
+      data: { messages: this.messages, currentUser: this.currentUser }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        console.log('Boîte de dialogue de messages fermée');
+      }
+    });
+  }
+  
   updateCourse(course: Course): void {
     if (course.id !== undefined) {
       this.courseService.updateCourse(course.id, course).subscribe(
@@ -350,18 +364,7 @@ export class MentorProfileComponent implements OnInit {
     this.showMoreCourses = !this.showMoreCourses;
   }
 
-  openMessagesDialog(currentUser: User, messages: Message[]): void {
-    const dialogRef = this.dialog.open(MessagesDialogComponent, {
-      data: {
-        currentUser: currentUser,
-        messages: messages
-      }
-    });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('Le dialogue a été fermé');
-    });
-  }
+ 
 
   logout(): void {
     // Logique de déconnexion ici (par exemple, supprimer les données de session, vider le local storage, etc.)

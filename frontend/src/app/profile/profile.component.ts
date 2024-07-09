@@ -35,6 +35,8 @@ export class ProfileComponent implements OnInit {
   currentUser!: any;
   selectedCarriere: Carriere | null = null;
   formationDetails: Formation | null = null; 
+  unreadMessagesCount: number = 0; // Initialisation avec une valeur par défaut
+
 
   constructor(
     private userService: UserService,
@@ -66,6 +68,9 @@ export class ProfileComponent implements OnInit {
   
     this.filteredCareers = this.careers;
     this.filteredFormations = this.formations;
+    this.currentUser = this.userService.getCurrentUser();
+    this.loadMessages();
+    this.getUnreadMessagesCount();
   }
   
   calculateTotalQuestions(callback?: () => void): void {
@@ -141,33 +146,36 @@ export class ProfileComponent implements OnInit {
   }
 
   loadMessages(): void {
-    if (this.currentUser && this.currentUser.id) {
-      this.messageService.getMessagesByReceiver(this.currentUser.id).subscribe(
-        (messages) => {
-          this.messages = messages;
-          console.log('Messages reçus:', this.messages); // Ajoutez cette ligne pour le débogage
-        },
-        (error) => console.error('Erreur lors de la récupération des messages :', error)
-      );
-    } else {
-      console.error('Utilisateur non défini ou ID utilisateur manquant');
-    }
+    this.messageService.getMessagesByReceiver(this.currentUser.id).subscribe(
+      (data) => {
+        this.messages = data;
+      },
+      (error) => {
+        console.error('Erreur lors du chargement des messages', error);
+      }
+    );
   }
-  
-  
-  openMessagesDialog(): void {
-    const dialogRef = this.dialog.open(MessagesDialogComponent, {
-      width: '500px',
-      data: { messages: this.messages }
+
+  getUnreadMessagesCount(): void {
+    this.messageService.getUnreadMessagesCount(this.currentUser.id).subscribe(count => {
+      this.unreadMessagesCount = count;
     });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Boîte de dialogue de messages fermée');
+  }
+
+  openMessageDialog(): void {
+    const dialogRef = this.dialog.open(MessagesDialogComponent, {
+      width: '300px',
+      data: { 
+        messages: this.messages,
+        currentUser: this.currentUser 
       }
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      // Recharge les messages non lus après la fermeture de la boîte de dialogue
+      this.getUnreadMessagesCount();
+    });
   }
-  
 
 
   navigateToQuestionPage(): void {

@@ -1,7 +1,8 @@
+// messages-dialog.component.ts
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Message } from '@app/model/message.model';
-import { MessageService } from '@app/services/message.service';
+import { MessageService } from '../services/message.service';
+import { Message } from '../model/message.model';
 
 @Component({
   selector: 'app-messages-dialog',
@@ -16,7 +17,7 @@ export class MessagesDialogComponent implements OnInit {
     private dialogRef: MatDialogRef<MessagesDialogComponent>,
     private messageService: MessageService
   ) {
-    console.log('Données reçues dans le dialogue:', data); // Ajoutez ce log
+    console.log('Données reçues dans le dialogue:', data); // Ajoutez ce log pour déboguer
     this.messages = data.messages;
   }
 

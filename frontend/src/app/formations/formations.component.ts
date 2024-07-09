@@ -6,6 +6,7 @@ import { AddFormationDialogComponent } from '@app/add-formation-dialog/add-forma
 import { EditFormationDialogComponent } from '@app/edit-formation-dialog/edit-formation-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-formation',
@@ -25,7 +26,7 @@ export class FormationComponent implements OnInit {
  
    pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
  
-  constructor(private formationService: FormationService, public dialog: MatDialog) {}
+  constructor(private formationService: FormationService, public dialog: MatDialog, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.loadFormations();
@@ -95,6 +96,12 @@ openEditDialog(formation: Formation): void {
     addFormation(newFormation: Formation): void {
     this.formationService.addFormation(newFormation).subscribe(() => {
     this.loadFormations();
+    this.snackBar.open('Formation ajoutée avec succès', 'Fermer', {
+      duration: 3000, // Durée en millisecondes
+      verticalPosition: 'top', // Position verticale
+      horizontalPosition: 'right', // Position horizontale
+        panelClass: 'custom-snackbar'
+    });
   });
 }
   
@@ -105,6 +112,12 @@ updateFormation(updatedFormation: Formation): void {
       .subscribe(() => {
         // Refresh the formation list after successful update
         this.loadFormations();
+        this.snackBar.open('Formation mis à jour avec succès', 'Fermer', {
+          duration: 3000, // Durée en millisecondes
+          verticalPosition: 'top', // Position verticale
+          horizontalPosition: 'right', // Position horizontale
+            panelClass: 'custom-snackbar'
+        });
       });
   }
 }
@@ -121,6 +134,12 @@ updateFormation(updatedFormation: Formation): void {
       if (confirm('Êtes-vous sûr de vouloir supprimer cette formation ?')) {
         this.formationService.deleteFormation(formation.id).subscribe(() => {
           this.loadFormations();
+          this.snackBar.open('Fpormation supprimée avec succès', 'Fermer', {
+            duration: 3000, // Durée en millisecondes
+            verticalPosition: 'top', // Position verticale
+            horizontalPosition: 'right', // Position horizontale
+              panelClass: 'custom-snackbar'
+          });
         });
       }
     } else {

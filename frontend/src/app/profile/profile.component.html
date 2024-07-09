@@ -6,16 +6,16 @@
     </button>
 </div>
 
-<div class="icons-container">
-    
-    <button class="btn-envelope" (click)="openMessagesDialog()">
-        <i class="bi bi-envelope"></i>
+<div class="notification-icon">
+    <button class="btn-envelope" (click)="openMessageDialog()">
+      <i class="bi bi-envelope"></i>
+      <span *ngIf="unreadMessagesCount > 0" class="notification-badge">{{ unreadMessagesCount }}</span>
     </button>
-</div>
+  </div>
+  
+  <!-- Le reste de votre contenu HTML -->
+  
 <!-- Reste de votre contenu -->
-
-<!-- Reste de votre contenu -->
-
 
 <div class="container" >
 

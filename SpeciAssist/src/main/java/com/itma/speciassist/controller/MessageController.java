@@ -104,6 +104,12 @@ public class MessageController {
         User user = this.userService.getUserById(userId);
         return messageService.getMessagebyUser(user, false);
     }
+    
+    @GetMapping("/unreadCount/{userId}")
+    public ResponseEntity<Long> getUnreadMessagesCount(@PathVariable Long userId) {
+        Long count = messageService.getUnreadMessagesCount(userId);
+        return ResponseEntity.ok(count);
 
+    }
     // Ajoutez d'autres méthodes de contrôleur REST selon vos besoins
 }

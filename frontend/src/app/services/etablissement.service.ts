@@ -32,6 +32,6 @@ export class EtablissementService {
   }
 
   deleteEtablissement(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.configService.apiUrl}/etablissements/${id}`);
+    return this.http.delete<void>(`${this.configService.apiUrl}/etablissements/delete/${id}`);
   }
 }

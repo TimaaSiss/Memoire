@@ -6,6 +6,7 @@ import { EditCarriereDialogComponent } from '@app/edit-dialog-career/edit-dialog
 import { AddCareerDialogComponent } from '@app/add-career-dialog/add-career-dialog.component';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-carriere',
@@ -25,7 +26,8 @@ export class CarriereComponent implements OnInit {
 
   constructor(
     private carriereService: CarriereService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -89,6 +91,12 @@ export class CarriereComponent implements OnInit {
     this.carriereService.updateCarriere(updatedCarriere.id, updatedCarriere).subscribe(() => {
       // Mettez à jour la liste des carrières après la modification réussie
       this.loadCarrieres();
+      this.snackBar.open('Carrière mise à jour avec succès', 'Fermer', {
+        duration: 3000, // Durée en millisecondes
+        verticalPosition: 'top', // Position verticale
+        horizontalPosition: 'right', // Position horizontale
+          panelClass: 'custom-snackbar'
+      });
     });
   }
 
@@ -107,12 +115,24 @@ export class CarriereComponent implements OnInit {
   addCarriere(newCarriere: Carriere): void {
     this.carriereService.addCarriere(newCarriere).subscribe(() => {
       this.loadCarrieres();
+      this.snackBar.open('Carrière ajoutée avec succès', 'Fermer', {
+        duration: 3000, // Durée en millisecondes
+        verticalPosition: 'top', // Position verticale
+        horizontalPosition: 'right', // Position horizontale
+          panelClass: 'custom-snackbar'
+      });
     });
   }
 
   deleteCarriere(id: number): void {
     this.carriereService.deleteCarriere(id).subscribe(() => {
       this.loadCarrieres();
+      this.snackBar.open('Carrière supprimée avec succès', 'Fermer', {
+        duration: 3000, // Durée en millisecondes
+        verticalPosition: 'top', // Position verticale
+        horizontalPosition: 'right', // Position horizontale
+          panelClass: 'custom-snackbar'
+      });
     });
   }
 }

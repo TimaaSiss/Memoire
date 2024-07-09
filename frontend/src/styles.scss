@@ -93,3 +93,15 @@ body {
 }
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+.custom-snackbar {
+  background-color: #bebebe; /* Couleur de fond */
+  color: #ffffff; /* Couleur du texte */
+  font-size: 16px; /* Taille de la police */
+  text-align: center; /* Alignement du texte */
+}
+
+.custom-snackbar .mat-simple-snackbar-action {
+  color: #b31e4f; /* Couleur du bouton d'action */
+}

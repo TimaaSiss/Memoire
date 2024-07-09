@@ -8,6 +8,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { FormationService } from '@app/services/formations.service';
 import { Formation } from '@app/model/formation.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-cours',
@@ -30,7 +31,8 @@ export class CoursComponent implements OnInit {
   constructor(
     private courseService: CourseService,
     private formationService: FormationService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -93,6 +95,12 @@ export class CoursComponent implements OnInit {
       const formationId = newCourse.formationId; // Assurez-vous que formationId est passé correctement
       this.courseService.addCourse(this.currentUser.id, newCourse, formationId).subscribe(() => {
         this.loadCourses();
+        this.snackBar.open('Cours ajouté avec succès', 'Fermer', {
+          duration: 3000, // Durée en millisecondes
+          verticalPosition: 'top', // Position verticale
+          horizontalPosition: 'right', // Position horizontale
+            panelClass: 'custom-snackbar'
+        });
       });
     } else {
       console.error('Utilisateur non connecté. Impossible d\'ajouter le cours.');
@@ -124,6 +132,12 @@ export class CoursComponent implements OnInit {
           }
           // Réinitialiser le cours sélectionné
           this.selectedCourse = null;
+          this.snackBar.open('Cours mis à jour avec succès', 'Fermer', {
+            duration: 3000, // Durée en millisecondes
+            verticalPosition: 'top', // Position verticale
+            horizontalPosition: 'right', // Position horizontale
+              panelClass: 'custom-snackbar'
+          });
         });
     }
   }
@@ -131,6 +145,12 @@ export class CoursComponent implements OnInit {
   deleteCourse(id: number): void {
     this.courseService.deleteCourse(id).subscribe(() => {
       this.loadCourses();
+      this.snackBar.open('Cours mis supprimé avec succès', 'Fermer', {
+        duration: 3000, // Durée en millisecondes
+        verticalPosition: 'top', // Position verticale
+        horizontalPosition: 'right', // Position horizontale
+          panelClass: 'custom-snackbar'
+      });
     });
   }
 

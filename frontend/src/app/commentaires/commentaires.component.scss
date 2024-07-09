@@ -1,0 +1,76 @@
+.commentaires-container {
+  display: flex;
+}
+
+.sidebar {
+  width: 250px; // ou la largeur souhaitée
+  height: 100vh;
+  background-color: #ffffff; // Couleur de fond
+  color: #000; // Couleur du texte
+  transition: all 0.3s ease;
+  overflow-y: auto; // Activation du défilement vertical si nécessaire
+}
+
+.sidebar ul {
+  padding: 0;
+  list-style-type: none;
+}
+
+.sidebar ul li {
+  padding: 10px;
+}
+
+.sidebar ul li a {
+  color: #000;
+  text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+  text-decoration: underline;
+}
+
+.admin-content {
+  flex-grow: 1; // Utilisation de tout l'espace disponible
+  padding: 20px;
+}
+
+.commentaires-list {
+  margin-top: 20px;
+}
+
+.commentaire-item {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 15px;
+  margin-bottom: 10px;
+}
+
+.commentaire-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.commentaire-user {
+  font-weight: bold;
+  margin: 0;
+}
+
+.commentaire-content {
+  margin: 10px 0;
+}
+
+.commentaire-date {
+  font-size: 0.85em;
+  color: #777;
+}
+
+.success-message {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+}

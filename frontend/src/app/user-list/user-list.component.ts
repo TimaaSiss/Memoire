@@ -7,6 +7,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { PageEvent } from '@angular/material/paginator';
 import { EditUserDialogComponent } from '@app/edit-user-dialog/edit-user-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-list',
@@ -25,7 +26,7 @@ export class UserListComponent implements OnInit {
 
   pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
 
-  constructor(private userService: UserService, private dialog: MatDialog) { }
+  constructor(private userService: UserService, private dialog: MatDialog,     private snackBar: MatSnackBar ) { }
 
   ngOnInit(): void {
     this.loadUsers(0, 10);
@@ -105,8 +106,13 @@ export class UserListComponent implements OnInit {
 
   updateUser(updatedUser: User) {
     this.userService.update(updatedUser.id, updatedUser).subscribe(() => {
-      // Rechargez la liste des utilisateurs pour refléter les modifications
       this.loadUsers(this.paginator.pageIndex, this.paginator.pageSize);
+      this.snackBar.open('Utilisateur mis à jour avec succès', 'Fermer', {
+        duration: 3000, // Durée en millisecondes
+        verticalPosition: 'top', // Position verticale
+        horizontalPosition: 'right', // Position horizontale
+          panelClass: 'custom-snackbar'
+      });
     });
   }
 
@@ -118,10 +124,14 @@ export class UserListComponent implements OnInit {
   }
 
   deleteUser(user: User) {
-    // Envoyez la demande de suppression de l'utilisateur
     this.userService.delete(user.id).subscribe(() => {
-      // Rechargez la liste des utilisateurs après la suppression réussie
       this.loadUsers(this.paginator.pageIndex, this.paginator.pageSize);
+      this.snackBar.open('Utilisateur supprimé avec succès', 'Fermer', {
+        duration: 3000, // Durée en millisecondes
+        verticalPosition: 'top', // Position verticale
+        horizontalPosition: 'right', // Position horizontale
+          panelClass: 'custom-snackbar'
+      });
     });
   }
 

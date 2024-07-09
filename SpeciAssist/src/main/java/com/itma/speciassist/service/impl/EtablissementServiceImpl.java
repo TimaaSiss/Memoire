@@ -13,7 +13,10 @@ import com.itma.speciassist.repository.EtablissementRepository;
 import com.itma.speciassist.repository.FormationRepository;
 import com.itma.speciassist.service.EtablissementService;
 
+import jakarta.transaction.Transactional;
+
 @Service
+@Transactional
 public class EtablissementServiceImpl implements EtablissementService {
     
     @Autowired

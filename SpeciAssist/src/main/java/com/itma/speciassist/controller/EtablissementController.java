@@ -42,7 +42,7 @@ public class EtablissementController {
         return etablissementService.updateEtablissement(id, etablissement);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void deleteEtablissement(@PathVariable Integer id) {
         etablissementService.deleteEtablissement(id);
     }

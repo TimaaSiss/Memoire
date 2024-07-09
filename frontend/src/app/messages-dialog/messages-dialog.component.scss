@@ -1,62 +1,69 @@
-/* Style pour la boîte de dialogue de messages */
+/* messages-dialog.component.scss */
 .messages-dialog {
-    padding: 20px; /* Espacement interne */
-    background-color: #f9f9f9; /* Couleur de fond */
-    border-radius: 10px; /* Coins arrondis */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Ombre */
-  }
-  
-  .messages-dialog h2 {
-    margin-bottom: 20px; /* Espacement en bas du titre */
-  }
-  
-  .messages-dialog .message {
-    padding: 10px; /* Espacement interne */
-    margin-bottom: 15px; /* Espacement en bas */
-    border: 1px solid #ddd; /* Bordure */
-    border-radius: 5px; /* Coins arrondis */
-    background-color: #fff; /* Couleur de fond */
-  }
-  
-  .messages-dialog .message strong {
-    display: block; /* Affichage en bloc */
-    margin-bottom: 5px; /* Espacement en bas */
-  }
-  
-  .messages-dialog .message p {
-    margin: 0; /* Enlever les marges */
-  }
-  
-  .messages-dialog .message em {
-    display: block; /* Affichage en bloc */
-    margin-top: 10px; /* Espacement en haut */
-    font-size: 0.875rem; /* Taille de police plus petite */
-    color: #666; /* Couleur du texte */
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
   }
 
-  .reply-section {
-    margin-top: 10px;
-  
-    textarea {
+  .message {
+    background-color: #f9f9f9;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+    p {
+      margin: 5px 0;
+      color: #555;
+
+      strong {
+        color: #333;
+      }
+
+      em {
+        font-size: 0.9em;
+        color: #999;
+      }
+    }
+
+    .reply-textarea {
       width: 100%;
-      height: 60px;
-      margin-bottom: 5px;
-      padding: 5px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
+      height: 80px;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 14px;
+      margin-top: 10px;
+      margin-bottom: 10px;
+      resize: vertical;
+
+      &:focus {
+        border-color: #007bff;
+        outline: none;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.25);
+      }
     }
-  
-    button {
+
+    .send-button {
+      display: inline-block;
+      padding: 10px 20px;
       background-color: #007bff;
-      color: white;
+      color: #fff;
       border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
+      border-radius: 8px;
+      font-size: 14px;
       cursor: pointer;
-    }
-  
-    button:hover {
-      background-color: #0056b3;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: #0056b3;
+      }
     }
   }
-  
+}

@@ -1,6 +1,16 @@
-<h2 mat-dialog-title>Ajouter un Mentor</h2>
+<h2 mat-dialog-title class="text-center">Ajouter un Mentor</h2>
 <mat-dialog-content>
   <form [formGroup]="mentorForm" (ngSubmit)="onSubmit()">
+
+    <div class="form-group">
+      <label for="nom">Nom</label>
+      <input type="text" formControlName="nom" class="form-control" id="nom" placeholder="Entrez votre nom " required>
+    </div>
+
+    <div class="form-group">
+      <label for="prenom">Prénom</label>
+      <input type="prenom" formControlName="prenom" class="form-control" id="prenom" placeholder="Entrez votre prénom" required>
+    </div>
   
     <div class="form-group">
       <label for="username">Nom d'utilisateur</label>

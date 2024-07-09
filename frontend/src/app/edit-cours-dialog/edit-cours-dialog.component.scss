@@ -1,51 +1,36 @@
 .scrollable-form-container {
-  max-height: 70vh; /* Ajustez cette valeur en fonction de votre besoin */
-  overflow-y: auto; /* Ajoute un défilement vertical */
-  padding-right: 15px; /* Ajustez l'espace pour ne pas cacher le contenu par la barre de défilement */
-}
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  overflow-y: auto; /* Ajout de défilement vertical */
 
-.edit-course-form {
-    max-width: 400px;
-    margin: 0 auto;
-    padding: 20px;
+  .form-group {
+    margin-bottom: 20px;
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    textarea {
+      resize: vertical; /* Permet de redimensionner la zone de texte verticalement */
+    }
   }
-  
-  .edit-course-form h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+
+  button[type="submit"],
+  button[type="button"] {
+    margin-right: 10px;
   }
-  
-  .edit-course-form label {
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-  
-  .edit-course-form .form-control {
-    width: 100%;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    color: #495057;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid #ced4da;
-    border-radius: 0.25rem;
-    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-  }
-  
-  .edit-course-form textarea {
-    resize: vertical;
-  }
-  
-  .edit-course-form button {
-    margin-top: 1rem;
-  }
-  
-  .edit-course-form .btn-primary {
-    margin-right: 0.5rem;
-  }
-  
-  .edit-course-form .btn-secondary {
-    margin-top: 1rem;
-  }
-  
+}

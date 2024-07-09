@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { AddMentorComponent } from '@app/add-mentor/add-mentor.component';
 import { EditMentorComponent } from '@app/edit-mentor/edit-mentor.component';
@@ -25,7 +26,7 @@ export class MentorComponent implements OnInit {
 
   pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
 
-  constructor(private mentorService: MentorService, public dialog: MatDialog) {}
+  constructor(private mentorService: MentorService, public dialog: MatDialog, private snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.loadMentors();
@@ -82,6 +83,12 @@ export class MentorComponent implements OnInit {
         // Mettre à jour la dataSource avec la liste actualisée des mentors
         this.dataSource = new MatTableDataSource<Mentor>(this.mentors.slice(0, this.pageSize));
         this.dataSource.paginator = this.paginator;
+        this.snackBar.open('Mentor ajouté avec succès', 'Fermer', {
+          duration: 3000, // Durée en millisecondes
+          verticalPosition: 'top', // Position verticale
+          horizontalPosition: 'right', // Position horizontale
+            panelClass: 'custom-snackbar'
+        });
       },
       (error) => {
         console.error('Error adding mentor', error);
@@ -108,6 +115,12 @@ export class MentorComponent implements OnInit {
       this.mentorService.updateMentor(this.selectedMentor.id, this.selectedMentor).subscribe(() => {
         this.selectedMentor = null;
         this.loadMentors();
+        this.snackBar.open('Mentor mis à jour avec succès', 'Fermer', {
+          duration: 3000, // Durée en millisecondes
+          verticalPosition: 'top', // Position verticale
+          horizontalPosition: 'right', // Position horizontale
+            panelClass: 'custom-snackbar'
+        });
       });
     }
   }
@@ -115,6 +128,12 @@ export class MentorComponent implements OnInit {
   deleteMentor(id: number): void {
     this.mentorService.deleteMentor(id).subscribe(() => {
       this.loadMentors();
+      this.snackBar.open('Mentor supprimé avec succès', 'Fermer', {
+        duration: 3000, // Durée en millisecondes
+        verticalPosition: 'top', // Position verticale
+        horizontalPosition: 'right', // Position horizontale
+          panelClass: 'custom-snackbar'
+      });
     });
   }
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from '@app/services/user-service.service';
 import { User } from '../model/user';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-user-form',
@@ -16,7 +17,8 @@ export class UserFormComponent {
   constructor(
     private route: ActivatedRoute, 
       private router: Router, 
-        private userService: UserService) {
+        private userService: UserService,
+      private snackBar: MatSnackBar) {
     this.user = new User();
   }
 

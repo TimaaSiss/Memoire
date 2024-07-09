@@ -6,7 +6,7 @@
   .sidebar {
     width: 250px; /* ou la largeur souhaitée */
     height: 100vh;
-    background-color: #333; /* Couleur de fond */
+    background-color: #ffffff; /* Couleur de fond */
     color: #fff; /* Couleur du texte */
     transition: all 0.3s ease;
     overflow-y: auto; /* Activation du défilement vertical si nécessaire */
@@ -44,3 +44,20 @@
 }
 
 
+.btn-green{
+  background-color: #3f85ee;
+  
+}
+
+/* styles.scss */
+
+.custom-snackbar {
+  background-color: #bebebe; /* Couleur de fond */
+  color: #ffffff; /* Couleur du texte */
+  font-size: 16px; /* Taille de la police */
+  text-align: center; /* Alignement du texte */
+}
+
+.custom-snackbar .mat-simple-snackbar-action {
+  color: #b31e4f; /* Couleur du bouton d'action */
+}
