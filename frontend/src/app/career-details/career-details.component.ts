@@ -8,10 +8,10 @@ import { Carriere } from '@app/model/carriere.model';
 import { Commentaire } from '@app/model/commentaires.model';
 import { VideoMentor } from '@app/model/video-mentor';
 import { User } from '@app/model/user';
-import { FormationService } from '@app/services/formations.service';
 import { Formation } from '@app/model/formation.model';
 import { MatDialog } from '@angular/material/dialog';
 import { MessageDialogComponent } from '@app/message-dialog/message-dialog.component';
+import { FormationService } from '@app/services/formations.service';
 
 @Component({
   selector: 'app-career-details',
@@ -26,42 +26,33 @@ export class CareerDetailsComponent implements OnInit {
   currentUser: User | null = null;
   mentorVideos: VideoMentor[] = [];
   carriereId!: number;
-  formations:Formation[]=[];
+  formations: Formation[] = [];
   formationDetails: Formation | undefined;
   messageContent: string = '';
   mentorId: number | null = null;
+
   constructor(
     private route: ActivatedRoute,
     private carriereService: CarriereService,
     private commentaireService: CommentaireService,
     private userService: UserService,
     private videoMentorService: VideoMentorService,
-    private formationService: FormationService,
     private router: Router,
-    private dialog: MatDialog
- 
-  ) {
-    
-   }
+    private dialog: MatDialog,
+    private formationService: FormationService
+  ) { }
 
   ngOnInit(): void {
     this.careerName = this.route.snapshot.paramMap.get('careerName') || '';
     this.carriereService.getCarriereByNom(this.careerName).subscribe(
       (data: Carriere) => {
         this.careerDetails = data;
-        this.carriereService.getFormationByCarriere(this.careerDetails.id).subscribe(
-          (data: Formation[]) => {
-            this.formations = data;
-          },
-          (error: any) => {
-            console.error('Error fetching commentaires:', error);
-          }
-        );
-
-        console.log('Career Details:', this.careerDetails); // Vérifiez ici les données récupérées
+        this.formations = data.formations || [];
+        console.log('Career Details:', this.careerDetails);
         if (this.careerDetails && this.careerDetails.id) {
           this.loadCommentaires(this.careerDetails.id);
           this.loadMentorVideos(this.careerDetails.id);
+          this.loadFormations(this.careerDetails.id); // Charger les formations associées
         }
       },
       (error: any) => {
@@ -69,13 +60,19 @@ export class CareerDetailsComponent implements OnInit {
       }
     );
 
-  
     this.currentUser = this.userService.getCurrentUser();
-
-    
   }
-  
-  
+
+  loadFormations(carriereId: number): void {
+    this.carriereService.getFormationByCarriere(carriereId).subscribe(
+      (data: Formation[]) => {
+        this.formations = data;
+      },
+      (error: any) => {
+        console.error('Error fetching formations:', error);
+      }
+    );
+  }
 
   viewFormationDetails(formationTitre: string): void {
     this.router.navigate(['/formation-details', formationTitre]);
@@ -85,7 +82,7 @@ export class CareerDetailsComponent implements OnInit {
     this.formationService.getFormationWithEtablissementsByTitre(titre).subscribe(
       (details) => {
         this.formationDetails = details;
-        console.log(this.formationDetails); // add this line to debbug
+        console.log(this.formationDetails);
       },
       (error) => {
         console.error('Error fetching formation details:', error);
@@ -122,10 +119,6 @@ export class CareerDetailsComponent implements OnInit {
       }
     );
   }
-  
-  
-  
-  
 
   openMessageDialog(mentorId: number): void {
     console.log('Opening message dialog with mentorId:', mentorId);
@@ -142,7 +135,7 @@ export class CareerDetailsComponent implements OnInit {
       }
     });
   }
-  
+
   addCommentaire(): void {
     if (this.commentContent.trim() && this.careerDetails && this.currentUser) {
       const newComment: Commentaire = {
@@ -166,5 +159,9 @@ export class CareerDetailsComponent implements OnInit {
         }
       );
     }
+  }
+
+  goBack(): void {
+    this.router.navigate(['/profile']); // Remplacez par la route correcte pour la page de profil
   }
 }

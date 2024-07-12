@@ -20,6 +20,7 @@ import { AddVideoDialogComponent } from '@app/add-video-dialog/add-video-dialog.
 import { AddCourseDialogComponent } from '@app/add-cours-dialog/add-cours-dialog.component';
 import { MessagesDialogComponent } from '@app/messages-dialog/messages-dialog.component';
 import { Mentor } from '@app/model/mentor.model';
+import { EditVideoDialogComponent } from '@app/edit-video-dialog/edit-video-dialog.component';
 
 @Component({
   selector: 'app-mentor-profile',
@@ -48,6 +49,8 @@ export class MentorProfileComponent implements OnInit {
  // mentorId: number | null = null; // ID du mentor qui a posté la vidéo
   messageContent: string = '';
   showMoreCourses: boolean = false;
+  unreadMessagesCount: number = 0; // Initialisation avec une valeur par défaut
+  
 
   constructor(
     private mentorService: MentorService,
@@ -72,18 +75,23 @@ export class MentorProfileComponent implements OnInit {
       this.nom = this.currentUser.nom || '';
       this.mail = this.currentUser.mail || '';
 
-      this.mentorService.getMentorById(this.currentUser.id).subscribe(
-        (mentorDetails) => {
-          console.log('mentorDetails:', mentorDetails);
-          this.specialite = mentorDetails.specialite || '';
-         // this.carriereId = mentorDetails.carriereId || 0;
-          this.nouvelleVideo.carriere.id = this.carriereId;
-          this.loadVideosAndCourses(this.currentUser.id);
-        },
-        (error) => {
-          console.error('Erreur lors de la récupération des détails du mentor : ', error);
-        }
-      );
+      if (this.currentUser.id) {
+        this.getUnreadMessagesCount(); // Chargez le nombre de messages non lus
+        this.mentorService.getMentorById(this.currentUser.id).subscribe(
+          (mentorDetails) => {
+            console.log('mentorDetails:', mentorDetails);
+            this.specialite = mentorDetails.specialite || '';
+           // this.carriereId = mentorDetails.carriereId || 0;
+            this.nouvelleVideo.carriere.id = this.carriereId;
+            this.loadVideosAndCourses(this.currentUser.id);
+          },
+          (error) => {
+            console.error('Erreur lors de la récupération des détails du mentor : ', error);
+          }
+        );
+      } else {
+        console.error('L\'ID de l\'utilisateur est introuvable.');
+      }
 
       this.loadCarrieres();
       this.loadFormations();
@@ -98,6 +106,28 @@ export class MentorProfileComponent implements OnInit {
         console.error('MentorId est manquant dans l\'URL');
       }
     });
+  }
+
+  getUnreadMessagesCount(): void {
+    this.messageService.getUnreadMessagesCount(this.currentUser.id).subscribe(
+      count => {
+        this.unreadMessagesCount = count;
+      },
+      error => {
+        console.error('Erreur lors de la récupération du nombre de messages non lus', error);
+      }
+    );
+  }
+
+  markAsRead(userId: number) {
+    this.messageService.markMessagesAsRead(userId).subscribe(
+      () => {
+        console.log('Messages marked as read successfully');
+      },
+      error => {
+        console.error('Error marking messages as read', error);
+      }
+    );
   }
 
   loadVideosAndCourses(mentorId: number): void {
@@ -286,6 +316,19 @@ export class MentorProfileComponent implements OnInit {
     }
   }
 
+  openEditVideoDialog(video: VideoMentor): void {
+    const dialogRef = this.dialog.open(EditVideoDialogComponent, {
+      width: '500px',
+      data: { ...video }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.modifierVideo(result);
+      }
+    });
+  }
+
   sendMessage(): void {
     if (this.currentUser && this.mentorId) {
       const message = {
@@ -333,16 +376,22 @@ export class MentorProfileComponent implements OnInit {
   
   openMessagesDialog(): void {
     const dialogRef = this.dialog.open(MessagesDialogComponent, {
-      width: '500px',
-      data: { messages: this.messages, currentUser: this.currentUser }
+      width: '400px',
+      data: { messages: this.messages,
+        currentUser: this.currentUser 
+       }
     });
-  
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log('Boîte de dialogue de messages fermée');
-      }
+
+    dialogRef.afterClosed().subscribe(() => {
+      // Marquez les messages comme lus après la fermeture de la boîte de dialogue
+      this.messageService.markMessagesAsRead(this.currentUser.id).subscribe(() => {
+        // Rechargez le nombre de messages non lus après la fermeture de la boîte de dialogue
+        this.getUnreadMessagesCount();
+      });
     });
   }
+
+   
   
   updateCourse(course: Course): void {
     if (course.id !== undefined) {

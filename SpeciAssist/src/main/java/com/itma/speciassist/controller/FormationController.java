@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.itma.speciassist.model.Carriere;
 import com.itma.speciassist.model.Commentaire;
 import com.itma.speciassist.model.Cours;
 import com.itma.speciassist.model.Etablissement;
@@ -191,5 +192,7 @@ public class FormationController {
         long formationCount = formationService.getFormationCount();
         return ResponseEntity.ok(formationCount);
     }
+    
+   
 
 }

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { Formation } from '@app/model/formation.model';
 import { Course } from '@app/model/cours.model';
 import { ConfigService } from './config.service';
+import { Carriere } from '@app/model/carriere.model';
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class FormationService {
 
   getFormationById(id: number): Observable<Formation> {
     return this.http.get<Formation>(`${this.configService.apiUrl}/formations/getFormation/${id}`);
+  }
+
+  getCarriereByFormation(formationId: number): Observable<Carriere[]> {
+    return this.http.get<Carriere[]>(`${this.configService.apiUrl}/formations/${formationId}/carrieres`);
   }
 
   getFormationWithEtablissementsByTitre(titre: string): Observable<Formation> {

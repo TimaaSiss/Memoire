@@ -23,4 +23,11 @@ public interface CarriereService {
 
 	long countCarrieres();
 
+	
+
+	List<Carriere> getCarrieresByFormation(Integer formationId);
+
+	List<Formation> addFormations(Integer carriereId);
+
+	List<Formation> addFormations(Integer carriereId, List<Formation> formations);
 }

@@ -2,7 +2,6 @@ package com.itma.speciassist.controller;
 
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,55 +26,67 @@ import lombok.AllArgsConstructor;
 @RequestMapping("/carrieres")
 public class CarriereController {
 
-    @Autowired
-    private CarriereService carriereService;
-    @Autowired
-    private CommentaireService commentaireService;
-    private FormationService formationService;
+	@Autowired
+	private CarriereService carriereService;
+	@Autowired
+	private CommentaireService commentaireService;
+	private FormationService formationService;
 
-    @GetMapping("/all")
-    public List<Carriere> getAllCarrieres() {
-        return carriereService.allCarrieres();
-    }
+	@GetMapping("/all")
+	public List<Carriere> getAllCarrieres() {
+		return carriereService.allCarrieres();
+	}
 
-    @GetMapping("/getCarriere/{id}")
-    public Carriere getCarriereById(@PathVariable Integer id) {
-        return carriereService.getCarriere(id);
-    }
-    
-    @GetMapping("/{carriereId}/formations")
-    public List<Formation> getFormationByCarriere(@PathVariable Integer carriereId) {
-        return carriereService.getFormationByCarriere(carriereId);
-    }
-    
-    
-    @GetMapping("/getCarriereByName/{nom}")
-    public Carriere getCarriereByNom(@PathVariable String nom) {
-        return carriereService.getCarriereByNom(nom);
-    }
-    
-    @GetMapping("/count")
-    public long countCarrieres() {
-        return carriereService.countCarrieres();
-    }
+	@GetMapping("/getCarriere/{id}")
+	public Carriere getCarriereById(@PathVariable Integer id) {
+		return carriereService.getCarriere(id);
+	}
 
-    @PostMapping("/addCarriere")
-    public Carriere addCarriere(@RequestBody Carriere carriere) {
-        return carriereService.addCarriere(carriere);
-    }
+	@GetMapping("/{carriereId}/formations")
+	public List<Formation> getFormationByCarriere(@PathVariable Integer carriereId) {
+		return carriereService.getFormationByCarriere(carriereId);
+	}
+	
+	
+	  @PostMapping("/{carriereId}/formations") public List<Formation>
+	  addFormations(@PathVariable Integer carriereId, List<Formation> formations){
+	  return carriereService.addFormations(carriereId);
+	  
+	  }
+	 
 
-    @PutMapping("updateCarriere/{id}")
-    public Carriere updateCarriere(@PathVariable Integer id, @RequestBody Carriere carriere) {
-        return carriereService.updateCarriere(id, carriere);
-    }
+	@GetMapping("/byFormation/{formationId}")
+	public List<Carriere> getCarrieresByFormation(@PathVariable Integer formationId) {
+		return carriereService.getCarrieresByFormation(formationId);
+	}
 
-    @DeleteMapping("/deleteCarriere/{id}")
-    public void deleteCarriere(@PathVariable Integer id) {
-        carriereService.deleteCarriere(id);
-    }
-    
-    @GetMapping("/{carriereId}")
-    public List<Commentaire> getCommentairesByCarriereId(@PathVariable Integer carriereId) {
-        return commentaireService.getCommentairesByCarriereId(carriereId);
-    }
+	@GetMapping("/getCarriereByName/{nom}")
+	public Carriere getCarriereByNom(@PathVariable String nom) {
+		return carriereService.getCarriereByNom(nom);
+	}
+
+	@GetMapping("/count")
+	public long countCarrieres() {
+		return carriereService.countCarrieres();
+	}
+
+	@PostMapping("/addCarriere")
+	public Carriere addCarriere(@RequestBody Carriere carriere) {
+		return carriereService.addCarriere(carriere);
+	}
+
+	@PutMapping("/updateCarriere/{id}")
+	public Carriere updateCarriere(@PathVariable Integer id, @RequestBody Carriere carriere) {
+		return carriereService.updateCarriere(id, carriere);
+	}
+
+	@DeleteMapping("/deleteCarriere/{id}")
+	public void deleteCarriere(@PathVariable Integer id) {
+		carriereService.deleteCarriere(id);
+	}
+
+	@GetMapping("/{carriereId}")
+	public List<Commentaire> getCommentairesByCarriereId(@PathVariable Integer carriereId) {
+		return commentaireService.getCommentairesByCarriereId(carriereId);
+	}
 }

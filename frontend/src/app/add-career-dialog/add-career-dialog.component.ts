@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Carriere } from '@app/model/carriere.model';
 import { Formation } from '@app/model/formation.model';
 import { FormationService } from '@app/services/formations.service';
+import { CarriereService } from '@app/services/carrieres.service';
 
 @Component({
   selector: 'app-add-career-dialog',
@@ -12,13 +13,13 @@ import { FormationService } from '@app/services/formations.service';
 })
 export class AddCareerDialogComponent implements OnInit {
   addCarriereForm!: FormGroup;
-  newCarriere!: Carriere; // Remove the initialization here
   formations: Formation[] = [];
   selectedFormationIds: number[] = [];
 
   constructor(
     public dialogRef: MatDialogRef<AddCareerDialogComponent>,
     private formationService: FormationService,
+    private carriereService: CarriereService,
     private formBuilder: FormBuilder
   ) {}
 
@@ -29,7 +30,8 @@ export class AddCareerDialogComponent implements OnInit {
       secteur: ['', Validators.required],
       competences_requises: ['', Validators.required],
       salaire: ['', Validators.required],
-      image: ['', Validators.required]
+      image: ['', Validators.required],
+      formations: [[]]  // Ajoutez ce champ pour les formations
     });
 
     this.loadFormations();
@@ -38,7 +40,7 @@ export class AddCareerDialogComponent implements OnInit {
   loadFormations(): void {
     this.formationService.getAllFormations().subscribe(
       (data: Formation[]) => {
-        this.formations = data;
+        this.formations = data || []; // Assurez-vous que data est défini
       },
       (error: any) => {
         console.error('Error fetching formations:', error);
@@ -52,6 +54,7 @@ export class AddCareerDialogComponent implements OnInit {
     } else {
       this.selectedFormationIds = this.selectedFormationIds.filter(id => id !== formationId);
     }
+    this.addCarriereForm.get('formations')?.setValue(this.selectedFormationIds);  // Mettez à jour le champ des formations
   }
 
   onSubmit(): void {
@@ -60,15 +63,17 @@ export class AddCareerDialogComponent implements OnInit {
       return;
     }
 
-    this.newCarriere = this.addCarriereForm.value; // Assign form values to newCarriere
+    const newCarriere: Carriere = this.addCarriereForm.value;
 
-    // Assign selected formations
-    this.newCarriere.formations = this.formations.filter(formation =>
-      this.selectedFormationIds.includes(formation.id)
+    this.carriereService.addCarriere(newCarriere).subscribe(
+      (response) => {
+        console.log("Carrière ajoutée avec succès :", response);
+        this.dialogRef.close(response);
+      },
+      (error) => {
+        console.error('Erreur lors de l\'ajout de la carrière :', error);
+      }
     );
-
-    console.log("Données à envoyer au composant parent :", this.newCarriere);
-    this.dialogRef.close(this.newCarriere);
   }
 
   onCancelClick(): void {

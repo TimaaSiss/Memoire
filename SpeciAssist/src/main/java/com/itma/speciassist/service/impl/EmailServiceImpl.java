@@ -38,6 +38,9 @@ public class EmailServiceImpl implements EmailService {
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(receiver);  // L'email de l'admin comme destinataire
             mailMessage.setFrom(details.getRecipient());  // L'email de l'utilisateur comme expéditeur
+            mailMessage.setFrom(receiver);
+            mailMessage.setTo(details.getRecipient());
+            
             mailMessage.setText(details.getMsgBody());
             mailMessage.setSubject(details.getSubject());
 

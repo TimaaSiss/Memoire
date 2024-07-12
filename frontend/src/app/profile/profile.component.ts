@@ -55,23 +55,27 @@ export class ProfileComponent implements OnInit {
       this.currentUser = JSON.parse(currentUserString);
       this.username = this.currentUser.username;
   
-      // Ensure totalQuestions is calculated before calculating progress
-      this.calculateTotalQuestions(() => {
-        this.calculateProgress(this.currentUser.id);
-      });
+      if (this.currentUser.id) {
+        this.getUnreadMessagesCount(); // Chargez le nombre de messages non lus
+        // Autres opérations nécessitant l'ID de l'utilisateur
+      } else {
+        console.error('L\'ID de l\'utilisateur est introuvable.');
+      }
     } else {
       this.username = '';
     }
-
+  
+    this.calculateTotalQuestions(() => {
+      this.calculateProgress(this.currentUser.id);
+    });
+  
     this.getCarrieres();
     this.getFormations();
-  
     this.filteredCareers = this.careers;
     this.filteredFormations = this.formations;
-    this.currentUser = this.userService.getCurrentUser();
     this.loadMessages();
-    this.getUnreadMessagesCount();
   }
+  
   
   calculateTotalQuestions(callback?: () => void): void {
     this.questionnaireService.getAllQuestionnaires().subscribe(
@@ -157,25 +161,45 @@ export class ProfileComponent implements OnInit {
   }
 
   getUnreadMessagesCount(): void {
-    this.messageService.getUnreadMessagesCount(this.currentUser.id).subscribe(count => {
-      this.unreadMessagesCount = count;
-    });
+    this.messageService.getUnreadMessagesCount(this.currentUser.id).subscribe(
+      count => {
+        this.unreadMessagesCount = count;
+      },
+      error => {
+        console.error('Erreur lors de la récupération du nombre de messages non lus', error);
+      }
+    );
   }
 
   openMessageDialog(): void {
     const dialogRef = this.dialog.open(MessagesDialogComponent, {
-      width: '300px',
+      width: '500px',
       data: { 
         messages: this.messages,
         currentUser: this.currentUser 
       }
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // Recharge les messages non lus après la fermeture de la boîte de dialogue
-      this.getUnreadMessagesCount();
+  
+    dialogRef.afterClosed().subscribe(() => {
+      // Marquez les messages comme lus après la fermeture de la boîte de dialogue
+      this.messageService.markMessagesAsRead(this.currentUser.id).subscribe(() => {
+        // Rechargez le nombre de messages non lus après la fermeture de la boîte de dialogue
+        this.getUnreadMessagesCount();
+      });
     });
   }
+
+  markAsRead(userId: number) {
+    this.messageService.markMessagesAsRead(userId).subscribe(
+      () => {
+        console.log('Messages marked as read successfully');
+      },
+      error => {
+        console.error('Error marking messages as read', error);
+      }
+    );
+  }
+  
 
 
   navigateToQuestionPage(): void {

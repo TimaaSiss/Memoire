@@ -1,26 +1,40 @@
 .career-details-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
   .career-header {
     text-align: center;
     background-color: #f4f4f4;
     padding: 20px;
+    border-radius: 10px 10px 0 0;
     border-bottom: 1px solid #ddd;
 
     h1 {
       margin: 0;
+      font-size: 24px;
+      color: #333;
     }
   }
 
   .career-info-top {
     display: flex;
     justify-content: space-between;
-   // align-items: flex-start;
-   // padding: 20px;
-    background-color: #ffffff;
-    border-bottom: 1px solid #111111;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #ddd;
+
+    
 
     .info-section {
       flex: 1;
       padding: 10px;
+      justify-content:flex-end;
+      
 
       h2 {
         display: flex;
@@ -33,29 +47,22 @@
         }
       }
 
-      p, ul {
+      p {
         margin-top: 5px;
+        color: #666;
       }
 
-      &.establishment-section {
+      &.sector-section {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-
-        h2 {
-          margin-bottom: 5px;
-        }
       }
 
-      &.duration-section, &.price-section {
+      &.salary-section {
         text-align: right;
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-
-        h2 {
-          margin-bottom: 5px;
-        }
       }
     }
   }
@@ -80,7 +87,7 @@
     }
   }
 
-  .info-section {
+  .skills-section {
     padding: 20px;
     border-bottom: 1px solid #ddd;
 
@@ -101,17 +108,21 @@
     }
   }
 
-  .scrollable-careers {
+  .formation-section {
+    margin-top: 50px;
+  }
+
+  .scrollable-formations {
     overflow-x: auto;
     white-space: nowrap;
     padding: 10px 0;
     display: flex;
 
-    .career-row {
+    .formation-row {
       display: inline-flex;
     }
 
-    .career-card {
+    .formation-card {
       display: inline-block;
       width: 250px;
       height: 250px;
@@ -119,6 +130,7 @@
       border: 1px solid #ccc;
       border-radius: 10px;
       background-size: cover;
+      background-position: center;
       cursor: pointer;
       position: relative;
 
@@ -131,6 +143,55 @@
         bottom: 0;
         width: 100%;
         text-align: center;
+        font-size: 18px;
+      }
+    }
+  }
+
+  .mentor-videos-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 22px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin-bottom: 20px;
+
+        h3 {
+          margin: 0;
+          margin-bottom: 10px;
+          font-size: 20px;
+        }
+
+        video {
+          display: block;
+          margin-bottom: 10px;
+        }
+
+        button {
+          background-color: #007bff;
+          border: none;
+          color: #fff;
+          padding: 10px 20px;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: #0056b3;
+          }
+        }
       }
     }
   }
@@ -143,7 +204,7 @@
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
     h2 {
-      font-size: 24px;
+      font-size: 1.5rem;
       margin-bottom: 20px;
       border-bottom: 2px solid #ccc;
       padding-bottom: 10px;
@@ -158,50 +219,46 @@
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 
       .comment-header {
-        font-weight: bold;
         margin-bottom: 5px;
       }
 
       .comment-content {
         margin-bottom: 10px;
-        line-height: 1.5;
       }
 
       .comment-date {
-        font-size: 12px;
-        color: #777;
+        font-size: 0.8rem;
+        color: #666;
       }
     }
 
     .comment-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
+      margin-top: 20px;
 
       textarea {
         width: 100%;
-        height: 80px;
         padding: 10px;
         border: 1px solid #ddd;
         border-radius: 5px;
-        resize: none;
-        font-family: inherit;
+        resize: vertical;
+        margin-bottom: 10px;
+        font-size: 0.9rem;
       }
 
       button {
-        align-self: flex-start;
-        padding: 10px 20px;
-        background-color: #4caf50;
+        background-color: #007bff;
         border: none;
+        color: #fff;
+        padding: 10px 20px;
         border-radius: 5px;
-        color: white;
         cursor: pointer;
         transition: background-color 0.3s;
 
         &:hover {
-          background-color: #45a049;
+          background-color: #0056b3;
         }
       }
     }
   }
 }
+

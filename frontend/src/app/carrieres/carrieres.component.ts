@@ -7,6 +7,7 @@ import { AddCareerDialogComponent } from '@app/add-career-dialog/add-career-dial
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-carriere',
@@ -17,41 +18,37 @@ export class CarriereComponent implements OnInit {
 
   carrieres: Carriere[] = [];
   menuOpen= true;
-  dataSource = new MatTableDataSource<Carriere>(); // Source de données pour la table
+  dataSource = new MatTableDataSource<Carriere>();
   displayedColumns: string[] = ['id', 'nom', 'secteur', 'competences_requises', 'description', 'salaire', 'image'];
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  pageSize: number = 10; // Vous pouvez ajuster cette valeur selon vos besoins
+  pageSize: number = 10;
 
   constructor(
     private carriereService: CarriereService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar, private router: Router
   ) { }
 
   ngOnInit(): void {
     this.loadCarrieres();
-    // Vérifier si la valeur de menuOpen est stockée localement
     const storedMenuOpen = localStorage.getItem('menuOpen');
     if (storedMenuOpen !== null) {
-      // Si une valeur est trouvée dans le stockage local, la mettre à jour
       this.menuOpen = JSON.parse(storedMenuOpen);
     }
   }
 
   toggleMenu(): void {
-    // Basculer l'état menuOpen
     this.menuOpen = !this.menuOpen;
-    // Enregistrer l'état menuOpen dans le stockage du navigateur
     localStorage.setItem('menuOpen', JSON.stringify(this.menuOpen));
   }
   
   loadCarrieres() {
     this.carriereService.getAllCarrieres().subscribe(data => {
       this.carrieres = data;
-      this.dataSource = new MatTableDataSource<Carriere>(this.carrieres.slice(0, 10)); // Charger les 10 premiers utilisateurs
-      this.dataSource.paginator = this.paginator; // Configurer la pagination
+      this.dataSource = new MatTableDataSource<Carriere>(this.carrieres.slice(0, 10));
+      this.dataSource.paginator = this.paginator;
     });
   }
   
@@ -60,10 +57,9 @@ export class CarriereComponent implements OnInit {
     const pageSize = event.pageSize;
     const startIndex = pageIndex * pageSize;
     const endIndex = startIndex + pageSize;
-  
-    // Charger les utilisateurs suivants selon l'index de page
     this.dataSource = new MatTableDataSource<Carriere>(this.carrieres.slice(startIndex, endIndex));
   }
+
   confirmDeleteCarriere(carriere: Carriere): void {
     if (confirm("Êtes-vous sûr de vouloir supprimer cette carrière ?")) {
       this.deleteCarriere(carriere.id);
@@ -71,43 +67,14 @@ export class CarriereComponent implements OnInit {
   }
 
   openEditDialog(carriere: Carriere): void {
-    console.log("Données à éditer :", carriere);
     const dialogRef = this.dialog.open(EditCarriereDialogComponent, {
       width: '500px',
       data: carriere
     });
-  
+
     dialogRef.afterClosed().subscribe(result => {
-      console.log("Résultat de la boîte de dialogue de modification :", result);
-      // Si des données sont renvoyées, mettez à jour la carrière correspondante
       if (result) {
         this.updateCarriere(result);
-      }
-    });
-  }
-
-  updateCarriere(updatedCarriere: Carriere): void {
-    console.log("Cest bizarre:" ,updatedCarriere)
-    this.carriereService.updateCarriere(updatedCarriere.id, updatedCarriere).subscribe(() => {
-      // Mettez à jour la liste des carrières après la modification réussie
-      this.loadCarrieres();
-      this.snackBar.open('Carrière mise à jour avec succès', 'Fermer', {
-        duration: 3000, // Durée en millisecondes
-        verticalPosition: 'top', // Position verticale
-        horizontalPosition: 'right', // Position horizontale
-          panelClass: 'custom-snackbar'
-      });
-    });
-  }
-
-  openAddDialog(): void {
-    const dialogRef = this.dialog.open(AddCareerDialogComponent, {
-      width: '500px'
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.addCarriere(result);
       }
     });
   }
@@ -116,6 +83,19 @@ export class CarriereComponent implements OnInit {
     this.carriereService.addCarriere(newCarriere).subscribe(() => {
       this.loadCarrieres();
       this.snackBar.open('Carrière ajoutée avec succès', 'Fermer', {
+        duration: 3000, // Durée en millisecondes
+        verticalPosition: 'top', // Position verticale
+        horizontalPosition: 'right', // Position horizontale
+          panelClass: 'custom-snackbar'
+      });
+    });
+  }
+
+  updateCarriere(updatedCarriere: Carriere): void {
+     this.carriereService.updateCarriere(updatedCarriere.id, updatedCarriere).subscribe(() => {
+      // Mettez à jour la liste des carrières après la modification réussie
+      this.loadCarrieres();
+      this.snackBar.open('Carrière mise à jour avec succès', 'Fermer', {
         duration: 3000, // Durée en millisecondes
         verticalPosition: 'top', // Position verticale
         horizontalPosition: 'right', // Position horizontale
@@ -135,4 +115,18 @@ export class CarriereComponent implements OnInit {
       });
     });
   }
+
+  openAddCarriereDialog(): void {
+    const dialogRef = this.dialog.open(AddCareerDialogComponent, {
+      width: '500px'
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadCarrieres();
+      }
+    });
+  }
+
+ 
 }

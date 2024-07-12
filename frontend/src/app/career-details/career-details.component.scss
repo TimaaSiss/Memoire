@@ -1,12 +1,32 @@
+
+body {
+  background-image: url('/assets/gris.png'); // Change this to the path of your image
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; // Keeps the background fixed while scrolling
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
 .career-details-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+
   .career-header {
     text-align: center;
     background-color: #f4f4f4;
     padding: 20px;
+    border-radius: 10px 10px 0 0;
     border-bottom: 1px solid #ddd;
 
     h1 {
       margin: 0;
+      font-size: 24px;
+      color: #333;
     }
   }
 
@@ -35,16 +55,13 @@
 
       p {
         margin-top: 5px;
+        color: #666;
       }
 
       &.sector-section {
         display: flex;
         flex-direction: column;
         align-items: flex-start;
-
-        h2 {
-          margin-bottom: 5px;
-        }
       }
 
       &.salary-section {
@@ -52,10 +69,6 @@
         display: flex;
         flex-direction: column;
         align-items: flex-end;
-
-        h2 {
-          margin-bottom: 5px;
-        }
       }
     }
   }
@@ -80,7 +93,7 @@
     }
   }
 
-  .info-section {
+  .skills-section {
     padding: 20px;
     border-bottom: 1px solid #ddd;
 
@@ -110,55 +123,79 @@
     white-space: nowrap;
     padding: 10px 0;
     display: flex;
+
+    .formation-row {
+      display: inline-flex;
+    }
+
+    .formation-card {
+      display: inline-block;
+      width: 250px;
+      height: 250px;
+      margin-right: 10px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      position: relative;
+
+      h2 {
+        margin: 0;
+        padding: 10px;
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #fff;
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 18px;
+      }
+    }
   }
 
-  .formation-row {
-    display: inline-flex;
-  }
-
-  .formation-card {
-    display: inline-block;
-    width: 250px;
-    height: 250px;
-    margin-right: 10px;
-    border: 1px solid #ccc;
+  .mentor-videos-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #f9f9f9;
     border-radius: 10px;
-    background-size: cover;
-    cursor: pointer;
-    position: relative;
-  }
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 
-  .formation-card h2 {
-    margin: 0;
-    padding: 10px;
-    background-color: rgba(0, 0, 0, 0.5);
-    color: #fff;
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    text-align: center;
-  }
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 22px;
+    }
 
-  .container {
-    .scrollable-videos {
-      display: flex;
-      overflow-x: auto;
-      padding: 10px;
+    ul {
+      list-style: none;
+      padding: 0;
 
-      .video-row {
-        display: flex;
-        flex-wrap: nowrap;
+      li {
+        margin-bottom: 20px;
 
-        .video-card {
-          min-width: 320px;
-          margin-right: 15px;
-          background: #fff;
-          padding: 10px;
-          border: 1px solid #ddd;
-          border-radius: 4px;
+        h3 {
+          margin: 0;
+          margin-bottom: 10px;
+          font-size: 20px;
+        }
 
-          h2 {
-            margin-top: 10px;
+        video {
+          display: block;
+          margin-bottom: 10px;
+        }
+
+        button {
+          background-color: #007bff;
+          border: none;
+          color: #fff;
+          padding: 10px 20px;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s;
+
+          &:hover {
+            background-color: #0056b3;
           }
         }
       }
@@ -177,6 +214,7 @@
       margin-bottom: 20px;
       border-bottom: 2px solid #ccc;
       padding-bottom: 10px;
+      color: #333;
     }
 
     .comment-container {
@@ -190,46 +228,44 @@
       .comment-header {
         font-weight: bold;
         margin-bottom: 5px;
+        color: #333;
       }
 
       .comment-content {
         margin-bottom: 10px;
-        line-height: 1.5;
+        color: #666;
       }
 
       .comment-date {
         font-size: 12px;
-        color: #777;
+        color: #999;
       }
     }
 
     .comment-form {
       display: flex;
       flex-direction: column;
-      gap: 10px;
 
       textarea {
-        width: 100%;
-        height: 80px;
+        resize: none;
         padding: 10px;
         border: 1px solid #ddd;
         border-radius: 5px;
-        resize: none;
-        font-family: inherit;
+        margin-bottom: 10px;
       }
 
       button {
-        align-self: flex-start;
-        padding: 10px 20px;
-        background-color: #4caf50;
+        align-self: flex-end;
+        background-color: #007bff;
         border: none;
+        color: #fff;
+        padding: 10px 20px;
         border-radius: 5px;
-        color: white;
         cursor: pointer;
         transition: background-color 0.3s;
 
         &:hover {
-          background-color: #45a049;
+          background-color: #0056b3;
         }
       }
     }

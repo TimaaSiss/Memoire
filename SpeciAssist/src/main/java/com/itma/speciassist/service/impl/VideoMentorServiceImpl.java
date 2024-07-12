@@ -102,11 +102,31 @@ public class VideoMentorServiceImpl implements VideoMentorService {
     public VideoMentor updateVideo(Long id, VideoMentor videoMentor) {
         Optional<VideoMentor> existingVideoOptional = videoMentorRepository.findById(id);
         if (existingVideoOptional.isPresent()) {
-            videoMentor.setId(id);
-            return videoMentorRepository.save(videoMentor);
+            VideoMentor existingVideo = existingVideoOptional.get();
+            
+            // Update the fields of existingVideo with the values from videoMentor
+            existingVideo.setUrl(videoMentor.getUrl());
+            existingVideo.setFileName(videoMentor.getFileName());
+            existingVideo.setTitle(videoMentor.getTitle());
+            
+            // Check if videoMentor.getMentor() is not null before accessing
+            if (videoMentor.getMentor() != null) {
+                // Fetch the Mentor entity that corresponds to videoMentor.getMentor().getId()
+                Mentor mentor = mentorRepository.findById(videoMentor.getMentor().getId())
+                                    .orElseThrow(() -> new EntityNotFoundException("Mentor not found"));
+
+                // Set the fetched Mentor entity to existingVideo
+                existingVideo.setMentor(mentor);
+            } else {
+                
+            }
+            
+            // Save the updated video
+            return videoMentorRepository.save(existingVideo);
         }
-        return null;
+        return null; // Handle this case according to your application's logic
     }
+
     
 
     @Override

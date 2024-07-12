@@ -2,7 +2,9 @@ package com.itma.speciassist.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -17,6 +19,7 @@ import lombok.Data;
 
 @Entity
 @Data
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Formation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -48,6 +51,7 @@ public class Formation {
         name = "formation_carriere",
         joinColumns = @JoinColumn(name = "formation_id"),
         inverseJoinColumns = @JoinColumn(name = "carriere_id"))
+   
     private List<Carriere> carrieres;
     
     

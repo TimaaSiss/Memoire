@@ -51,7 +51,17 @@ public class MessageServiceImpl implements MessageService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	@Override
+	public void markMessagesAsRead(User user) {
+        List<Message> unreadMessages = messageRepository.findByReceiverAndIsReadFalse(user);
+        for (Message message : unreadMessages) {
+            message.setRead(true);
+            messageRepository.save(message);
+        }
+    }
+	
+	@Override
     public Long getUnreadMessagesCount(Long userId) {
         return messageRepository.countByReceiverIdAndIsReadFalse(userId);
     }

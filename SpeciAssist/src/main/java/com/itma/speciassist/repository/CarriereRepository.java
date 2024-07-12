@@ -15,4 +15,8 @@ public interface CarriereRepository extends JpaRepository<Carriere, Integer> {
 
 	Optional<Carriere> findByNom(String nom);
 
+
+
+	Optional<Carriere> findAllById(Integer carriereId);
+
 }

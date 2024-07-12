@@ -12,9 +12,12 @@
       <p>Email: {{ mail }}</p>
     </div>
     
-    <button class="btn-envelope" (click)="openMessagesDialog()">
-      <i class="bi bi-envelope"></i>
-    </button>
+    <div class="envelope-container">
+      <button mat-icon-button (click)="openMessagesDialog()">
+        <mat-icon>mail</mat-icon>
+        <span *ngIf="unreadMessagesCount > 0" class="unread-badge">{{ unreadMessagesCount }}</span>
+      </button>
+    </div>
   </div>
 
   <button class="btn-add-video" (click)="ajouterVideo()">
@@ -31,7 +34,7 @@
           Votre navigateur ne supporte pas la balise vidéo.
         </video>
         <button *ngIf="video.url !== undefined" (click)="supprimerVideo(video.id)" class="btn btn-danger">Supprimer</button>
-        <button *ngIf="video.url !== undefined" (click)="modifierVideo(video)" class="btn btn-secondary">Modifier</button>
+        <button *ngIf="video.url !== undefined" (click)="openEditVideoDialog(video)" class="btn btn-secondary">Modifier</button>
       </div>
     </div>
   </div>

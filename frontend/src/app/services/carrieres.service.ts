@@ -31,6 +31,11 @@ export class CarriereService {
     return this.http.get<Formation[]>(`${this.configService.apiUrl}/carrieres/${carriereId}/formations`);
   }
 
+  getCarrieresByFormationId(formationId: number): Observable<Carriere[]> {
+    return this.http.get<Carriere[]>(`${this.configService.apiUrl}/carrieres/byFormation/${formationId}`);
+  }
+
+
   addCarriere(carriere: Carriere): Observable<Carriere> {
     console.log('Carriere sent to backend:', carriere); // Ajoutez cette ligne
     return this.http.post<Carriere>(`${this.configService.apiUrl}/carrieres/addCarriere`, carriere);

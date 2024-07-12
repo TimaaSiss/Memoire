@@ -11,4 +11,5 @@ public interface MessageService {
 	List<Message> getMessagebyUser(User user, boolean receiver);
 	Message getMessageById(Object messageId);
 	Long getUnreadMessagesCount(Long userId);
+	void markMessagesAsRead(User user);
 }

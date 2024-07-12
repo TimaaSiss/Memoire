@@ -1,12 +1,13 @@
-<!-- messages-dialog.component.html -->
 <div class="messages-dialog">
   <h2>Messages Reçus</h2>
-  <div *ngFor="let message of messages" class="message">
-    <p *ngIf="message.sender"><strong>De: {{ message.sender.nom }} {{ message.sender.prenom }}</strong></p>
-    <p>{{ message.content }}</p>
-    <p><em>Reçu le {{ message.dateSent | date: 'short' }}</em></p>
-    <!-- Champ de saisie pour la réponse -->
-    <textarea class="reply-textarea" [(ngModel)]="message.replyContent" placeholder="Votre réponse"></textarea>
-    <button class="send-button" (click)="sendReply(message)">Envoyer</button>
+  <div class="scrollable-content">
+    <div *ngFor="let message of messages" class="message">
+      <p *ngIf="message.sender"><strong>De: {{ message.sender.nom }} {{ message.sender.prenom }}</strong></p>
+      <p>{{ message.content }}</p>
+      <p><em>Reçu le {{ message.dateSent | date: 'short' }}</em></p>
+      <!-- Champ de saisie pour la réponse -->
+      <textarea class="reply-textarea" [(ngModel)]="message.replyContent" placeholder="Votre réponse"></textarea>
+      <button class="send-button" (click)="sendReply(message)">Envoyer</button>
+    </div>
   </div>
 </div>

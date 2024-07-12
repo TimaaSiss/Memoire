@@ -25,10 +25,15 @@ export class MessageService {
   }
 
   sendReply(reply: { messageId: number, senderId: number, content: string }): Observable<Message> {
-    return this.http.post<Message>(`${this.configService.apiUrl}/reply`, reply);
+    return this.http.post<Message>(`${this.configService.apiUrl}/messages/reply`, reply);
   }
 
   getUnreadMessagesCount(userId: number): Observable<number> {
     return this.http.get<number>(`${this.configService.apiUrl}/messages/unreadCount/${userId}`);
   }
+
+  markMessagesAsRead(userId: number): Observable<void> {
+    return this.http.put<void>(`${this.configService.apiUrl}/messages/markAsRead/${userId}`, {});
+}
+
 }

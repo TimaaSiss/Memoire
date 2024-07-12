@@ -1,3 +1,5 @@
+<!-- career-details.component.html -->
+<button mat-button (click)="goBack()">Retour au profil</button>
 <div class="career-details-container" *ngIf="careerDetails">
   <!-- Header Section -->
   <div class="career-header">
@@ -7,73 +9,71 @@
   <!-- Sector and Salary Section -->
   <div class="career-info-top">
     <div class="info-section sector-section">
-      <i class="bi bi-bank"><i class="bi bi-bank"></i><i class="bi bi-bank"></i></i>
-      <h2><i class="fas fa-industry"></i> Secteur</h2>
+      <i class="bi bi-bank">   <i class="bi bi-bank"></i><i class="bi bi-bank"></i></i>
+      <h2> Secteur</h2>
       <p>{{ careerDetails.secteur }}</p>
     </div>
     <div class="info-section salary-section">
       <i class="bi bi-coin"><i class="bi bi-coin"></i><i class="bi bi-coin"></i></i>
-      <h2><i class="fas fa-coins"></i> Salaire</h2>
+      <h2> Salaire</h2>
       <p>{{ careerDetails.salaire }}</p>
     </div>
   </div>
-  <br/><br/>
+  <br /><br />
   <!-- Description Section -->
   <div class="info-section description-section">
     <h2><strong>Description</strong></h2>
     <p>{{ careerDetails.description }}</p>
   </div>
-  
+
   <!-- Skills Section -->
-  <div class="info-section">
+  <div class="info-section skills-section">
     <h2><strong>Compétences requises</strong></h2>
     <ul>
       <li *ngFor="let competence of careerDetails.competences_requises.split(',')">{{ competence.trim() }}</li>
     </ul>
   </div>
 
+  <!-- Formations Section -->
   <h1 class="font-weight-bold">Formations disponibles</h1>
-        <div class="scrollable-formations">
-            <div class="formtion-row">
-                <!-- Répétez cette colonne pour chaque formation -->
-                <div class="formation-card"  [style.backgroundImage]="'url(' + formation.image + ')'" *ngFor="let formation of formations; let i = index" [ngClass]="'formation-card-' + (i + 1)" (click)="viewFormationDetails(formation.titre)">
-                    <h2>{{ formation.titre}}</h2>
-            
-            <!-- Autres détails de la formation -->
-        </div>
-        
-    </div>
-</div>
-
-<br/><br/>
-
-<!-- Videos Section -->
-<div class="mentor-videos-section" *ngIf="mentorVideos.length > 0">
-  <h2>Videos des Mentors</h2>
-  <ul>
-    <li *ngFor="let video of mentorVideos">
-      <h3>{{ video.title }}</h3>
-      <video width="320" height="240" controls>
-        <source [src]="video.url" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
-      <div *ngIf="currentUser ">
-        <button (click)="openMessageDialog(video.user.id)">Contacter le Mentor</button>
+  <div class="scrollable-formations">
+    <div class="formation-row">
+      <div class="formation-card" [style.backgroundImage]="'url(' + formation.image + ')'" *ngFor="let formation of formations"
+       (click)="viewFormationDetails(formation.titre)">
+        <h2>{{ formation.titre }}</h2>
       </div>
-    </li>
-  </ul>
-</div>
-
-<!-- Comments Section -->
-<div class="comment-section">
-  <h2>Commentaires</h2>
-  <div class="comment-container" *ngFor="let commentaire of commentaires">
-    <p class="comment-header"><strong>{{ commentaire.user?.nom }} {{ commentaire.user?.prenom }}:</strong></p>
-    <p class="comment-content">{{ commentaire.contenu }}</p>
-    <p class="comment-date"><em>Publié le {{ commentaire.datePublication | date: 'short' }}</em></p>
+    </div>
   </div>
-  <div *ngIf="currentUser" class="comment-form">
-    <textarea [(ngModel)]="commentContent" placeholder="Ajoutez un commentaire..."></textarea>
-    <button (click)="addCommentaire()">Publier</button>
+  <br /><br />
+
+  <!-- Videos Section -->
+  <div class="mentor-videos-section" *ngIf="mentorVideos.length > 0">
+    <h2>Videos des Mentors</h2>
+    <ul>
+      <li *ngFor="let video of mentorVideos">
+        <h3>{{ video.title }}</h3>
+        <video width="320" height="240" controls>
+          <source [src]="video.url" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div *ngIf="currentUser">
+          <button (click)="openMessageDialog(video.user.id)">Contacter le Mentor</button>
+        </div>
+      </li>
+    </ul>
+  </div>
+
+  <!-- Comments Section -->
+  <div class="comment-section">
+    <h2>Commentaires</h2>
+    <div class="comment-container" *ngFor="let commentaire of commentaires">
+      <p class="comment-header"><strong>{{ commentaire.user?.nom }} {{ commentaire.user?.prenom }}:</strong></p>
+      <p class="comment-content">{{ commentaire.contenu }}</p>
+      <p class="comment-date"><em>Publié le {{ commentaire.datePublication | date: 'short' }}</em></p>
+    </div>
+    <div *ngIf="currentUser" class="comment-form">
+      <textarea [(ngModel)]="commentContent" placeholder="Ajoutez un commentaire..."></textarea>
+      <button (click)="addCommentaire()">Publier</button>
+    </div>
   </div>
 </div>

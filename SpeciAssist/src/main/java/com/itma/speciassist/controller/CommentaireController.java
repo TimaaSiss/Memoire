@@ -19,33 +19,32 @@ import com.itma.speciassist.service.CommentaireService;
 @RequestMapping("/commentaires")
 public class CommentaireController {
 
-    @Autowired
-    private CommentaireService commentaireService;
+	@Autowired
+	private CommentaireService commentaireService;
 
-    @GetMapping("/{id}")
-    public Commentaire getCommentaireById(@PathVariable Integer id) {
-        return commentaireService.getCommentaire(id);
-    }
+	@GetMapping("/{id}")
+	public Commentaire getCommentaireById(@PathVariable Integer id) {
+		return commentaireService.getCommentaire(id);
+	}
 
-    
-    @GetMapping()
-    public List<Commentaire> getAllCommentaires() {
-        return commentaireService.getAllCommentaires();
-    }
+	@GetMapping()
+	public List<Commentaire> getAllCommentaires() {
+		return commentaireService.getAllCommentaires();
+	}
 
-    @PostMapping()
-    public Commentaire addCommentaire(@RequestBody Commentaire commentaire) {
-        return commentaireService.addCommentaire(commentaire);
-    }
+	@PostMapping()
+	public Commentaire addCommentaire(@RequestBody Commentaire commentaire) {
+		return commentaireService.addCommentaire(commentaire);
+	}
 
-    @PutMapping("/{id}")
-    public Commentaire updateCommentaire(@PathVariable Integer id, @RequestBody Commentaire commentaire) {
-        return commentaireService.updateCommentaire(id, commentaire);
-    }
+	@PutMapping("/{id}")
+	public Commentaire updateCommentaire(@PathVariable Integer id, @RequestBody Commentaire commentaire) {
+		return commentaireService.updateCommentaire(id, commentaire);
+	}
 
-    @DeleteMapping("/delete/{id}")
-    public void deleteCommentaire(@PathVariable Integer id) {
-        commentaireService.deleteCommentaire(id);
-    }
-   
+	@DeleteMapping("/delete/{id}")
+	public void deleteCommentaire(@PathVariable Integer id) {
+		commentaireService.deleteCommentaire(id);
+	}
+
 }
