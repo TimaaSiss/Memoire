@@ -17,7 +17,7 @@ export class ChartComponent implements OnInit {
   public pieChartLegend = true;
 
   public pieChartData = [
-    { data: [17, 8, 8, 5], label: 'Mes premières données en fonctions du nombre d\'utilisateur inscrit' }
+    { data: [17, 8, 8, 5], label: 'Données en fonction du nombre d\'utilisateur inscrit' }
   ];
 
   constructor() { }
